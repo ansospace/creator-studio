@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { isLoggedIn } from "./lib/server";
+import { isLoggedIn } from "./actions/auth";
 
 export const middleware = async (request: NextRequest) => {
   const path = new URL(request.url).pathname;

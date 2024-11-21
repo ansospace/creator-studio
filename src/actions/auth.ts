@@ -1,61 +1,34 @@
 "use server";
 
-import axios from "axios";
-
-import { IApiResponse, saveAccessToken, saveRefreshToken } from "../lib/server";
+import { LOGIN, SIGNUP } from "../lib/api";
+import { ApiResponse } from "../lib/send-response.util";
+import { getAccessToken, getRefreshToken, saveAuthTokens } from "../lib/server";
 import { LoginSchema, SignUpSchema } from "../types/auth";
+import { GetUser } from "../types/user";
 
-// Set default headers and validation
-axios.defaults.headers.common["Origin"] = "http://localhost:3000";
-axios.defaults.validateStatus = (status) => status >= 200 && status < 500;
-
-// Helper function to extract token from Set-Cookie header
-export const extractTokenFromCookie = (
-  setCookieHeader: string | string[] | undefined,
-  tokenName: string
-): string | undefined => {
-  if (!setCookieHeader) return undefined;
-
-  // Ensure setCookieHeader is an array
-  const cookiesArray = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader];
-
-  for (const cookie of cookiesArray) {
-    const match = cookie.match(new RegExp(`${tokenName}=([^;]+)`));
-    if (match) {
-      return match[1];
-    }
-  }
-
-  return undefined;
+export const authenticateUser = async (credentials: LoginSchema): Promise<ApiResponse<GetUser>> => {
+  const response = await LOGIN(credentials);
+  await saveAuthTokens(response);
+  return await response.json();
 };
 
-export const authenticateUser = async (credentials: LoginSchema) => {
+export const registerUser = async (credentials: SignUpSchema) => {
   try {
-    const { data, headers } = await axios.post<IApiResponse>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/login`,
-      credentials
-    );
+    const response = await SIGNUP(credentials);
 
-    const accessToken = headers.authorization;
-    const refreshToken = extractTokenFromCookie(headers["set-cookie"], "refresh-token");
-
-    if (accessToken && refreshToken) {
-      saveAccessToken(accessToken);
-      saveRefreshToken(refreshToken);
-    }
-
-    return data;
+    return await response.json();
   } catch (error) {
-    throw axios.isAxiosError(error) ? new Error("Internal server error") : new Error("Failed to authenticate user");
+    throw new Error(error instanceof Error ? error.message : "Failed to sign up user");
   }
 };
 
-export const signUpUser = async (user: SignUpSchema) => {
-  try {
-    const { data } = await axios.post<IApiResponse>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/sign-up`, user);
+export const isLoggedIn = async (): Promise<boolean> => {
+  if (typeof window !== "undefined") {
+    return !!(document.cookie.includes("authorization") && document.cookie.includes("refresh-token"));
+  } else {
+    const accessToken = await getAccessToken();
+    const refreshToken = await getRefreshToken();
 
-    return data;
-  } catch (error) {
-    throw axios.isAxiosError(error) ? new Error("Internal server error") : new Error("Failed to sign up user");
+    return !!(accessToken && refreshToken);
   }
 };

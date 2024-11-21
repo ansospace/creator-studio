@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 export const saveAccessToken = (token: string) => {
   cookies().set({
-    name: "access-token",
+    name: "authorization",
     value: token,
     httpOnly: true,
     secure: true,
@@ -27,9 +27,18 @@ export const getRefreshToken = async () => {
 };
 
 export const getAccessToken = async () => {
-  return cookies().get("access-token")?.value;
+  return cookies().get("authorization")?.value;
 };
 
+export const saveCookie = (name: string, value: string) => {
+  cookies().set({
+    name,
+    value,
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+};
 export interface IApiResponse<T = undefined> {
   response: Response;
   statusCode: number;
@@ -38,13 +47,33 @@ export interface IApiResponse<T = undefined> {
   data: T;
 }
 
-export const isLoggedIn = async (): Promise<boolean> => {
-  if (typeof window !== "undefined") {
-    return !!(document.cookie.includes("access-token") && document.cookie.includes("refresh-token"));
-  } else {
-    const accessToken = await getAccessToken();
-    const refreshToken = await getRefreshToken();
+const extractCookiesFromHeader = (setCookieHeader: string | null): { name: string; value: string }[] => {
+  if (!setCookieHeader) return [];
 
-    return !!(accessToken && refreshToken);
+  return setCookieHeader.split(",").map((cookie) => {
+    const [cookieStr] = cookie.split(";");
+    const [name, value] = cookieStr.trim().split("=");
+    return { name, value };
+  });
+};
+
+export const saveAuthTokens = async (response: Response) => {
+  const authToken = response.headers.get("authorization");
+  const setCookieHeader = response.headers.get("set-cookie");
+
+  if (!authToken || !setCookieHeader) {
+    return false;
   }
+
+  const cookies = extractCookiesFromHeader(setCookieHeader);
+
+  // Save auth token to cookies instead of directly manipulating headers
+  saveCookie("authorization", authToken);
+
+  // Save other cookies
+  for (const { name, value } of cookies) {
+    saveCookie(name, value);
+  }
+
+  return true;
 };
