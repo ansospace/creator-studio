@@ -9,7 +9,7 @@ import { authenticateUser } from "../actions/auth";
 import { getAccessToken } from "../lib/server";
 import { setCredentials } from "../redux/features/authSlice";
 import { LoginSchema } from "../types/auth";
-import { useToast } from "./use-toast";
+import { useToast } from "./useToast";
 
 export const useLogin = () => {
   const { toast } = useToast();

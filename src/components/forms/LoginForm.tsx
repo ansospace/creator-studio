@@ -4,7 +4,7 @@ import { Path } from "react-hook-form";
 
 import { FormGenerator, Loader } from "@/components/global";
 import { Button, Checkbox } from "@/components/ui";
-import { Ansopedia_CONSTANTS } from "@/constants";
+import { LOGIN_FORM_FIELDS } from "@/constants";
 import { useLogin } from "@/hooks";
 import { LoginSchema } from "@/types/auth";
 
@@ -13,7 +13,7 @@ export const LoginForm = () => {
 
   return (
     <form className="mt-10 flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-      {Ansopedia_CONSTANTS.loginForm.map((field) => (
+      {LOGIN_FORM_FIELDS.map((field) => (
         <FormGenerator
           {...field}
           key={field.id}

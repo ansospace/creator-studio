@@ -1,4 +1,4 @@
-export type AuthFormProps = {
+export type FormFieldConfig = {
   id: string;
   type: "email" | "text" | "password";
   inputType: "select" | "input" | "password";
@@ -9,30 +9,30 @@ export type AuthFormProps = {
   value?: string;
 };
 
-export const SIGN_UP_FORM: AuthFormProps[] = [
+export const SIGNUP_FORM_FIELDS: FormFieldConfig[] = [
   {
-    id: "1",
+    id: "signup_username",
     inputType: "input",
     placeholder: "Create an unique username",
     name: "username",
     type: "text",
   },
   {
-    id: "2",
+    id: "signup_email",
     inputType: "input",
     placeholder: "Email",
     name: "email",
     type: "email",
   },
   {
-    id: "3",
+    id: "signup_password",
     inputType: "password",
     placeholder: "Create a password",
     name: "password",
     type: "password",
   },
   {
-    id: "4",
+    id: "signup_confirm_password",
     inputType: "password",
     placeholder: "Confirm password",
     name: "confirmPassword",
@@ -40,16 +40,16 @@ export const SIGN_UP_FORM: AuthFormProps[] = [
   },
 ];
 
-export const LOGIN_FORM: AuthFormProps[] = [
+export const LOGIN_FORM_FIELDS: FormFieldConfig[] = [
   {
-    id: "1",
+    id: "login_email",
     inputType: "input",
     placeholder: "Email",
     name: "email",
     type: "email",
   },
   {
-    id: "2",
+    id: "login_password",
     inputType: "password",
     placeholder: "Password",
     name: "password",

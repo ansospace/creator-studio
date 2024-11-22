@@ -1,24 +1,28 @@
 "use server";
 
-import { LOGIN, SIGNUP } from "../lib/api";
+import { login, signup } from "../lib/api";
+import { ApiError } from "../lib/errors/api.error";
 import { ApiResponse } from "../lib/send-response.util";
 import { getAccessToken, getRefreshToken, saveAuthTokens } from "../lib/server";
 import { LoginSchema, SignUpSchema } from "../types/auth";
 import { GetUser } from "../types/user";
 
 export const authenticateUser = async (credentials: LoginSchema): Promise<ApiResponse<GetUser>> => {
-  const response = await LOGIN(credentials);
-  await saveAuthTokens(response);
-  return await response.json();
+  try {
+    const response = await login(credentials);
+    await saveAuthTokens(response);
+    return await response.json();
+  } catch (error) {
+    throw new Error(error instanceof ApiError ? error.message : "Authentication failed. Please try again.");
+  }
 };
 
 export const registerUser = async (credentials: SignUpSchema) => {
   try {
-    const response = await SIGNUP(credentials);
-
+    const response = await signup(credentials);
     return await response.json();
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : "Failed to sign up user");
+    throw new Error(error instanceof ApiError ? error.message : "Failed to sign up user");
   }
 };
 

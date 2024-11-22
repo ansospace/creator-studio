@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-import { GET_USERS } from "@/lib/api";
+import { getUsers } from "@/lib/api";
 import { GetUser } from "@/types/user";
 
 const UserList = ({ users }: { users: GetUser[] }) => {
@@ -25,7 +25,7 @@ const UserList = ({ users }: { users: GetUser[] }) => {
 };
 
 const page = async () => {
-  const response = await GET_USERS();
+  const response = await getUsers();
   if (!response.data) {
     return <div>No users found</div>;
   }

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { registerUser } from "@/actions/auth";
 import { SignUpSchema } from "@/types/auth";
 
-import { useToast } from "./use-toast";
+import { useToast } from "./useToast";
 
 export const useSignUp = () => {
   const { toast } = useToast();
