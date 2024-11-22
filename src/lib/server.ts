@@ -2,8 +2,8 @@
 
 import { cookies } from "next/headers";
 
-export const saveAccessToken = (token: string) => {
-  cookies().set({
+export const saveAccessToken = async (token: string) => {
+  (await cookies()).set({
     name: "authorization",
     value: token,
     httpOnly: true,
@@ -12,8 +12,8 @@ export const saveAccessToken = (token: string) => {
   });
 };
 
-export const saveRefreshToken = (token: string) => {
-  cookies().set({
+export const saveRefreshToken = async (token: string) => {
+  (await cookies()).set({
     name: "refresh-token",
     value: token,
     httpOnly: true,
@@ -23,15 +23,15 @@ export const saveRefreshToken = (token: string) => {
 };
 
 export const getRefreshToken = async () => {
-  return cookies().get("refresh-token")?.value;
+  return (await cookies()).get("refresh-token")?.value;
 };
 
 export const getAccessToken = async () => {
-  return cookies().get("authorization")?.value;
+  return (await cookies()).get("authorization")?.value;
 };
 
-export const saveCookie = (name: string, value: string) => {
-  cookies().set({
+export const saveCookie = async (name: string, value: string) => {
+  (await cookies()).set({
     name,
     value,
     httpOnly: true,
@@ -68,11 +68,11 @@ export const saveAuthTokens = async (response: Response) => {
   const cookies = extractCookiesFromHeader(setCookieHeader);
 
   // Save auth token to cookies instead of directly manipulating headers
-  saveCookie("authorization", authToken);
+  await saveCookie("authorization", authToken);
 
   // Save other cookies
   for (const { name, value } of cookies) {
-    saveCookie(name, value);
+    await saveCookie(name, value);
   }
 
   return true;
