@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { ConnectedUsers } from "@/components/ConnectedUsers";
 import { useAppSelector } from "@/redux/store";
 
 const DashboardPage = () => {
@@ -13,16 +14,24 @@ const DashboardPage = () => {
   }, []);
 
   if (!isClient) {
-    return <div>Loading...</div>; // Or any loading state you prefer
+    return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      {isAuthenticated ? "dashboard" : "not authenticated"}
-      <br />
-      accessToken: {accessToken}
-      <br />
-      isLoading: {isLoading.toString()}
+    <div className="p-4">
+      <div className="grid gap-4">
+        <div>
+          {isAuthenticated ? "dashboard" : "not authenticated"}
+          <br />
+          accessToken: {accessToken}
+          <br />
+          isLoading: {isLoading.toString()}
+        </div>
+
+        <div className="rounded-lg border p-4">
+          <ConnectedUsers />
+        </div>
+      </div>
     </div>
   );
 };
