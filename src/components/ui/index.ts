@@ -7,6 +7,7 @@ export * from "./input";
 export * from "./label";
 export * from "./password";
 export * from "./separator";
+export * from "./sidebar";
 export * from "./signin-with-google";
 export * from "./textarea";
 export * from "./toast";

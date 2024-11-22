@@ -44,19 +44,7 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}): Pr
   const url = `${baseURL}${normalizedEndpoint}`;
 
   try {
-    const response = await fetch(url, config as RequestInit);
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new ApiError(
-        errorData.message || API_ERROR_MESSAGES.SERVER_ERROR,
-        response.status,
-        errorData.code,
-        errorData.errors
-      );
-    }
-
-    return response;
+    return await fetch(url, config as RequestInit);
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;

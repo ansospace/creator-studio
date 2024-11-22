@@ -45,6 +45,8 @@ export default function RootLayout({
                   <Link href="/users">Users</Link>
                   <Link href="/login">Login</Link>
                   <Link href="/dashboard">Dashboard</Link>
+                  <Link href="/profile">Profile</Link>
+                  <Link href="/settings">Settings</Link>
                 </div>
                 {children}
               </BootUpProvider>

@@ -26,7 +26,7 @@ export const password = z
   );
 
 export const userSchema = z.object({
-  userId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid id"),
+  id: z.string().uuid(),
   googleId: z.string().optional(),
   username: username,
   email: z.string().email().trim().toLowerCase(),
