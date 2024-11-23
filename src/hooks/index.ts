@@ -3,3 +3,4 @@ export * from "./useMobile";
 export * from "./useSignUp";
 export * from "./useSocket";
 export * from "./useToast";
+export * from "./useUpdateProfile";

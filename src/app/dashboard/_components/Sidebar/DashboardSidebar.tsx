@@ -85,10 +85,16 @@ export const DashboardSidebar = () => {
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem>Account</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/profile">Profile Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/settings">Account Settings</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/logout">Sign out</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>

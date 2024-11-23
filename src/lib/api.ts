@@ -1,9 +1,8 @@
-import type { UpdateUser } from "@/types/user";
+import type { GetUser, LoginSchema, Profile, ProfileSchema, SignUpSchema } from "@/types";
 
-import { LoginSchema, SignUpSchema } from "../types/auth";
-import { GetUser, Profile } from "../types/user";
 import { apiFetch } from "./fetch";
 import { ApiResponse } from "./send-response.util";
+import { getAccessToken } from "./server";
 
 export const login = async (credentials: LoginSchema): Promise<Response> => {
   return apiFetch("/api/v1/auth/login", { method: "POST", body: JSON.stringify(credentials) });
@@ -35,14 +34,19 @@ export const getUser = async (username: string): Promise<ApiResponse<GetUser>> =
   return apiFetch(`/api/v1/users/${username}`, { method: "GET" }).then((res) => res.json());
 };
 
-export const updateProfile = async (data: UpdateUser) => {
-  return apiFetch("/api/v1/users/profile", {
-    method: "PATCH",
+export const updateProfile = async (data: ProfileSchema) => {
+  const accessToken = await getAccessToken();
+  return apiFetch("/api/v1/profile", {
+    method: "PUT",
     body: JSON.stringify(data),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 };
 
-export const getProfile = async (accessToken: string): Promise<ApiResponse<Profile>> => {
+export const getProfile = async (): Promise<ApiResponse<Profile>> => {
+  const accessToken = await getAccessToken();
   return apiFetch("/api/v1/profile", {
     method: "GET",
     headers: {

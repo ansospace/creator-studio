@@ -2,8 +2,7 @@ import { z } from "zod";
 
 import { GetUser } from "./user";
 
-export const profileSchema = z.object({
-  userId: z.string().uuid(),
+export const ProfileSchema = z.object({
   avatar: z.string().url().optional(),
   bio: z.string().max(500).optional(),
   address: z
@@ -17,32 +16,32 @@ export const profileSchema = z.object({
   phoneNumber: z.string().optional(),
   socialLinks: z
     .object({
-      twitter: z.string().url().optional(),
-      linkedin: z.string().url().optional(),
-      github: z.string().url().optional(),
+      twitter: z.string().trim().url().optional().or(z.literal("")),
+      linkedin: z.string().trim().url().optional().or(z.literal("")),
+      github: z.string().trim().url().optional().or(z.literal("")),
     })
     .optional(),
 });
 
-export const validateProfileSchema = (data: ProfileData) => {
+export const validateProfileSchema = (data: ProfileSchema) => {
   // Check if at least one key from profileSchema is present in the data, excluding userId
-  const hasAnyKey = Object.keys(profileSchema.shape)
+  const hasAnyKey = Object.keys(ProfileSchema.shape)
     .filter((key) => key !== "userId")
-    .some((key) => key in data && data[key as keyof ProfileData] !== undefined);
+    .some((key) => key in data && data[key as keyof ProfileSchema] !== undefined);
 
   if (!hasAnyKey) {
     throw new z.ZodError([
       {
         code: z.ZodIssueCode.custom,
-        path: Object.keys(profileSchema.shape).filter((key) => key !== "userId"),
+        path: Object.keys(ProfileSchema.shape).filter((key) => key !== "userId"),
         message: "At least one field from the profile schema must be provided",
       },
     ]);
   }
 
-  return profileSchema.parse(data);
+  return ProfileSchema.parse(data);
 };
 
-export type ProfileData = z.infer<typeof profileSchema>;
-export type CreateProfileData = Omit<ProfileData, "userId">;
-export type Profile = { profile: ProfileData; user: GetUser };
+export type ProfileSchema = z.infer<typeof ProfileSchema>;
+export type CreateProfileData = Omit<ProfileSchema, "userId">;
+export type Profile = { profile: ProfileSchema; user: GetUser };
