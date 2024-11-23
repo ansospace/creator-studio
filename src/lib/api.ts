@@ -1,7 +1,7 @@
 import type { UpdateUser } from "@/types/user";
 
 import { LoginSchema, SignUpSchema } from "../types/auth";
-import { GetUser } from "../types/user";
+import { GetUser, Profile } from "../types/user";
 import { apiFetch } from "./fetch";
 import { ApiResponse } from "./send-response.util";
 
@@ -40,4 +40,13 @@ export const updateProfile = async (data: UpdateUser) => {
     method: "PATCH",
     body: JSON.stringify(data),
   });
+};
+
+export const getProfile = async (accessToken: string): Promise<ApiResponse<Profile>> => {
+  return apiFetch("/api/v1/profile", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((res) => res.json());
 };

@@ -5,10 +5,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
 
+import ThemeToggle from "../components/theme/ThemeToggle";
 import { Toaster } from "../components/ui/toaster";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
-import BootUpProvider from "./BootUpProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -38,7 +38,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <BootUpProvider>{children}</BootUpProvider>
+              <ThemeToggle className="absolute right-4 top-[100px]" />
+              {children}
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
           </ReduxProvider>
