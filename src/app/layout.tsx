@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Link from "next/link";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
 
+import NavBar from "../components/NavBar";
 import { Toaster } from "../components/ui/toaster";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
@@ -40,14 +40,7 @@ export default function RootLayout({
           <ReduxProvider>
             <ReactQueryProvider>
               <BootUpProvider>
-                <div className="flex items-center gap-2">
-                  <Link href="/">Home</Link>
-                  <Link href="/users">Users</Link>
-                  <Link href="/login">Login</Link>
-                  <Link href="/dashboard">Dashboard</Link>
-                  <Link href="/profile">Profile</Link>
-                  <Link href="/settings">Settings</Link>
-                </div>
+                <NavBar />
                 {children}
               </BootUpProvider>
               <ReactQueryDevtools initialIsOpen={false} />
