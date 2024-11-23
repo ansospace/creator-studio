@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
 
-import NavBar from "../components/NavBar";
 import { Toaster } from "../components/ui/toaster";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
@@ -39,10 +38,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <BootUpProvider>
-                <NavBar />
-                {children}
-              </BootUpProvider>
+              <BootUpProvider>{children}</BootUpProvider>
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
           </ReduxProvider>

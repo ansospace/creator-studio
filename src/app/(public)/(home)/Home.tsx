@@ -1,6 +1,6 @@
 import { GlobalEducation, Hero, Welcome } from "./_components";
 
-const LandingPage = () => {
+const Home = () => {
   return (
     <div>
       <Hero />
@@ -10,4 +10,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Home;
