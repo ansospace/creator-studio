@@ -3,18 +3,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 
 import { authenticateUser } from "../actions/auth";
-import { getAccessToken } from "../lib/server";
-import { setCredentials } from "../redux/features/authSlice";
 import { LoginSchema } from "../types/auth";
 import { useToast } from "./useToast";
 
 export const useLogin = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const {
     register,
@@ -36,11 +32,6 @@ export const useLogin = () => {
     mutationFn: authenticateUser,
     onSuccess: async (data) => {
       if (data.status === "success") {
-        const accessToken = await getAccessToken();
-        if (accessToken) {
-          dispatch(setCredentials({ accessToken }));
-        }
-
         toast({
           title: "Success",
           description: data.message,

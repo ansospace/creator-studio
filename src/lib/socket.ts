@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import { redirect } from "next/navigation";
+
 import { Socket, io } from "socket.io-client";
 
 import { ENV_CONFIG } from "@/constants";
@@ -56,6 +58,7 @@ class SocketService {
 
     this.socket.on("connect_error", (error) => {
       console.error("Socket connection error:", error);
+      redirect("/login");
     });
   }
 
