@@ -14,7 +14,7 @@ const withAuth = async ({ children }: { children: React.ReactNode }) => {
     redirect("/login");
   }
 
-  const profile = await getProfile(accessToken);
+  const profile = await getProfile();
   if (profile.status === "failed") {
     redirect("/login");
   }

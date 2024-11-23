@@ -6,7 +6,7 @@ import { Input, Label, Password, Textarea } from "@/components/ui";
 type InputType = "select" | "input" | "textarea" | "password";
 type InputTypeProps = {
   select: { options: { value: string; label: string; id: string }[] };
-  input: { type: "text" | "email" | "password" | "number" };
+  input: { type: "text" | "email" | "password" | "number" | "url" };
   textarea: { lines: number };
   password: { type: "text" | "email" | "password" | "number" };
 };
