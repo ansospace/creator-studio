@@ -1,7 +1,7 @@
 "use client";
 
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from "@/components/ui/toast";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/useToast";
 
 export const Toaster = () => {
   const { toasts } = useToast();

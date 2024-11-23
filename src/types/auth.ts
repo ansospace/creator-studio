@@ -28,4 +28,17 @@ export const LoginSchema = z
     }
   });
 
+export const SignUpSchema = userSchema
+  .pick({
+    email: true,
+    username: true,
+    password: true,
+    confirmPassword: true,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Confirm password does not match password",
+    path: ["confirmPassword"],
+  });
+
 export type LoginSchema = z.infer<typeof LoginSchema>;
+export type SignUpSchema = z.infer<typeof SignUpSchema>;

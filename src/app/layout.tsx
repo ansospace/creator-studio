@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import { ThemeProvider } from "@/components/theme";
 
+import NavBar from "../components/NavBar";
 import { Toaster } from "../components/ui/toaster";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
+import BootUpProvider from "./BootUpProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -30,11 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
+            <ReactQueryProvider>
+              <BootUpProvider>
+                <NavBar />
+                {children}
+              </BootUpProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </ReactQueryProvider>
           </ReduxProvider>
           <Toaster />
         </ThemeProvider>

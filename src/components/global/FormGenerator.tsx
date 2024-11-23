@@ -3,11 +3,12 @@ import { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form
 
 import { Input, Label, Password, Textarea } from "@/components/ui";
 
-type InputType = "select" | "input" | "textarea";
+type InputType = "select" | "input" | "textarea" | "password";
 type InputTypeProps = {
   select: { options: { value: string; label: string; id: string }[] };
   input: { type: "text" | "email" | "password" | "number" };
   textarea: { lines: number };
+  password: { type: "text" | "email" | "password" | "number" };
 };
 
 type FormGeneratorProps<T extends InputType, F extends FieldValues> = {
