@@ -20,7 +20,7 @@ const quizzes: Quiz[] = [
     difficulty: "Beginner",
     totalAttempts: 1234,
     averageScore: 75,
-    image: "/images/quizzes/web-dev.jpg",
+    image: "/images/html.svg",
     questions: [
       {
         id: "q1",
@@ -46,7 +46,7 @@ const quizzes: Quiz[] = [
     difficulty: "Intermediate",
     totalAttempts: 856,
     averageScore: 68,
-    image: "/images/quizzes/python.jpg",
+    image: "/images/python.svg",
     questions: [
       {
         id: "q1",

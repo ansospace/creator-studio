@@ -18,7 +18,7 @@ const blogs = [
     date: "2024-03-15",
     category: "Web Development",
     readTime: "5 min read",
-    image: "/images/blog/web-dev.jpg",
+    image: "/images/html.svg",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const blogs = [
     date: "2024-03-14",
     category: "AI & ML",
     readTime: "8 min read",
-    image: "/images/blog/ml-basics.jpg",
+    image: "/images/Innovation-bro.svg",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const blogs = [
     date: "2024-03-13",
     category: "Education",
     readTime: "6 min read",
-    image: "/images/blog/future-edu.jpg",
+    image: "/images/Teleportation-bro.svg",
   },
   // Add more dummy blogs as needed
 ];
@@ -90,6 +90,7 @@ export const Blogs = () => {
                   alt={blog.title}
                   fill
                   className="object-cover transition-transform duration-300 hover:scale-105"
+                  objectFit="contain"
                 />
               </div>
               <CardHeader>

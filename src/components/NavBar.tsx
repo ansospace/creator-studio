@@ -22,6 +22,7 @@ const navItems = [
   { href: "/about", label: "About" },
   { href: "/courses", label: "Courses" },
   { href: "/blog", label: "Blog" },
+  { href: "/quizzes", label: "Quizzes" },
 ];
 
 const NavBar = () => {
