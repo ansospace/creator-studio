@@ -38,7 +38,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <ThemeToggle className="absolute right-4 top-[100px]" />
+              <ThemeToggle className="absolute right-4 top-[150px]" />
               {children}
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
