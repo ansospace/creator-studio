@@ -129,3 +129,35 @@ export const filterCourses = async (filters: CourseFilterRequest): Promise<ApiRe
     baseURL: ENV_CONFIG.SERVICES.ACS_API_URL,
   }).then((res) => res.json());
 };
+
+export const createCourse = async (course: Course): Promise<ApiResponse<Course>> => {
+  const accessToken = await getAccessToken();
+  try {
+    const res = await apiFetch({
+      endpoint: "/api/v1/courses",
+      options: {
+        method: "POST",
+        body: JSON.stringify(course),
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+      baseURL: ENV_CONFIG.SERVICES.ACS_API_URL,
+    });
+    return await res.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return { status: "failed", data: undefined, message: "Failed to create course" };
+  }
+};
+
+export const getCourse = async (courseId: string): Promise<ApiResponse<{ course: Course }>> => {
+  return apiFetch({
+    endpoint: `/api/v1/courses/${courseId}`,
+    options: {
+      method: "GET",
+    },
+    baseURL: ENV_CONFIG.SERVICES.ACS_API_URL,
+  }).then((res) => res.json());
+};

@@ -30,6 +30,10 @@ export const getAccessToken = async () => {
   return (await cookies()).get("authorization")?.value;
 };
 
+export const getCookie = async (name: string) => {
+  return (await cookies()).get(name)?.value;
+};
+
 export const saveCookie = async (name: string, value: string) => {
   (await cookies()).set({
     name,

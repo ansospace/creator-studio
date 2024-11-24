@@ -3,6 +3,7 @@ import { z } from "zod";
 // Course Schema
 export const courseSchema = z.object({
   id: z.string().uuid(),
+  _id: z.string().uuid(),
   authorId: z.string().min(1, "Author is required"),
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required").optional(),

@@ -4,7 +4,7 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 
 import { getProfile } from "../lib/api";
 import { getAccessToken } from "../lib/server";
-import { Profile } from "../types/profile";
+import { Profile } from "../types";
 
 // Server-side authentication check
 const withAuth = async ({ children }: { children: React.ReactNode }) => {
@@ -19,7 +19,11 @@ const withAuth = async ({ children }: { children: React.ReactNode }) => {
     redirect("/login");
   }
 
-  return <AuthProvider profile={profile.data as Profile}>{children}</AuthProvider>;
+  return (
+    <AuthProvider profile={{ ...profile.data, userId: profile.data?.user.id || "" } as Profile}>
+      {children}
+    </AuthProvider>
+  );
 };
 
 export default withAuth;

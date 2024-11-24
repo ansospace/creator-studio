@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Clock, Star, Users } from "lucide-react";
 
-import { Badge, Button, Card, CardContent, CardFooter, CardHeader } from "@/components/ui";
+import { Badge, Button, CardContent, CardFooter, CardHeader } from "@/components/ui";
 import { Course } from "@/types";
 
 interface CourseGridProps {
@@ -16,8 +17,9 @@ export const CourseGrid = ({ courses, viewMode, className }: CourseGridProps) =>
     <div className={className}>
       <div className={viewMode === "grid" ? "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" : "space-y-4"}>
         {courses.map((course) => (
-          <Card
-            key={course.id}
+          <Link
+            key={course._id}
+            href={`/courses/${course._id}`}
             className={`group transition-all duration-200 hover:shadow-lg ${viewMode === "list" ? "flex" : ""}`}
           >
             {course.image && (
@@ -57,7 +59,7 @@ export const CourseGrid = ({ courses, viewMode, className }: CourseGridProps) =>
                 <Button>Enroll Now</Button>
               </CardFooter>
             </div>
-          </Card>
+          </Link>
         ))}
       </div>
     </div>
