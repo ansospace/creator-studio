@@ -1,10 +1,12 @@
-import NavBar from "../../components/NavBar";
+import { Footer } from "@/components/Footer";
+import NavBar from "@/components/NavBar";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavBar />
-      {children}
+      <main className="min-h-[calc(100vh-64px)]">{children}</main>
+      <Footer />
     </>
   );
 }

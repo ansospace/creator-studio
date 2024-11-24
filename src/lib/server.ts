@@ -51,6 +51,10 @@ export interface IApiResponse<T = undefined> {
   data: T;
 }
 
+export const deleteCookie = async (name: string) => {
+  (await cookies()).delete(name);
+};
+
 const extractCookiesFromHeader = (setCookieHeader: string | null): { name: string; value: string }[] => {
   if (!setCookieHeader) return [];
 
