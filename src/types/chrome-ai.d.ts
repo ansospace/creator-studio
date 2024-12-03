@@ -13,6 +13,8 @@ interface AISummarizerConfig {
   type?: AISummarizerType;
   format?: AISummarizerFormat;
   length?: AISummarizerLength;
+  language?: string;
+  sharedContext?: string;
 }
 
 interface Window {

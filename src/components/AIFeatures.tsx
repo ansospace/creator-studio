@@ -3,23 +3,43 @@
 import { useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
+import ReactMarkdown from "react-markdown";
 
-import { Button } from "@/components/ui/button";
+import { Button, Card, Select, SelectContent, SelectItem, SelectTrigger, Textarea, Typography } from "@/components/ui";
 import { toast, useAI } from "@/hooks";
 
-import { Card } from "./ui/card";
-import { Input } from "./ui/input";
+const AISummarizerTypes: Record<string, AISummarizerType> = {
+  KeyPoints: "key-points",
+  TLDR: "tl;dr",
+  Teaser: "teaser",
+  Headline: "headline",
+} as const;
+
+const AISummarizerLengths: Record<string, AISummarizerLength> = {
+  Short: "short",
+  Medium: "medium",
+  Long: "long",
+} as const;
 
 export const AIFeatures = () => {
   const { isAvailable, provider } = useAI();
+
   const [summary, setSummary] = useState<string | null>(null);
   const [text, setText] = useState<string>("");
+  const [config, setConfig] = useState<AISummarizerConfig>({
+    type: "teaser",
+    format: "markdown",
+    length: "medium",
+    language: "en",
+    sharedContext: "This is a scientific article",
+  });
 
   const { mutate: summarize, isPending: isLoading } = useMutation({
     mutationFn: async (text: string) => {
       if (!provider) throw new Error("No AI provider available");
       const cleanText = text.replace(/<[^>]*>/g, "");
-      return provider.summarize(cleanText);
+
+      return provider.summarize(cleanText, config);
     },
     onSuccess: (data) => {
       setSummary(data);
@@ -61,22 +81,42 @@ export const AIFeatures = () => {
     summarize(text);
   };
 
-  const formatBulletPoints = (text: string) => {
-    return text
-      .split("*")
-      .filter(Boolean)
-      .map((point) => point.trim());
-  };
-
   return (
     <div className="flex flex-col gap-6 p-4">
+      <Typography variant="h2">Summarize Text</Typography>
       <div className="flex flex-col gap-4">
-        <Input
+        <Textarea
           placeholder="Enter text to summarize..."
           value={text}
           onChange={(e) => setText(e.target.value)}
           className="w-full max-w-2xl"
         />
+        <div className="flex gap-4">
+          <Select onValueChange={(value) => setConfig({ ...config, type: value as AISummarizerType })}>
+            <SelectTrigger className="w-full max-w-xs">
+              <span>Type: {config.type}</span>
+            </SelectTrigger>
+            <SelectContent>
+              {Object.values(AISummarizerTypes).map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select onValueChange={(value) => setConfig({ ...config, length: value as AISummarizerLength })}>
+            <SelectTrigger className="w-full max-w-xs">
+              <span>Length: {config.length}</span>
+            </SelectTrigger>
+            <SelectContent>
+              {Object.values(AISummarizerLengths).map((length) => (
+                <SelectItem key={length} value={length}>
+                  {length}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Button onClick={handleSummarize} disabled={!isAvailable || isLoading || !text} className="w-fit">
           {isLoading ? "Summarizing..." : "Summarize Text"}
         </Button>
@@ -85,14 +125,9 @@ export const AIFeatures = () => {
       {summary && (
         <Card className="max-w-2xl p-6">
           <h3 className="mb-4 text-lg font-semibold">Summary</h3>
-          <ul className="space-y-2">
-            {formatBulletPoints(summary).map((point, index) => (
-              <li key={index} className="flex gap-2">
-                <span className="text-primary">•</span>
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="prose prose-slate dark:prose-invert">
+            <ReactMarkdown>{summary}</ReactMarkdown>
+          </div>
         </Card>
       )}
     </div>
