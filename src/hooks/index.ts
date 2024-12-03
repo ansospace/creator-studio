@@ -1,3 +1,4 @@
+export * from "./useAI";
 export * from "./useCreateCourse";
 export * from "./useLogin";
 export * from "./useMobile";
