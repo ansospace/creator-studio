@@ -3,8 +3,8 @@ import { Typography } from "../../components/ui/typography";
 
 const page = () => {
   return (
-    <div>
-      <Typography>AI Features</Typography>
+    <div className="flex flex-col gap-6 p-4">
+      <Typography variant="h1">AI Features</Typography>
       <AIFeatures />
     </div>
   );

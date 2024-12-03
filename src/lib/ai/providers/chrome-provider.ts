@@ -27,6 +27,11 @@ export class ChromeAIProvider implements AIProvider {
 
   async summarize(text: string, config?: AISummarizerConfig): Promise<string> {
     try {
+      const capabilities = await window.ai?.summarizer?.capabilities();
+      if (capabilities?.available === "no") {
+        throw new Error("Summarizer not available");
+      }
+
       const summarizer = await window.ai?.summarizer?.create(config);
       if (!summarizer) {
         throw new Error("Summarizer not available in Chrome AI");
