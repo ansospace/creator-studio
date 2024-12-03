@@ -13,7 +13,7 @@ export const NavProjects = async () => {
       {projects.data?.users.map((user) => (
         <SidebarMenuItem key={user.username}>
           <SidebarMenuButton asChild>
-            <Link href={`/dashboard/users/${user.username}`}>
+            <Link href={`/users/${user.username}`}>
               <User2 />
               <span>{user.username}</span>
             </Link>

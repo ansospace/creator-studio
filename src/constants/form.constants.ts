@@ -2,9 +2,9 @@ import { FieldValues } from "react-hook-form";
 
 export interface FormFieldConfig extends FieldValues {
   id: string;
-  type: "email" | "text" | "password" | "url";
+  type: "email" | "text" | "password" | "url" | "number";
   inputType: "select" | "input" | "password" | "textarea";
-  options?: { value: string; label: string; id: string }[];
+  options?: readonly { value: string; label: string; id: string }[];
   label?: string;
   placeholder: string;
   name: string;
@@ -49,6 +49,7 @@ export const LOGIN_FORM_FIELDS: FormFieldConfig[] = [
     placeholder: "Email",
     name: "email",
     type: "email",
+    value: "sanjay8797421521@gmail.com",
   },
   {
     id: "login_password",
@@ -56,6 +57,7 @@ export const LOGIN_FORM_FIELDS: FormFieldConfig[] = [
     placeholder: "Password",
     name: "password",
     type: "password",
+    value: "Sanjay@8797421521",
   },
 ];
 

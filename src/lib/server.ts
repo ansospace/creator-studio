@@ -30,6 +30,10 @@ export const getAccessToken = async () => {
   return (await cookies()).get("authorization")?.value;
 };
 
+export const getCookie = async (name: string) => {
+  return (await cookies()).get(name)?.value;
+};
+
 export const saveCookie = async (name: string, value: string) => {
   (await cookies()).set({
     name,
@@ -46,6 +50,10 @@ export interface IApiResponse<T = undefined> {
   message: string;
   data: T;
 }
+
+export const deleteCookie = async (name: string) => {
+  (await cookies()).delete(name);
+};
 
 const extractCookiesFromHeader = (setCookieHeader: string | null): { name: string; value: string }[] => {
   if (!setCookieHeader) return [];

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { Calendar, ChevronUp, Home, Inbox, Search, Settings, User2 } from "lucide-react";
+import { BookOpen, ChevronUp, Home, Settings, User2 } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -26,11 +26,12 @@ import { NavProjects } from "./NavProjects";
 import { NavProjectsSkeleton } from "./NavProjectsSkeleton";
 
 const items = [
-  { title: "Home", url: "/dashboard", icon: Home },
-  { title: "Inbox", url: "/dashboard/inbox", icon: Inbox },
-  { title: "Calendar", url: "/dashboard/calendar", icon: Calendar },
-  { title: "Search", url: "/dashboard/search", icon: Search },
+  { title: "Home", url: "/", icon: Home },
+  // { title: "Inbox", url: "/dashboard/inbox", icon: Inbox },
+  // { title: "Calendar", url: "/dashboard/calendar", icon: Calendar },
+  // { title: "Search", url: "/dashboard/search", icon: Search },
   { title: "Settings", url: "/dashboard/settings", icon: Settings },
+  { title: "Courses", url: "/dashboard/courses", icon: BookOpen },
 ];
 
 export const DashboardSidebar = () => {

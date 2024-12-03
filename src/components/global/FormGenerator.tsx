@@ -5,7 +5,7 @@ import { Input, Label, Password, Textarea } from "@/components/ui";
 
 type InputType = "select" | "input" | "textarea" | "password";
 type InputTypeProps = {
-  select: { options: { value: string; label: string; id: string }[] };
+  select: { options: readonly { value: string; label: string; id: string }[] };
   input: { type: "text" | "email" | "password" | "number" | "url" };
   textarea: { lines: number };
   password: { type: "text" | "email" | "password" | "number" };
@@ -19,6 +19,7 @@ type FormGeneratorProps<T extends InputType, F extends FieldValues> = {
   name: Path<F>;
   errors: FieldErrors<F>;
   value?: string;
+  disabled?: boolean;
 } & InputTypeProps[T];
 
 const ErrorMessageComponent = ({ errors, name }: { errors: FieldErrors<FieldValues>; name: string }) => (
@@ -30,12 +31,13 @@ const ErrorMessageComponent = ({ errors, name }: { errors: FieldErrors<FieldValu
 );
 
 export const FormGenerator = <T extends InputType, F extends FieldValues>(props: FormGeneratorProps<T, F>) => {
-  const { inputType, label, placeholder, register, name, errors, value } = props;
+  const { inputType, label, placeholder, register, name, errors, value, disabled } = props;
 
   const commonProps = {
     id: `${inputType}-${label}`,
     placeholder,
     value,
+    disabled,
     ...register(name), // Cast name to keyof F
   };
 

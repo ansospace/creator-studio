@@ -32,9 +32,20 @@ export const createFetchConfig = async (options: FetchOptions = {}): Promise<Req
   };
 };
 
-export const apiFetch = async (endpoint: string, options: FetchOptions = {}): Promise<Response> => {
+interface ApiFetchOptions extends FetchOptions {
+  baseURL: string;
+  endpoint: string;
+  options: FetchOptions;
+}
+
+export const apiFetch = async (
+  { endpoint, options, baseURL }: ApiFetchOptions = {
+    endpoint: "",
+    options: {},
+    baseURL: ENV_CONFIG.SERVICES.USER_API_URL || "",
+  }
+): Promise<Response> => {
   const config = await createFetchConfig(options);
-  const baseURL = ENV_CONFIG.SERVICES.USER_API_URL;
 
   if (!baseURL) {
     throw new ApiError(API_ERROR_MESSAGES.INVALID_CONFIG);
@@ -66,12 +77,16 @@ export const apiFetch = async (endpoint: string, options: FetchOptions = {}): Pr
 export const ProtectedFetch = async <T>(endpoint: string, options: FetchOptions = {}): Promise<ApiResponse<T>> => {
   const accessToken = await getAccessToken();
 
-  const res = await apiFetch(endpoint, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: accessToken || "",
+  const res = await apiFetch({
+    endpoint,
+    options: {
+      ...options,
+      headers: {
+        ...options.headers,
+        Authorization: accessToken || "",
+      },
     },
+    baseURL: ENV_CONFIG.SERVICES.USER_API_URL || "",
   });
 
   return res.json();

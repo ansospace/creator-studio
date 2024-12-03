@@ -44,4 +44,4 @@ export const validateProfileSchema = (data: ProfileSchema) => {
 
 export type ProfileSchema = z.infer<typeof ProfileSchema>;
 export type CreateProfileData = Omit<ProfileSchema, "userId">;
-export type Profile = { profile: ProfileSchema; user: GetUser };
+export type Profile = { profile: ProfileSchema; user: GetUser; userId: string };
