@@ -7,6 +7,7 @@ export const ENV_CONFIG = {
   SERVICES: {
     USER_API_URL: process.env.NEXT_PUBLIC_USER_SERVICE_BASE_URL,
     ACS_API_URL: process.env.NEXT_PUBLIC_ACS_API_URL || "",
+    AI_API_URL: process.env.NEXT_PUBLIC_AI_SERVICE_BASE_URL || "",
   },
 } as const;
 
