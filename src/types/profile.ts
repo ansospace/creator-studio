@@ -3,6 +3,7 @@ import { z } from "zod";
 import { GetUser } from "./user";
 
 export const ProfileSchema = z.object({
+  userId: z.string(),
   avatar: z.string().url().optional(),
   bio: z.string().max(500).optional(),
   address: z
@@ -44,4 +45,4 @@ export const validateProfileSchema = (data: ProfileSchema) => {
 
 export type ProfileSchema = z.infer<typeof ProfileSchema>;
 export type CreateProfileData = Omit<ProfileSchema, "userId">;
-export type Profile = { profile: ProfileSchema; user: GetUser; userId: string };
+export type Profile = { profile: ProfileSchema; user: GetUser };
