@@ -62,7 +62,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
 
           {/* Content */}
           <div
-            className="prose prose-slate dark:prose-invert max-w-none"
+            className="prose prose-slate max-w-none dark:prose-invert"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
 
