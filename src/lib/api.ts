@@ -80,7 +80,7 @@ export const getUser = async (username: string): Promise<ApiResponse<GetUser>> =
   }).then((res) => res.json());
 };
 
-export const updateProfile = async (data: ProfileSchema) => {
+export const upSertProfile = async (data: ProfileSchema): Promise<ApiResponse<ProfileSchema>> => {
   const accessToken = await getAccessToken();
   return apiFetch({
     endpoint: "/api/v1/profile",

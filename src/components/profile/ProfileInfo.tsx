@@ -1,13 +1,23 @@
+"use client";
+
 import { User } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui";
 import { Profile } from "@/types";
+
+import { useAppSelector } from "../../redux/store";
 
 interface ProfileInfoProps {
   profile: Profile;
 }
 
 export const ProfileInfo = ({ profile }: ProfileInfoProps) => {
+  const { profile: updatedProfile } = useAppSelector((state) => state.auth);
+
+  if (updatedProfile) {
+    profile = updatedProfile;
+  }
+
   const profileSections = [
     {
       label: "Basic Information",

@@ -6,11 +6,34 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
 import { useToast } from "@/hooks/useToast";
-import { updateProfile } from "@/lib/api";
-import { setUser } from "@/redux/features/authSlice";
+import { upSertProfile } from "@/lib/api";
 import { Profile, ProfileSchema } from "@/types/profile";
 
-export const useUpdateProfile = (initialData?: Profile) => {
+import { setUser } from "../redux/features/authSlice";
+
+const initialProfileData: Profile = {
+  profile: {
+    userId: "",
+    bio: "",
+    phoneNumber: "",
+    address: {
+      street: "",
+      city: "",
+      country: "",
+      zipCode: "",
+    },
+  },
+  user: {
+    id: "",
+    username: "",
+    email: "",
+    isEmailVerified: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+};
+
+export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const dispatch = useDispatch();
@@ -21,6 +44,7 @@ export const useUpdateProfile = (initialData?: Profile) => {
   } = useForm<ProfileSchema>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
+      userId: initialData?.user.id,
       bio: initialData?.profile?.bio || "",
       phoneNumber: initialData?.profile?.phoneNumber || "",
       address: {
@@ -38,25 +62,21 @@ export const useUpdateProfile = (initialData?: Profile) => {
   });
 
   const { isPending, mutate } = useMutation({
-    mutationFn: async (data: ProfileSchema) => {
-      const response = await updateProfile(data);
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
-      return response.json();
-    },
+    mutationFn: upSertProfile,
     onSuccess: (data) => {
-      dispatch(setUser(data.data));
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      toast({
-        title: "Success",
-        description: "Profile updated successfully",
-      });
+      if (data.status === "success" && data.data) {
+        dispatch(setUser({ profile: data.data, user: initialData.user }));
+        queryClient.invalidateQueries({ queryKey: ["profile"] });
+        toast({
+          title: "Success",
+          description: "Profile updated successfully",
+        });
+      }
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to update profile",
+        description: error.message,
         variant: "destructive",
       });
     },
