@@ -78,7 +78,7 @@ export const QuizDetails = ({ quiz }: QuizDetailsProps) => {
             </Typography>
             <div className="flex items-center gap-4">
               <Badge variant="secondary">{quiz.difficulty}</Badge>
-              <span className="flex items-center gap-1 text-sm text-muted-foreground">
+              <span className="text-muted-foreground flex items-center gap-1 text-sm">
                 <Clock className="h-4 w-4" />
                 {quiz.duration} mins
               </span>
@@ -134,12 +134,12 @@ export const QuizDetails = ({ quiz }: QuizDetailsProps) => {
           })}
         </CardContent>
         {showExplanation && (
-          <CardFooter className="border-t bg-muted/50 p-4">
+          <CardFooter className="bg-muted/50 border-t p-4">
             <div>
               <Typography variant="h4" className="mb-2 text-sm font-semibold">
                 Explanation
               </Typography>
-              <Typography className="text-sm text-muted-foreground">{question.explanation}</Typography>
+              <Typography className="text-muted-foreground text-sm">{question.explanation}</Typography>
             </div>
           </CardFooter>
         )}

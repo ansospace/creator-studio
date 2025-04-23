@@ -15,9 +15,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.requireConfig": true,
-  "eslint.options": {
-    "extensions": [".js", ".jsx", ".ts", ".tsx"]
-  },
+  "eslint.options": {},
+  "eslint.useFlatConfig": true,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

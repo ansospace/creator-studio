@@ -12,7 +12,7 @@ interface CourseFiltersProps {
 export const CourseFilters = ({ className, state, dispatch }: CourseFiltersProps) => {
   return (
     <div className={className}>
-      <div className="rounded-lg border bg-card p-6">
+      <div className="bg-card rounded-lg border p-6">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Filters</h3>
           <Button variant="ghost" size="sm" onClick={() => dispatch({ type: "RESET_FILTERS" })}>

@@ -5,7 +5,7 @@ import Home from "./(home)/Home";
 export default function Page() {
   return (
     <div>
-      <ThemeToggle className="absolute right-4 top-4" />
+      <ThemeToggle className="absolute top-4 right-4" />
       <Home />
     </div>
   );

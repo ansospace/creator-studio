@@ -22,13 +22,13 @@ export const Welcome = () => {
         width={1920}
         height={1080}
       />
-      <section className="relative min-h-[80vh] bg-[#fff4eb] py-16 dark:bg-[#1e293b] md:py-24">
+      <section className="relative min-h-[80vh] bg-[#fff4eb] py-16 md:py-24 dark:bg-[#1e293b]">
         <div className="container mx-auto flex flex-col gap-16 px-4">
           {/* Header - Enhanced typography and spacing */}
           <div className="flex flex-col justify-center gap-6">
-            <h2 className="text-center text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-50 md:text-6xl">
+            <h2 className="text-center text-5xl font-bold tracking-tight text-slate-900 md:text-6xl dark:text-slate-50">
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+              <span className="from-primary to-primary/80 bg-gradient-to-r bg-clip-text text-transparent">
                 Ansopedia
               </span>
             </h2>
@@ -43,7 +43,7 @@ export const Welcome = () => {
             {/* Exam Mastery Card */}
             <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
-                <div className="rounded-full bg-primary/10 p-4 transition-all duration-300 group-hover:scale-110 dark:bg-primary/5">
+                <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image src="/icons/exam-result.svg" alt="Exam Mastery" width={48} height={48} className="h-12 w-12" />
                 </div>
                 <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">Exam Mastery</h3>
@@ -58,7 +58,7 @@ export const Welcome = () => {
             {/* Quiz Card */}
             <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
-                <div className="rounded-full bg-primary/10 p-4 transition-all duration-300 group-hover:scale-110 dark:bg-primary/5">
+                <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image src="/icons/quiz.svg" alt="Quiz" width={48} height={48} className="h-12 w-12" />
                 </div>
                 <h3 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">Engaging Quiz</h3>
@@ -67,14 +67,14 @@ export const Welcome = () => {
                 <p className="text-slate-700 dark:text-slate-300">
                   Test your knowledge and prepare for exams with our interactive quizzes.
                 </p>
-                <Button className="bg-primary font-medium hover:bg-primary/90">Play Now</Button>
+                <Button className="bg-primary hover:bg-primary/90 font-medium">Play Now</Button>
               </CardContent>
             </Card>
 
             {/* Certificate Card */}
             <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
-                <div className="rounded-full bg-primary/10 p-4 transition-all duration-300 group-hover:scale-110 dark:bg-primary/5">
+                <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image
                     src="/icons/certificate.svg"
                     alt="Global Certificate"

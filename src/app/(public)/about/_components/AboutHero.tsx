@@ -10,7 +10,7 @@ export const AboutHero = () => {
           <Typography variant="h1" className="text-4xl font-bold md:text-5xl lg:text-6xl">
             Empowering Global <span className="text-primary">Education</span>
           </Typography>
-          <Typography className="text-lg text-muted-foreground">
+          <Typography className="text-muted-foreground text-lg">
             We&apos;re on a mission to make quality education accessible to everyone, everywhere. Our platform connects
             learners with the best educational resources and opportunities worldwide.
           </Typography>

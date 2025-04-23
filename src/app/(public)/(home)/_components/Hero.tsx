@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <section className="container relative mx-auto max-w-7xl px-4">
+    <section className="relative container mx-auto max-w-7xl px-4">
       {/* Background */}
       <div
-        className="absolute right-0 top-0 -z-10 h-[424px] w-[960px] bg-cover"
+        className="absolute top-0 right-0 -z-10 h-[424px] w-[960px] bg-cover"
         style={{ backgroundImage: "url('/assets/Hero_background.svg')" }}
       />
 
@@ -20,7 +20,7 @@ export const Hero = () => {
           </h1>
 
           {/* Description */}
-          <p className="text-lg text-muted-foreground">
+          <p className="text-muted-foreground text-lg">
             The beautiful thing about learning is that no one can take it from you.
           </p>
 

@@ -13,7 +13,7 @@ interface DashboardLayoutProps {
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full overflow-hidden bg-background">
+      <div className="bg-background flex h-screen w-full overflow-hidden">
         <DashboardSidebar />
         <div className="relative flex flex-1 flex-col">
           <DashboardNavbar />

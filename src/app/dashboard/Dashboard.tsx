@@ -25,8 +25,8 @@ const DashboardPage = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="transition-all hover:shadow-lg">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-muted-foreground text-sm font-medium">Total Users</CardTitle>
+            <Users className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -36,14 +36,14 @@ const DashboardPage = () => {
                 20.1%
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">from last month</p>
+            <p className="text-muted-foreground text-xs">from last month</p>
           </CardContent>
         </Card>
 
         <Card className="transition-all hover:shadow-lg">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Active Sessions</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-muted-foreground text-sm font-medium">Active Sessions</CardTitle>
+            <Activity className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -53,14 +53,14 @@ const DashboardPage = () => {
                 12.3%
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">from last hour</p>
+            <p className="text-muted-foreground text-xs">from last hour</p>
           </CardContent>
         </Card>
 
         <Card className="transition-all hover:shadow-lg">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Questions</CardTitle>
-            <HelpCircle className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-muted-foreground text-sm font-medium">Total Questions</CardTitle>
+            <HelpCircle className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ const DashboardPage = () => {
                 8.2%
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">from last week</p>
+            <p className="text-muted-foreground text-xs">from last week</p>
           </CardContent>
         </Card>
       </div>
@@ -98,7 +98,7 @@ const DashboardPage = () => {
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Authentication:</span>
+                <span className="text-muted-foreground text-sm">Authentication:</span>
                 <span
                   className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     isAuthenticated
@@ -110,7 +110,7 @@ const DashboardPage = () => {
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">System Status:</span>
+                <span className="text-muted-foreground text-sm">System Status:</span>
                 <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
                   {isLoading ? "Loading" : "Online"}
                 </span>

@@ -33,7 +33,7 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-xl font-semibold">About this course</h2>
-                  <p className="mt-2 text-muted-foreground">{course.description}</p>
+                  <p className="text-muted-foreground mt-2">{course.description}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-4">
@@ -68,7 +68,7 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
               <div className="mt-6 space-y-4">
                 <div>
                   <h3 className="font-semibold">This course includes:</h3>
-                  <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+                  <ul className="text-muted-foreground mt-2 space-y-2 text-sm">
                     <li>• {course.duration} of content</li>
                     <li>• Access on all devices</li>
                     <li>• Certificate of completion</li>

@@ -31,14 +31,14 @@ export const CourseGrid = ({ courses, viewMode, className }: CourseGridProps) =>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold transition-colors group-hover:text-primary">{course.title}</h3>
-                    <p className="text-sm text-muted-foreground">by {course.instructor}</p>
+                    <h3 className="group-hover:text-primary text-xl font-semibold transition-colors">{course.title}</h3>
+                    <p className="text-muted-foreground text-sm">by {course.instructor}</p>
                   </div>
                   <Badge variant="secondary">{course.level}</Badge>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="mb-4 text-muted-foreground">{course.description}</p>
+                <p className="text-muted-foreground mb-4">{course.description}</p>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-yellow-400" />

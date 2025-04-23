@@ -15,7 +15,7 @@ const Password = forwardRef<HTMLInputElement, InputProps>((props: InputProps, re
     <div className="relative">
       <Input {...props} ref={ref} type={visible ? "text" : "password"} />
       <div
-        className="absolute bottom-2 right-5"
+        className="absolute right-5 bottom-2"
         onClick={toggleVisible}
         tabIndex={0}
         onKeyDown={(e) => {

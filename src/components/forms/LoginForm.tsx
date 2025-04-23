@@ -29,7 +29,7 @@ export const LoginForm = () => {
           <Checkbox id="remember-me" {...register("rememberMe", { setValueAs: (value) => value === "on" })} />
           <label
             htmlFor="remember-me"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Remember me
           </label>

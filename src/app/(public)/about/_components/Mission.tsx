@@ -7,7 +7,7 @@ export const Mission = () => {
         <Typography variant="h2" className="mb-4 text-3xl font-bold">
           Our Mission & Vision
         </Typography>
-        <Typography className="mx-auto max-w-2xl text-muted-foreground">
+        <Typography className="text-muted-foreground mx-auto max-w-2xl">
           We strive to break down barriers in education and create a world where quality learning is accessible to all,
           regardless of geographical or economic constraints.
         </Typography>

@@ -48,11 +48,11 @@ const SettingsPage = () => {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label>Email</Label>
-              <p className="text-sm text-muted-foreground">{profile.user.email}</p>
+              <p className="text-muted-foreground text-sm">{profile.user.email}</p>
             </div>
             <div className="space-y-2">
               <Label>Username</Label>
-              <p className="text-sm text-muted-foreground">{profile.user.username}</p>
+              <p className="text-muted-foreground text-sm">{profile.user.username}</p>
             </div>
           </CardContent>
         </Card>

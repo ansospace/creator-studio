@@ -37,7 +37,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       <div className="mb-8 space-y-4">
         <div className="mx-auto max-w-md">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Search blogs..."
               className="pl-10"
@@ -72,7 +72,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       {/* Loading State */}
       {isLoading && (
         <div className="flex justify-center py-8">
-          <div className="animate-pulse text-muted-foreground">Loading...</div>
+          <div className="text-muted-foreground animate-pulse">Loading...</div>
         </div>
       )}
 
@@ -92,18 +92,18 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
               </div>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-primary">{blog.category}</span>
-                  <span className="text-sm text-muted-foreground">{blog.readTime}</span>
+                  <span className="text-primary text-sm">{blog.category}</span>
+                  <span className="text-muted-foreground text-sm">{blog.readTime}</span>
                 </div>
                 <Typography variant="h3" className="line-clamp-2 text-xl font-semibold">
                   {blog.title}
                 </Typography>
               </CardHeader>
               <CardContent>
-                <Typography className="mb-4 line-clamp-3 text-muted-foreground">{blog.excerpt}</Typography>
+                <Typography className="text-muted-foreground mb-4 line-clamp-3">{blog.excerpt}</Typography>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">By {blog.author.name}</span>
-                  <span className="text-sm text-muted-foreground">{new Date(blog.date).toLocaleDateString()}</span>
+                  <span className="text-muted-foreground text-sm">By {blog.author.name}</span>
+                  <span className="text-muted-foreground text-sm">{new Date(blog.date).toLocaleDateString()}</span>
                 </div>
               </CardContent>
             </Card>

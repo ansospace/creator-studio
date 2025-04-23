@@ -91,7 +91,7 @@ export const ConnectedUsers = () => {
             </Avatar>
             <div className="flex flex-col">
               <span className="font-medium">{user.userId}</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-muted-foreground text-sm">
                 Connected {new Date(user.timestamp).toLocaleTimeString()}
               </span>
             </div>

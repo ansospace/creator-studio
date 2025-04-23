@@ -5,7 +5,7 @@ import { Button, Typography } from "@/components/ui";
 export const GlobalEducation = () => {
   return (
     <section className="container mx-auto max-w-7xl px-4">
-      <div className="py-18 container mx-auto my-12 flex flex-col gap-10 lg:gap-0">
+      <div className="container mx-auto my-12 flex flex-col gap-10 py-18 lg:gap-0">
         <div className="grid md:grid-cols-2 md:gap-8">
           <div className="h-full w-full md:order-2">
             <Image

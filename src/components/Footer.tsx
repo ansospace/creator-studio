@@ -43,7 +43,7 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t bg-background">
+    <footer className="bg-background border-t">
       <div className="container mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Section */}
@@ -54,7 +54,7 @@ export const Footer = () => {
                 Ansopedia
               </Typography>
             </Link>
-            <Typography className="mb-6 text-muted-foreground">
+            <Typography className="text-muted-foreground mb-6">
               Empowering global education through accessible learning resources and opportunities.
             </Typography>
             <div className="flex space-x-4">
@@ -62,7 +62,7 @@ export const Footer = () => {
                 <Link
                   key={label}
                   href={href}
-                  className="text-muted-foreground transition-colors hover:text-primary"
+                  className="text-muted-foreground hover:text-primary transition-colors"
                   aria-label={label}
                 >
                   <Icon className="h-5 w-5" />
@@ -74,7 +74,7 @@ export const Footer = () => {
           {/* Links Sections */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <Typography variant="h3" className="mb-4 text-sm font-semibold uppercase tracking-wider">
+              <Typography variant="h3" className="mb-4 text-sm font-semibold tracking-wider uppercase">
                 {section.title}
               </Typography>
               <ul className="space-y-2">
@@ -82,7 +82,7 @@ export const Footer = () => {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-muted-foreground transition-colors hover:text-primary hover:underline"
+                      className="text-muted-foreground hover:text-primary transition-colors hover:underline"
                     >
                       {link.label}
                     </Link>
@@ -96,14 +96,14 @@ export const Footer = () => {
         {/* Bottom Section */}
         <div className="mt-12 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Typography className="text-sm text-muted-foreground">
+            <Typography className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Ansopedia. All rights reserved.
             </Typography>
             <div className="flex gap-4">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary hover:underline">
+              <Link href="#" className="text-muted-foreground hover:text-primary text-sm hover:underline">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary hover:underline">
+              <Link href="#" className="text-muted-foreground hover:text-primary text-sm hover:underline">
                 Terms of Service
               </Link>
             </div>
