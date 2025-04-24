@@ -86,8 +86,7 @@ export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
     const cleanedData = {
       ...data,
       socialLinks: data.socialLinks
-        ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          Object.fromEntries(Object.entries(data.socialLinks).filter(([_, value]) => value && value.length > 0))
+        ? Object.fromEntries(Object.entries(data.socialLinks).filter(([_, value]) => value && value.length > 0))
         : undefined,
     };
 

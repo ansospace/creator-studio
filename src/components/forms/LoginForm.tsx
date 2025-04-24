@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Path } from "react-hook-form";
 
 import { FormGenerator, Loader } from "@/components/global";
@@ -34,9 +36,9 @@ export const LoginForm = () => {
             Remember me
           </label>
         </div>
-        <a href="#" className="text-blue-500 hover:underline">
+        <Link href="#" className="text-blue-500 hover:underline">
           Forget password?
-        </a>
+        </Link>
       </div>
       <Button type="submit" disabled={isPending}>
         <Loader loading={isPending}>Log In</Loader>

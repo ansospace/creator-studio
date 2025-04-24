@@ -17,6 +17,7 @@ interface AISummarizerConfig {
   sharedContext?: string;
 }
 
+// eslint-disable-next-line no-unused-vars
 interface Window {
   ai?: {
     summarizer?: {

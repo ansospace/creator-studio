@@ -17,6 +17,7 @@ const Password = ({ className, ...props }: React.ComponentProps<"input">) => {
     <div className={cn("relative w-full", className)}>
       <Input {...props} type={visible ? "text" : "password"} />
       <div
+        role="button"
         className="absolute right-5 bottom-2"
         onClick={toggleVisible}
         tabIndex={0}
