@@ -108,13 +108,13 @@ export const QuizDetails = ({ quiz }: QuizDetailsProps) => {
           {question.options.map((option, index) => {
             const isCorrect = index === question.correctAnswer;
             const isSelected = selectedAnswer === index;
-            let buttonVariant: "outline" | "default" | "success" | "destructive" = "outline";
+            let buttonVariant: "outline" | "default" | "destructive" | "default" | "ghost" | "link" = "outline";
 
             if (selectedAnswer !== null) {
               if (isSelected) {
-                buttonVariant = isCorrect ? "success" : "destructive";
+                buttonVariant = isCorrect ? "default" : "destructive";
               } else if (isCorrect) {
-                buttonVariant = "success";
+                buttonVariant = "default";
               }
             }
 

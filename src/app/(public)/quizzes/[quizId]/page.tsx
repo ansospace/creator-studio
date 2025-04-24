@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 
+import { ApiResponse } from "../../../../lib/send-response.util";
+import { Quiz } from "../../../../types/quiz";
 import { QuizDetails } from "./_components/QuizDetails";
 
 // Mock function to fetch quiz - replace with actual API call
-const getQuiz = async (id: string) => {
+const getQuiz = async (id: string): Promise<ApiResponse<{ quiz: Quiz }>> => {
   // Simulating API call with dummy data
-  return {
+  const apiResponse: ApiResponse<{ quiz: Quiz }> = {
     status: "success",
+    message: "Quiz fetched successfully",
     data: {
       quiz: {
         id,
@@ -49,15 +52,18 @@ const getQuiz = async (id: string) => {
       },
     },
   };
+
+  return new Promise<ApiResponse<{ quiz: Quiz }>>((resolve) => resolve(apiResponse));
 };
 
 interface QuizPageProps {
-  params: {
+  params: Promise<{
     quizId: string;
-  };
+  }>;
 }
 
-const QuizPage = async ({ params }: QuizPageProps) => {
+const QuizPage = async (props: QuizPageProps) => {
+  const params = await props.params;
   if (!params.quizId) {
     notFound();
   }

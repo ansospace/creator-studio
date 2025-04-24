@@ -5,12 +5,13 @@ import { getCourse } from "@/lib/api";
 import { CourseDetails } from "./_components/CourseDetails";
 
 interface CoursePageProps {
-  params: {
+  params: Promise<{
     courseId: string;
-  };
+  }>;
 }
 
-const CoursePage = async ({ params }: CoursePageProps) => {
+const CoursePage = async (props: CoursePageProps) => {
+  const params = await props.params;
   if (!params.courseId) {
     notFound();
   }
