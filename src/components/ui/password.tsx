@@ -1,19 +1,21 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
-import { Input, InputProps } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 
-const Password = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) => {
+import { cn } from "../../lib/utils";
+
+const Password = ({ className, ...props }: React.ComponentProps<"input">) => {
   const [visible, setVisible] = useState(false);
 
   const toggleVisible = () => setVisible(!visible);
 
   return (
-    <div className="relative">
-      <Input {...props} ref={ref} type={visible ? "text" : "password"} />
+    <div className={cn("relative w-full", className)}>
+      <Input {...props} type={visible ? "text" : "password"} />
       <div
         className="absolute right-5 bottom-2"
         onClick={toggleVisible}
@@ -26,7 +28,6 @@ const Password = forwardRef<HTMLInputElement, InputProps>((props: InputProps, re
       </div>
     </div>
   );
-});
-Password.displayName = "Password";
+};
 
 export { Password };

@@ -38,7 +38,7 @@ export const LoginForm = () => {
           Forget password?
         </a>
       </div>
-      <Button type="submit" className="rounded-2xl" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         <Loader loading={isPending}>Log In</Loader>
       </Button>
     </form>
