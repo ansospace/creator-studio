@@ -20,7 +20,7 @@ export const UpdateProfileForm = ({ profile }: UpdateProfileFormProps) => {
   const { isPending, handleSubmit, register, errors, onSubmit } = useUpdateProfile(profile);
 
   const renderFormSection = (title: string, description: string, fields: typeof PROFILE_FORM_FIELDS) => (
-    <Card className="transition-all hover:shadow-sm">
+    <Card className="transition-all hover:shadow-xs">
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

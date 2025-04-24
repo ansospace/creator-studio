@@ -28,9 +28,7 @@ export const Welcome = () => {
           <div className="flex flex-col justify-center gap-6">
             <h2 className="text-center text-5xl font-bold tracking-tight text-slate-900 md:text-6xl dark:text-slate-50">
               Welcome to{" "}
-              <span className="from-primary to-primary/80 bg-gradient-to-r bg-clip-text text-transparent">
-                Ansopedia
-              </span>
+              <span className="from-primary to-primary/80 bg-linear-to-r bg-clip-text text-transparent">Ansopedia</span>
             </h2>
             <p className="mx-auto max-w-2xl text-center text-lg text-slate-700 dark:text-slate-300">
               Dive into a world of interactive quizzes, captivating content, and endless opportunities to expand your
@@ -41,7 +39,7 @@ export const Welcome = () => {
           {/* Cards - Improved layout and hover effects */}
           <div className="container mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 md:grid-cols-2 lg:grid-cols-3">
             {/* Exam Mastery Card */}
-            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
+            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
                 <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image src="/icons/exam-result.svg" alt="Exam Mastery" width={48} height={48} className="h-12 w-12" />
@@ -56,7 +54,7 @@ export const Welcome = () => {
             </Card>
 
             {/* Quiz Card */}
-            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
+            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
                 <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image src="/icons/quiz.svg" alt="Quiz" width={48} height={48} className="h-12 w-12" />
@@ -72,7 +70,7 @@ export const Welcome = () => {
             </Card>
 
             {/* Certificate Card */}
-            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
+            <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600">
               <CardHeader className="flex flex-col items-center gap-4 p-6">
                 <div className="bg-primary/10 dark:bg-primary/5 rounded-full p-4 transition-all duration-300 group-hover:scale-110">
                   <Image

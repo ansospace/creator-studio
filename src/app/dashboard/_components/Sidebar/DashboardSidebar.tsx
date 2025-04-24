@@ -39,7 +39,7 @@ export const DashboardSidebar = () => {
     <Sidebar>
       <SidebarHeader className="border-b">
         <Link href="/dashboard" className="flex items-center gap-2 px-4 py-3">
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <div className="flex items-center gap-2">
               <Image src="/images/ansopedia_logo.svg" alt="ansopedia" width={40} height={40} priority />
               <span className="text-xl font-bold">Ansopedia</span>
@@ -85,7 +85,7 @@ export const DashboardSidebar = () => {
                   <ChevronUp className="ml-auto h-4 w-4" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]">
+              <DropdownMenuContent side="top" className="w-(--radix-popper-anchor-width)">
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/profile">Profile Settings</Link>
                 </DropdownMenuItem>

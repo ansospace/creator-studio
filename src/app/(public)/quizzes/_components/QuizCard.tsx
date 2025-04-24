@@ -13,7 +13,7 @@ interface QuizCardProps {
 export const QuizCard = ({ quiz }: QuizCardProps) => {
   return (
     <Link href={`/quizzes/${quiz.id}`}>
-      <Card className="group h-full overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 hover:dark:border-slate-600">
+      <Card className="group h-full overflow-hidden transition-all duration-300 hover:shadow-lg dark:border-slate-700 dark:bg-slate-800/50 dark:hover:border-slate-600">
         {quiz.image && (
           <div className="relative aspect-video overflow-hidden">
             <Image

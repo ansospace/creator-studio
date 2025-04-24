@@ -31,10 +31,10 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+    <div className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
       <nav className="container mx-auto flex h-16 items-center px-4">
         {/* Logo - Left */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <div className="flex items-center gap-2">
             <Image src="/images/ansopedia_logo.svg" alt="ansopedia" width={40} height={40} priority />
             <span className="text-xl font-bold">Ansopedia</span>
@@ -59,7 +59,7 @@ const NavBar = () => {
         </div>
 
         {/* CTA - Right */}
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <div className="hidden md:block">
             <Button onClick={() => router.push("login")}>Sign in</Button>
           </div>

@@ -37,8 +37,8 @@ export const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col gap-6 lg:w-fit lg:flex-row">
-            <Button className="flex-grow">Learn More</Button>
-            <Button variant="outline" className="flex-grow">
+            <Button className="grow">Learn More</Button>
+            <Button variant="outline" className="grow">
               Get Started
             </Button>
           </div>
