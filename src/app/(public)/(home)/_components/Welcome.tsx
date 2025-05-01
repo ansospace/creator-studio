@@ -18,7 +18,7 @@ export const Welcome = () => {
       <Image
         src="/images/background-wave-dark.svg"
         alt="Background wave"
-        className="hidden h-full w-full dark:flex"
+        className="hidden h-full w-full dark:block"
         width={1920}
         height={1080}
       />

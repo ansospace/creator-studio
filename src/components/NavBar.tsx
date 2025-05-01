@@ -18,11 +18,11 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/courses", label: "Courses" },
-  { href: "/blog", label: "Blog" },
-  { href: "/quizzes", label: "Quizzes" },
+  { link: "/", name: "Home" },
+  { link: "/about", name: "About" },
+  { link: "/courses", name: "Courses" },
+  { link: "/blog", name: "Blog" },
+  { link: "/quizzes", name: "Quizzes" },
 ];
 
 const NavBar = () => {
@@ -45,11 +45,11 @@ const NavBar = () => {
         <div className="hidden flex-1 items-center justify-center md:flex">
           <NavigationMenu>
             <NavigationMenuList>
-              {navItems.map(({ href, label }) => (
-                <NavigationMenuItem key={href}>
-                  <Link href={href} legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()} active={pathname === href}>
-                      {label}
+              {navItems.map(({ link, name }) => (
+                <NavigationMenuItem key={link}>
+                  <Link href={link}>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()} active={pathname === link}>
+                      {name}
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -73,16 +73,16 @@ const NavBar = () => {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px]">
               <div className="mt-6 flex flex-col gap-4">
-                {navItems.map(({ href, label }) => (
+                {navItems.map(({ link, name }) => (
                   <Link
-                    key={href}
-                    href={href}
+                    key={link}
+                    href={link}
                     onClick={() => setOpen(false)}
                     className={`text-lg font-medium ${
-                      pathname === href ? "text-primary" : "text-muted-foreground"
+                      pathname === link ? "text-primary" : "text-muted-foreground"
                     } hover:text-primary`}
                   >
-                    {label}
+                    {name}
                   </Link>
                 ))}
                 <Button

@@ -16,6 +16,8 @@ export const courseSchema = z.object({
   category: z.string().min(1, "Category is required").optional(),
   image: z.string().url().optional(),
   deleted: z.boolean().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
 });
 
 // FilterState Schema

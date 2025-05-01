@@ -33,7 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <ThemeToggle className="absolute top-[150px] right-4" />
+              <ThemeToggle className="fixed top-[150px] right-4" />
               {children}
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
