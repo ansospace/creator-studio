@@ -2,12 +2,14 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { ENV_CONFIG } from "@/constants";
 
+import { ApiResponse } from "./send-response.util";
 import { getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from "./server";
 
 export const axiosInstance = axios.create({
   baseURL: ENV_CONFIG.SERVICES.USER_API_URL,
   headers: {
     "Content-Type": "application/json",
+    Origin: ENV_CONFIG.APP.URL,
   },
 });
 
@@ -51,6 +53,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
+    console.log({ error });
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // If there's no response, just reject the promise
@@ -142,3 +145,20 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const GET = async <T>(
+  endpoint: string,
+  options: AxiosRequestConfig = {}
+): Promise<AxiosResponse<ApiResponse<T>>> => {
+  const response = await axiosInstance.get(endpoint, options);
+  return response;
+};
+
+export const POST = async <T>(
+  endpoint: string,
+  body: any,
+  options: AxiosRequestConfig = {}
+): Promise<AxiosResponse<ApiResponse<T>>> => {
+  const response = await axiosInstance.post<ApiResponse<T>>(endpoint, body, options);
+  return response;
+};

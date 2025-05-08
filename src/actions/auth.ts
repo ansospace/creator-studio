@@ -3,16 +3,23 @@
 import { login, signup } from "../lib/api";
 import { ApiError } from "../lib/errors/api.error";
 import { ApiResponse } from "../lib/send-response.util";
-import { getAccessToken, getRefreshToken, saveAuthTokens } from "../lib/server";
+import { getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from "../lib/server";
 import { LoginSchema, SignUpSchema } from "../types/auth";
-import { GetUser } from "../types/user";
 
-export const authenticateUser = async (credentials: LoginSchema): Promise<ApiResponse<GetUser>> => {
+export const authenticateUser = async (credentials: LoginSchema): Promise<ApiResponse<{ userId: string }>> => {
   try {
     const response = await login(credentials);
-    await saveAuthTokens(response);
-    return await response.json();
+    if (response.status === "success" && response.data) {
+      const { accessToken, refreshToken } = response.data;
+
+      if (accessToken && refreshToken) {
+        await saveAccessToken(accessToken);
+        await saveRefreshToken(refreshToken);
+      }
+    }
+    return response;
   } catch (error) {
+    console.dir(error);
     throw new Error(error instanceof ApiError ? error.message : "Authentication failed. Please try again.");
   }
 };

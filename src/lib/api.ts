@@ -10,19 +10,34 @@ import type {
 } from "@/types";
 
 import { ENV_CONFIG } from "../constants";
+import { GET, POST } from "./axios";
 import { apiFetch } from "./fetch";
 import { ApiResponse } from "./send-response.util";
 import { getAccessToken } from "./server";
 
-export const login = async (credentials: LoginSchema): Promise<Response> => {
-  return apiFetch({
-    endpoint: "/api/v1/auth/login",
-    options: {
-      method: "POST",
-      body: JSON.stringify(credentials),
-    },
-    baseURL: ENV_CONFIG.SERVICES.USER_API_URL || "",
-  });
+interface LoginResponse {
+  userId: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export const login = async (credentials: LoginSchema): Promise<ApiResponse<LoginResponse>> => {
+  const { status, data, headers } = await POST<{ userId: string }>("/api/v1/auth/login", credentials);
+  if (status === 200 && data.data) {
+    const accessToken = headers.authorization;
+    const newRefreshToken = headers["refresh-token"];
+
+    return {
+      ...data,
+      data: {
+        userId: data.data.userId,
+        accessToken: accessToken,
+        refreshToken: newRefreshToken,
+      },
+    };
+  }
+
+  return { message: data.message, ...data.data };
 };
 
 export const signup = async (credentials: SignUpSchema): Promise<Response> => {
@@ -96,17 +111,21 @@ export const upSertProfile = async (data: ProfileSchema): Promise<ApiResponse<Pr
 };
 
 export const getProfile = async (): Promise<ApiResponse<Profile>> => {
-  const accessToken = await getAccessToken();
-  return apiFetch({
-    endpoint: "/api/v1/profile",
-    options: {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-    baseURL: ENV_CONFIG.SERVICES.USER_API_URL || "",
-  }).then((res) => res.json());
+  const { data } = await GET<Profile>("/api/v1/profile");
+  console.log({ data });
+  return data;
+
+  // const accessToken = await getAccessToken();
+  // return apiFetch({
+  //   endpoint: "/api/v1/profile",
+  //   options: {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //     },
+  //   },
+  //   baseURL: ENV_CONFIG.SERVICES.USER_API_URL || "",
+  // }).then((res) => res.json());
 };
 
 export const getCourses = async (): Promise<ApiResponse<{ courses: Course[] }>> => {
