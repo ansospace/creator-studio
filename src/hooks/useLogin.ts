@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
