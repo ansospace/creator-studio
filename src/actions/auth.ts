@@ -19,7 +19,6 @@ export const authenticateUser = async (credentials: LoginSchema): Promise<ApiRes
     }
     return response;
   } catch (error) {
-    console.dir(error);
     throw new Error(error instanceof ApiError ? error.message : "Authentication failed. Please try again.");
   }
 };

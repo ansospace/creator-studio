@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
 
-import ThemeToggle from "../components/theme/ThemeToggle";
 import { Toaster } from "../components/ui/toaster";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
@@ -33,7 +32,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <ThemeToggle className="fixed top-[150px] right-4" />
               {children}
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>

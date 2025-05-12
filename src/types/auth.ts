@@ -9,7 +9,6 @@ export const LoginSchema = z
       message: "Username must be at least 3 characters",
     }),
     password: userSchema.shape.password,
-    rememberMe: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.email == null && data.username == null) {

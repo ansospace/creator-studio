@@ -11,6 +11,9 @@ export const axiosInstance = axios.create({
     "Content-Type": "application/json",
     Origin: ENV_CONFIG.APP.URL,
   },
+  validateStatus: (status) => {
+    return status >= 200 && status < 500;
+  },
 });
 
 axiosInstance.interceptors.request.use(
@@ -53,7 +56,6 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
-    console.log({ error });
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // If there's no response, just reject the promise

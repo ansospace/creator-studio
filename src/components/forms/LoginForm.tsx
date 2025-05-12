@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Path } from "react-hook-form";
 
 import { FormGenerator, Loader } from "@/components/global";
-import { Button, Checkbox } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { LOGIN_FORM_FIELDS } from "@/constants";
 import { useLogin } from "@/hooks";
 import { LoginSchema } from "@/types/auth";
@@ -26,16 +26,7 @@ export const LoginForm = () => {
           value={field.value}
         />
       ))}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Checkbox id="remember-me" {...register("rememberMe", { setValueAs: (value) => value === "on" })} />
-          <label
-            htmlFor="remember-me"
-            className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Remember me
-          </label>
-        </div>
+      <div className="flex items-center justify-end">
         <Link href="#" className="text-blue-500 hover:underline">
           Forget password?
         </Link>

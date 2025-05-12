@@ -14,7 +14,7 @@ const Password = ({ className, ...props }: React.ComponentProps<"input">) => {
   const toggleVisible = () => setVisible(!visible);
 
   return (
-    <div className={cn("relative w-full", className)}>
+    <div className={cn("relative w-full cursor-pointer", className)}>
       <Input {...props} type={visible ? "text" : "password"} />
       <div
         role="button"
