@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getCourse } from "@/lib/api";
+import { getCourse } from "@/lib/services";
 
 import { CourseDetails } from "./_components/CourseDetails";
 

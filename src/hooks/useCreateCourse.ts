@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import { createCourse } from "@/lib/api";
+import { createCourse } from "@/lib/services";
 import { Course, createCourseSchema } from "@/types";
 
 import { RootState } from "../redux/store";

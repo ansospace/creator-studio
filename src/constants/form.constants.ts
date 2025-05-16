@@ -49,7 +49,6 @@ export const LOGIN_FORM_FIELDS: FormFieldConfig[] = [
     placeholder: "Email",
     name: "email",
     type: "email",
-    value: "superusername@gmail.com",
   },
   {
     id: "login_password",
@@ -57,7 +56,6 @@ export const LOGIN_FORM_FIELDS: FormFieldConfig[] = [
     placeholder: "Password",
     name: "password",
     type: "password",
-    value: "Superusername@123",
   },
 ];
 

@@ -5,8 +5,9 @@ import { Path } from "react-hook-form";
 import { FormGenerator, Loader } from "@/components/global";
 import { Button } from "@/components/ui";
 import { SIGNUP_FORM_FIELDS } from "@/constants";
-import { useSignUp } from "@/hooks";
 import { SignUpSchema } from "@/types/auth";
+
+import { useSignUp } from "../hooks/useSignUp";
 
 export const SignUpForm = () => {
   const { isPending, handleSubmit, register, errors, onSubmit } = useSignUp();

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-import { getUsers } from "@/lib/api";
+import { getUsers } from "@/lib/services";
 import { GetUser } from "@/types/user";
 
 const UserList = ({ users }: { users: GetUser[] }) => {

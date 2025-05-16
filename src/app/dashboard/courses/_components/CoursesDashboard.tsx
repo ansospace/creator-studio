@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui";
-import { getCourses } from "@/lib/api";
+import { getCourses } from "@/lib/services";
 import { Course } from "@/types";
 
 import { CoursesTable } from "./CoursesTable";

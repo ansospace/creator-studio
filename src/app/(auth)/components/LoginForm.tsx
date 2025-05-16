@@ -7,8 +7,9 @@ import { Path } from "react-hook-form";
 import { FormGenerator, Loader } from "@/components/global";
 import { Button } from "@/components/ui";
 import { LOGIN_FORM_FIELDS } from "@/constants";
-import { useLogin } from "@/hooks";
 import { LoginSchema } from "@/types/auth";
+
+import { useLogin } from "../hooks";
 
 export const LoginForm = () => {
   const { isPending, handleSubmit, register, errors, onSubmit } = useLogin();

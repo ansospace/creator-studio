@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
 import { useToast } from "@/hooks/useToast";
-import { upSertProfile } from "@/lib/api";
+import { upsertProfile } from "@/lib/services";
 import { Profile, ProfileSchema } from "@/types/profile";
 
 import { setUser } from "../redux/features/authSlice";
@@ -62,7 +62,7 @@ export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
   });
 
   const { isPending, mutate } = useMutation({
-    mutationFn: upSertProfile,
+    mutationFn: upsertProfile,
     onSuccess: (data) => {
       if (data.status === "success" && data.data) {
         dispatch(setUser({ profile: data.data, user: initialData.user }));

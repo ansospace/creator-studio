@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/api";
+import { getUser } from "@/lib/services";
 
 import { Typography } from "../../../components/ui";
 

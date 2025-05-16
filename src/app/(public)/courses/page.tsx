@@ -1,4 +1,4 @@
-import { getCourses } from "@/lib/api";
+import { getCourses } from "@/lib/services";
 
 import { Courses } from "./_components/Courses";
 

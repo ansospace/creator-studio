@@ -4,10 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { registerUser } from "@/actions/auth";
+import { useToast } from "@/hooks/useToast";
+import { signup } from "@/lib/services";
 import { SignUpSchema } from "@/types/auth";
-
-import { useToast } from "./useToast";
 
 export const useSignUp = () => {
   const { toast } = useToast();
@@ -21,7 +20,7 @@ export const useSignUp = () => {
   });
 
   const { isPending, mutate } = useMutation({
-    mutationFn: registerUser,
+    mutationFn: signup,
     onSuccess: (data) => {
       if (data.status === "success") {
         toast({

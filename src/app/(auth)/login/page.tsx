@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { LoginForm } from "@/components/forms";
 import { Divider, SignInWithGoogle, Typography } from "@/components/ui";
+
+import { LoginForm } from "../components";
 
 const LoginPage = () => {
   return (

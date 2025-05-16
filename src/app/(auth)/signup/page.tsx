@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { SignUpForm } from "@/components/forms";
 import { Typography } from "@/components/ui";
+
+import { SignUpForm } from "../components";
 
 const LoginPage = () => {
   return (

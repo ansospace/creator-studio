@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { UpdateProfileForm } from "@/components/forms";
 import { ProfileInfo } from "@/components/profile/ProfileInfo";
 import { Card, CardContent, CardHeader, Typography } from "@/components/ui";
-import { getProfile } from "@/lib/api";
+import { getProfile } from "@/lib/services";
 
 export const dynamic = "force-dynamic";
 
