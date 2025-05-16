@@ -42,7 +42,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
               placeholder="Search blogs..."
               className="pl-10"
               value={filters.query}
-              onChange={(e) => updateFilters(e.target.value, undefined)}
+              onChange={(e) => updateFilters.setInputQuery(e.target.value)}
             />
           </div>
         </div>
@@ -51,7 +51,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button
             variant={!filters.category ? "default" : "outline"}
-            onClick={() => updateFilters(undefined, "")}
+            onClick={() => updateFilters.updateCategory("")}
             className="text-sm"
           >
             All
@@ -60,7 +60,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
             <Button
               key={category}
               variant={filters.category === category ? "default" : "outline"}
-              onClick={() => updateFilters(undefined, category)}
+              onClick={() => updateFilters.updateCategory(category)}
               className="text-sm"
             >
               {category}
@@ -114,7 +114,14 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       {!isLoading && blogs.length === 0 && (
         <div className="py-8 text-center">
           <Typography className="text-muted-foreground">No blogs found matching your criteria.</Typography>
-          <Button variant="outline" className="mt-4" onClick={() => updateFilters("", "")}>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => {
+              updateFilters.setInputQuery("");
+              updateFilters.updateCategory("");
+            }}
+          >
             Clear All Filters
           </Button>
         </div>
