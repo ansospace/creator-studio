@@ -27,7 +27,7 @@ export const useSignUp = () => {
           title: "Sign up successful",
           description: data.message,
         });
-        router.push("/login");
+        router.push("/verify-otp");
       } else {
         toast({
           title: "Sign up failed",
