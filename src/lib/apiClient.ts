@@ -204,10 +204,15 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
     return result;
   } catch (error: any) {
     // Handle network errors or errors thrown during refresh
+    if (error.cause?.code === "ECONNREFUSED") {
+      return {
+        status: "failed",
+        message: "Could not connect to the server. Please check your network connection and try again.",
+      };
+    }
     return {
       status: "failed",
       message: error.message || "Network error",
-      data: undefined as unknown as T,
     };
   }
 }

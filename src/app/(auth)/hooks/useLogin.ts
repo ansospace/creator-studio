@@ -19,7 +19,9 @@ export const useLogin = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>({ resolver: zodResolver(LoginSchema) });
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(LoginSchema),
+  });
 
   if (searchParams.get("error")) {
     toast({

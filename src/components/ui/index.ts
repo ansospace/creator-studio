@@ -1,3 +1,4 @@
+export * from "../OtpVerificationModal"; // Add this line to export the modal
 export * from "./accordion";
 export * from "./avatar";
 export * from "./badge";
@@ -9,6 +10,7 @@ export * from "./divider";
 export * from "./dropdown-menu";
 export * from "./form";
 export * from "./input";
+export * from "./input-otp";
 export * from "./label";
 export * from "./password";
 export * from "./progress";

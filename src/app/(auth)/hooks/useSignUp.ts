@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/useToast";
 import { signup } from "@/lib/services";
 import { SignUpSchema } from "@/types/auth";
 
+import { useAuthContext } from "../AuthContext";
+
 export const useSignUp = () => {
   const { toast } = useToast();
   const router = useRouter();
@@ -15,23 +17,28 @@ export const useSignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<SignUpSchema>({
     resolver: zodResolver(SignUpSchema),
   });
+  const { setEmailVerificationData } = useAuthContext();
 
   const { isPending, mutate } = useMutation({
     mutationFn: signup,
-    onSuccess: (data) => {
-      if (data.status === "success") {
+    onSuccess: ({ status, data, message }) => {
+      if (status === "success") {
         toast({
           title: "Sign up successful",
-          description: data.message,
+          description: message,
         });
+        if (data?.emailVerificationToken) {
+          setEmailVerificationData(data.emailVerificationToken, getValues().email);
+        }
         router.push("/verify-otp");
       } else {
         toast({
           title: "Sign up failed",
-          description: data.message,
+          description: message,
           variant: "destructive",
         });
       }

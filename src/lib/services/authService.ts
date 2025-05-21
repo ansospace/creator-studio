@@ -3,6 +3,7 @@
 import { ENV_CONFIG } from "@/constants";
 import { LoginSchema, SignUpSchema } from "@/types/auth";
 
+import { OtpEvent, OtpVerifyEvent } from "../../types";
 import { POST } from "../apiClient";
 import { ApiResponse } from "../send-response.util";
 import { getAccessToken, getRefreshToken } from "../server";
@@ -18,26 +19,17 @@ interface LoginResponse {
 /**
  * Authenticates a user with their credentials
  */
-export const loginUser = async (credentials: LoginSchema): Promise<ApiResponse<LoginResponse>> => {
+export const loginUser = async (body: LoginSchema): Promise<ApiResponse<LoginResponse>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-in`;
-
-  // The apiClient now handles token extraction and storage for this endpoint
-  const response = await POST<LoginResponse>(url, {
-    body: credentials,
-  });
-
-  return response;
+  return POST<LoginResponse>(url, { body });
 };
 
 /**
  * Registers a new user
  */
-export const signup = async (credentials: SignUpSchema): Promise<ApiResponse<any>> => {
+export const signup = async (body: SignUpSchema): Promise<ApiResponse<{ emailVerificationToken: string }>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-up`;
-
-  return POST(url, {
-    body: credentials,
-  });
+  return POST(url, { body });
 };
 
 /**
@@ -45,7 +37,6 @@ export const signup = async (credentials: SignUpSchema): Promise<ApiResponse<any
  */
 export const logout = async (): Promise<ApiResponse<void>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/logout`;
-
   return POST<void>(url);
 };
 
@@ -63,4 +54,14 @@ export const isLoggedIn = async (): Promise<boolean> => {
     const refreshToken = await getRefreshToken();
     return !!(accessToken && refreshToken);
   }
+};
+
+export const verifyOtp = async (body: OtpVerifyEvent): Promise<ApiResponse<any>> => {
+  const url = `${AUTH_API_URL}/api/v1/otp/verify`;
+  return POST(url, { body });
+};
+
+export const resendOtp = async (body: OtpEvent): Promise<ApiResponse<any>> => {
+  const url = `${AUTH_API_URL}/api/v1/otp/resend`;
+  return POST(url, { body });
 };
