@@ -5,36 +5,44 @@ import { ReactNode, createContext, useContext } from "react";
 
 import useSessionStorage from "@/hooks/useSessionStorage";
 
+import { OtpType } from "../../types";
+
 interface AuthContextType {
-  emailVerificationToken: string | null;
+  actionToken: string | null;
   email: string | null;
-  setEmailVerificationData: (token: string, email: string) => void;
-  clearEmailVerificationData: () => void;
+  setActionData: (token: string, email: string, otpType: OtpType) => void;
+  clearActionData: () => void;
+  otpType: OtpType | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [emailVerificationToken, setEmailVerificationToken, clearToken] = useSessionStorage<string | null>(
-    "emailVerificationToken",
-    null
+  const [actionToken, setActionToken, clearToken] = useSessionStorage<string | null>(
+    "ActionToken",
+    "emailForVerification"
   );
-  const [email, setEmail, clearEmail] = useSessionStorage<string | null>("emailForVerification", null);
+  const [email, setEmail, clearEmail] = useSessionStorage<string | null>("email", null);
+  const [otpType, setOtpType, clearOtpType] = useSessionStorage<OtpType | null>("otpType", null);
 
-  const setEmailVerificationData = (token: string, userEmail: string) => {
-    setEmailVerificationToken(token);
+  const setActionData = (
+    actionToken: string = "sendActionOTP",
+    userEmail: string = "email",
+    otpType: OtpType = "sendEmailVerificationOTP"
+  ) => {
+    setActionToken(actionToken);
     setEmail(userEmail);
+    setOtpType(otpType);
   };
 
-  const clearEmailVerificationData = () => {
+  const clearActionData = () => {
     clearToken();
     clearEmail();
+    clearOtpType();
   };
 
   return (
-    <AuthContext.Provider
-      value={{ emailVerificationToken, email, setEmailVerificationData, clearEmailVerificationData }}
-    >
+    <AuthContext.Provider value={{ actionToken, email, setActionData, clearActionData, otpType }}>
       {children}
     </AuthContext.Provider>
   );

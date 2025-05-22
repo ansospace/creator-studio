@@ -61,7 +61,7 @@ export const verifyOtp = async (body: OtpVerifyEvent): Promise<ApiResponse<any>>
   return POST(url, { body });
 };
 
-export const resendOtp = async (body: OtpEvent): Promise<ApiResponse<any>> => {
-  const url = `${AUTH_API_URL}/api/v1/otp/resend`;
+export const sendOtp = async (body: OtpEvent): Promise<ApiResponse<{ token?: string }>> => {
+  const url = `${AUTH_API_URL}/api/v1/otp`;
   return POST(url, { body });
 };

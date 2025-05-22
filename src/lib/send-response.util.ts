@@ -1,14 +1,22 @@
+import { ZodIssue } from "zod";
+
 interface IApiResponse<T = undefined> {
-  status?: "success" | "failed";
+  status: "success" | "failed";
   message: string;
+  code?: string;
   data?: T;
+  errors?: ZodIssue[];
 }
 
-export const apiResponse = <T>(data: IApiResponse<T>): IApiResponse<T> => {
-  const { message } = data;
-  const responseBody: IApiResponse<T> = { message };
+export const apiResponse = <T>({ status, message, data, code, errors }: IApiResponse<T>): IApiResponse<T> => {
+  const responseBody: IApiResponse<T> = {
+    status,
+    message,
+    data,
+    code,
+    errors,
+  };
 
-  Object.assign(responseBody, data);
   return responseBody;
 };
 

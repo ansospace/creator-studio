@@ -85,7 +85,7 @@ export const FormGenerator = <T extends InputType, F extends FieldValues>(props:
   const InputComponent = inputComponents[inputType];
 
   return InputComponent ? (
-    <Label className="flex flex-col gap-2" htmlFor={commonProps.id}>
+    <Label className="flex flex-col items-start" htmlFor={commonProps.id}>
       {label && label}
       {InputComponent}
       <ErrorMessageComponent errors={errors} name={name} />

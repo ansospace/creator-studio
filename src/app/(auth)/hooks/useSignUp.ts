@@ -21,7 +21,7 @@ export const useSignUp = () => {
   } = useForm<SignUpSchema>({
     resolver: zodResolver(SignUpSchema),
   });
-  const { setEmailVerificationData } = useAuthContext();
+  const { setActionData } = useAuthContext();
 
   const { isPending, mutate } = useMutation({
     mutationFn: signup,
@@ -32,7 +32,7 @@ export const useSignUp = () => {
           description: message,
         });
         if (data?.emailVerificationToken) {
-          setEmailVerificationData(data.emailVerificationToken, getValues().email);
+          setActionData(data.emailVerificationToken, getValues().email, "sendEmailVerificationOTP");
         }
         router.push("/verify-otp");
       } else {

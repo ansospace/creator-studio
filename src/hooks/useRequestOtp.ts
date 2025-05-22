@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { resendOtp } from "@/lib/services";
+import { sendOtp } from "@/lib/services";
 import { OtpEvent } from "@/types";
 
-export const useRequestOtp = (onSuccessCallback?: (data: any) => void, onErrorCallback?: (error: any) => void) => {
+export const useRequestOtp = () => {
   const { isPending, mutate, error, data } = useMutation({
-    mutationFn: (otpEventData: OtpEvent) => resendOtp(otpEventData),
-    onSuccess: onSuccessCallback,
-    onError: onErrorCallback,
+    mutationFn: (otpEventData: OtpEvent) => sendOtp(otpEventData),
   });
+
+  console.log({ error });
 
   return {
     isRequestingOtp: isPending,

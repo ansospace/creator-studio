@@ -23,10 +23,9 @@ import {
   InputOTPSlot,
 } from "@/components/ui";
 import { useRequestOtp, useToast, useVerifyOtp } from "@/hooks";
-// Import the new hooks
-import { OtpType, OtpVerifyEvent } from "@/types";
 
-// Import necessary types
+import { useAuthContext } from "../app/(auth)/AuthContext";
+import { OtpType, OtpVerifyEvent } from "../types";
 
 interface OtpVerificationModalProps {
   isOpen: boolean;
@@ -48,9 +47,10 @@ export const OtpVerificationModal = ({
   onVerificationSuccessAction,
 }: OtpVerificationModalProps) => {
   const { toast } = useToast();
+  const { setActionData } = useAuthContext();
 
   // Use the reusable verification hook
-  const { isVerifying, verifyOtp } = useVerifyOtp(
+  const { isVerifying, verifyOtp, verificationError, verificationData } = useVerifyOtp(
     (data) => {
       // Handle success within the modal, then call the external callback
       toast({
@@ -73,22 +73,25 @@ export const OtpVerificationModal = ({
   );
 
   // Use the reusable request OTP hook
-  const { isRequestingOtp, requestOtp } = useRequestOtp(
-    () => {
-      toast({
-        title: "Success",
-        description: "New OTP has been sent to your email",
-        variant: "default",
-      });
-    },
-    (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  );
+  const { isRequestingOtp, requestOtp, requestOtpError, requestOtpData } = useRequestOtp();
+  // () => {
+  //   toast({
+  //     title: "Success",
+  //     description: "New OTP has been sent to your email",
+  //     variant: "default",
+  //   });
+  // },
+  // (error) => {
+  //   toast({
+  //     title: "Error",
+  //     description: error.message,
+  //     variant: "destructive",
+  //   });
+  // }
+
+  if (requestOtpData.data?.token && email) {
+    setActionData(requestOtpData.data?.token, email, "sendEmailVerificationOTP");
+  }
 
   const form = useForm<OtpVerifyEvent>({
     resolver: zodResolver(OtpVerifyEvent),

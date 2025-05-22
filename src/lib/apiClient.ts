@@ -1,9 +1,9 @@
 "use server";
 
-import { ENV_CONFIG } from "@/constants";
+import { COOKIES, ENV_CONFIG } from "@/constants";
 
 import { ApiResponse } from "./send-response.util";
-import { getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from "./server";
+import { deleteCookie, getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from "./server";
 
 interface RequestOptions extends RequestInit {
   body?: any;
@@ -115,7 +115,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       }
     }
     // --- End token saving logic ---
-
+    console.log(response.status, url);
     // --- 401 Handling and Refresh Token Logic ---
     if (response.status === 401 && !_retry) {
       // If it's the sign-in endpoint, it's invalid credentials, not an expired token
@@ -136,14 +136,14 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
 
       try {
         const refreshToken = await getRefreshToken();
+        const actionToken = await getRefreshToken();
 
         if (!refreshToken) {
           // No refresh token available, redirect to login (client-side)
           if (typeof window !== "undefined") {
             window.location.href = "/login";
           }
-          // Or throw an error for server-side
-          throw new Error("No refresh token available");
+          throw new Error("Unauthorized User. Please log in again.");
         }
 
         // Call the refresh token endpoint
@@ -188,6 +188,8 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       } catch (refreshError) {
         // Handle errors during the refresh process
         processQueue(refreshError, null);
+        deleteCookie(COOKIES.AUTHORIZATION);
+        deleteCookie(COOKIES.REFRESH_TOKEN);
         if (typeof window !== "undefined") {
           window.location.href = "/login";
         }
@@ -201,6 +203,12 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
     // Handle the response for non-401 or retried requests
     const result = await handleResponse<T>(response);
 
+    // --- 404 Handling ---
+    if (result.status === "failed" && result.code === "resource_not_found") {
+      throw new Error(result.message);
+    }
+
+    console.log({ result });
     return result;
   } catch (error: any) {
     // Handle network errors or errors thrown during refresh
@@ -210,10 +218,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
         message: "Could not connect to the server. Please check your network connection and try again.",
       };
     }
-    return {
-      status: "failed",
-      message: error.message || "Network error",
-    };
+    throw error; // Re-throw the error
   }
 }
 
