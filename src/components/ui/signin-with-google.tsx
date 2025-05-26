@@ -1,17 +1,34 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import { ENV_CONFIG } from "@/constants";
+import { useToast } from "@/hooks";
 import { Google } from "@/icons";
+
+import { Button } from "./button";
 
 export const SignInWithGoogle = () => {
   const router = useRouter();
+  const { toast } = useToast();
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("error")) {
+      toast({
+        title: "Error",
+        description: "Failed to login",
+        variant: "destructive",
+      });
+    }
+  }, [searchParams, toast]);
 
   return (
-    <button
-      type="button"
-      className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-medium text-gray-800 shadow-xs hover:bg-gray-50 focus:bg-gray-50 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+    <Button
+      className="w-full"
+      variant="outline"
       onClick={() =>
         router.push(
           `${ENV_CONFIG.SERVICES.USER_API_URL}/api/v1/auth/google?redirectUrl=${ENV_CONFIG.APP.URL}/dashboard`
@@ -20,6 +37,6 @@ export const SignInWithGoogle = () => {
     >
       <Google />
       Sign in with Google
-    </button>
+    </Button>
   );
 };

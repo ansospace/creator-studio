@@ -25,20 +25,21 @@ export const useSignUp = () => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: signup,
-    onSuccess: ({ status, data, message }) => {
-      if (status === "success") {
+    onSuccess: (res) => {
+      if (res.status === "success") {
+        const { data, message } = res;
         toast({
           title: "Sign up successful",
           description: message,
         });
-        if (data?.emailVerificationToken) {
-          setActionData(data.emailVerificationToken, getValues().email, "sendEmailVerificationOTP");
+        if (data.token) {
+          setActionData(data.token, getValues().email, "sendEmailVerificationOTP");
         }
         router.push("/verify-otp");
       } else {
         toast({
           title: "Sign up failed",
-          description: message,
+          description: res.message,
           variant: "destructive",
         });
       }

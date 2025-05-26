@@ -14,6 +14,6 @@ export const useRequestOtp = () => {
     isRequestingOtp: isPending,
     requestOtp: mutate,
     requestOtpError: error,
-    requestOtpData: { ...data },
+    requestOtpData: data,
   };
 };

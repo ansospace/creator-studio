@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { useDispatch } from "react-redux";
 
+import { COOKIES } from "@/constants";
 import { deleteCookie } from "@/lib/server";
 import { logout } from "@/redux/features/authSlice";
 
@@ -14,8 +15,8 @@ export default function LogoutPage() {
 
   useEffect(() => {
     (async () => {
-      await deleteCookie("authorization");
-      await deleteCookie("refresh-token");
+      await deleteCookie(COOKIES.AUTHORIZATION);
+      await deleteCookie(COOKIES.REFRESH_TOKEN);
       router.replace("/");
       dispatch(logout());
     })();

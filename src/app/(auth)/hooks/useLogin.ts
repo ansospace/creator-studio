@@ -1,21 +1,20 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
+import { useToast } from "@/hooks/useToast";
 import { loginUser, sendOtp } from "@/lib/services";
+import { LoginSchema } from "@/types/auth";
 
-import { useToast } from "../../../hooks/useToast";
-import { LoginSchema } from "../../../types/auth";
 import { useAuthContext } from "../AuthContext";
 
 export const useLogin = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { setActionData } = useAuthContext();
 
   const {
@@ -26,14 +25,6 @@ export const useLogin = () => {
   } = useForm<LoginSchema>({
     resolver: zodResolver(LoginSchema),
   });
-
-  if (searchParams.get("error")) {
-    toast({
-      title: "Error",
-      description: "Failed to login",
-      variant: "destructive",
-    });
-  }
 
   const { isPending, mutate } = useMutation({
     mutationFn: loginUser,
@@ -48,9 +39,9 @@ export const useLogin = () => {
         if (data.code === "email_not_verified") {
           const email = getValues("email");
           if (email) {
-            const { data } = await sendOtp({ email, otpType: "sendEmailVerificationOTP" });
-            if (data?.token) {
-              setActionData(data.token, email, "sendEmailVerificationOTP");
+            const res = await sendOtp({ email, otpType: "sendEmailVerificationOTP" });
+            if (res.status === "success" && res.data?.token) {
+              setActionData(res.data.token, email, "sendEmailVerificationOTP");
             }
           }
           router.push("/verify-otp");

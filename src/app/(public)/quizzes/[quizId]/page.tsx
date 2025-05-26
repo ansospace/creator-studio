@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
 
-import { ApiResponse } from "../../../../lib/send-response.util";
+import { IApiResponse } from "../../../../lib/send-response.util";
 import { Quiz } from "../../../../types/quiz";
 import { QuizDetails } from "./_components/QuizDetails";
 
 // Mock function to fetch quiz - replace with actual API call
-const getQuiz = async (id: string): Promise<ApiResponse<{ quiz: Quiz }>> => {
+const getQuiz = async (id: string): Promise<IApiResponse<{ quiz: Quiz }>> => {
   // Simulating API call with dummy data
-  const apiResponse: ApiResponse<{ quiz: Quiz }> = {
+  const apiResponse: IApiResponse<{ quiz: Quiz }> = {
     status: "success",
     message: "Quiz fetched successfully",
     data: {
@@ -53,7 +53,7 @@ const getQuiz = async (id: string): Promise<ApiResponse<{ quiz: Quiz }>> => {
     },
   };
 
-  return new Promise<ApiResponse<{ quiz: Quiz }>>((resolve) => resolve(apiResponse));
+  return new Promise<IApiResponse<{ quiz: Quiz }>>((resolve) => resolve(apiResponse));
 };
 
 interface QuizPageProps {
@@ -69,7 +69,7 @@ const QuizPage = async (props: QuizPageProps) => {
   }
 
   const response = await getQuiz(params.quizId);
-  if (!response.data?.quiz) {
+  if (response.status === "failed") {
     notFound();
   }
 

@@ -72,24 +72,9 @@ export const OtpVerificationModal = ({
     }
   );
 
-  // Use the reusable request OTP hook
   const { isRequestingOtp, requestOtp, requestOtpError, requestOtpData } = useRequestOtp();
-  // () => {
-  //   toast({
-  //     title: "Success",
-  //     description: "New OTP has been sent to your email",
-  //     variant: "default",
-  //   });
-  // },
-  // (error) => {
-  //   toast({
-  //     title: "Error",
-  //     description: error.message,
-  //     variant: "destructive",
-  //   });
-  // }
 
-  if (requestOtpData.data?.token && email) {
+  if (requestOtpData && requestOtpData.status === "success" && requestOtpData.data?.token && email) {
     setActionData(requestOtpData.data?.token, email, "sendEmailVerificationOTP");
   }
 
@@ -98,7 +83,7 @@ export const OtpVerificationModal = ({
     defaultValues: {
       otp: "",
       otpType: otpType,
-      token: token || "", // Use the token passed as prop
+      token: token,
     },
   });
 
@@ -122,12 +107,6 @@ export const OtpVerificationModal = ({
       requestOtp({ otpType: otpType, email: email });
     } else if (phoneNumber && otpType === "verifyPhoneNumber") {
       requestOtp({ otpType: otpType, phoneNumber: phoneNumber });
-    } else {
-      toast({
-        title: "Error",
-        description: "Contact information or OTP type is missing/invalid to resend OTP.",
-        variant: "destructive",
-      });
     }
   };
 

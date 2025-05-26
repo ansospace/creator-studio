@@ -1,23 +1,16 @@
 import { ZodIssue } from "zod";
 
-interface IApiResponse<T = undefined> {
-  status: "success" | "failed";
+interface IApiResponseSuccess<T> {
+  status: "success";
+  message: string;
+  data: T;
+}
+
+interface IApiResponseFailed {
+  status: "failed";
   message: string;
   code?: string;
-  data?: T;
   errors?: ZodIssue[];
 }
 
-export const apiResponse = <T>({ status, message, data, code, errors }: IApiResponse<T>): IApiResponse<T> => {
-  const responseBody: IApiResponse<T> = {
-    status,
-    message,
-    data,
-    code,
-    errors,
-  };
-
-  return responseBody;
-};
-
-export type ApiResponse<T = undefined> = ReturnType<typeof apiResponse<T>>;
+export type IApiResponse<T> = IApiResponseSuccess<T> | IApiResponseFailed;

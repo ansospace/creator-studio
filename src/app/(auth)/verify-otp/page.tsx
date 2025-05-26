@@ -32,10 +32,10 @@ export default function VerifyOtpPage() {
   const handleVerificationSuccess = (data: any) => {
     // This callback is triggered when OTP is successfully verified via the modal
     console.log("Verification successful, received data:", data);
-    // clearActionData(); // Clear data from context/session storage on success
+    clearActionData(); // Clear data from context/session storage on success
     // You might want to use the 'data' here if it contains an action token
     // and redirect the user based on the next step (e.g., dashboard, password reset form)
-    // router.replace("/dashboard"); // Example redirect
+    router.replace("/dashboard");
   };
 
   const handleModalClose = () => {
@@ -61,7 +61,7 @@ export default function VerifyOtpPage() {
         onVerificationSuccessAction={handleVerificationSuccess}
       />
       {/* You might want to add some text or a spinner here while the modal is loading/open */}
-      {/* {!isModalOpen && <p>Loading verification...</p>} */}
+      {!isModalOpen && <p>Loading verification...</p>}
     </div>
   );
 }

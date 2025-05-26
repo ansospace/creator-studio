@@ -1,11 +1,11 @@
 "use server";
 
 import { ENV_CONFIG } from "@/constants";
-import { LoginSchema, SignUpSchema } from "@/types/auth";
+import { LoginSchema, SignUpResponse, SignUpSchema } from "@/types/auth";
 
 import { OtpEvent, OtpVerifyEvent } from "../../types";
 import { POST } from "../apiClient";
-import { ApiResponse } from "../send-response.util";
+import { IApiResponse } from "../send-response.util";
 import { getAccessToken, getRefreshToken } from "../server";
 
 // Keep getAccessToken/getRefreshToken for isLoggedIn
@@ -19,7 +19,7 @@ interface LoginResponse {
 /**
  * Authenticates a user with their credentials
  */
-export const loginUser = async (body: LoginSchema): Promise<ApiResponse<LoginResponse>> => {
+export const loginUser = async (body: LoginSchema): Promise<IApiResponse<LoginResponse>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-in`;
   return POST<LoginResponse>(url, { body });
 };
@@ -27,7 +27,7 @@ export const loginUser = async (body: LoginSchema): Promise<ApiResponse<LoginRes
 /**
  * Registers a new user
  */
-export const signup = async (body: SignUpSchema): Promise<ApiResponse<{ emailVerificationToken: string }>> => {
+export const signup = async (body: SignUpSchema): Promise<IApiResponse<SignUpResponse>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-up`;
   return POST(url, { body });
 };
@@ -35,7 +35,7 @@ export const signup = async (body: SignUpSchema): Promise<ApiResponse<{ emailVer
 /**
  * Logs out the current user
  */
-export const logout = async (): Promise<ApiResponse<void>> => {
+export const logout = async (): Promise<IApiResponse<void>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/logout`;
   return POST<void>(url);
 };
@@ -56,12 +56,12 @@ export const isLoggedIn = async (): Promise<boolean> => {
   }
 };
 
-export const verifyOtp = async (body: OtpVerifyEvent): Promise<ApiResponse<any>> => {
+export const verifyOtp = async (body: OtpVerifyEvent): Promise<IApiResponse<any>> => {
   const url = `${AUTH_API_URL}/api/v1/otp/verify`;
   return POST(url, { body });
 };
 
-export const sendOtp = async (body: OtpEvent): Promise<ApiResponse<{ token?: string }>> => {
+export const sendOtp = async (body: OtpEvent): Promise<IApiResponse<{ token?: string }>> => {
   const url = `${AUTH_API_URL}/api/v1/otp`;
   return POST(url, { body });
 };
