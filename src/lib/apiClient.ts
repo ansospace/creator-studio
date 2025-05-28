@@ -2,7 +2,7 @@
 
 import { COOKIES, ENV_CONFIG } from "@/constants";
 
-import { ApiResponse } from "./send-response.util";
+import { IApiResponse } from "../types";
 import { deleteCookie, getAccessToken, getRefreshToken, saveAccessToken, saveRefreshToken } from "./server";
 
 interface RequestOptions extends RequestInit {
@@ -56,26 +56,12 @@ const processQueue = (error: unknown, accessToken: string | null = null) => {
 };
 
 // Helper function to handle fetch responses
-async function handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
-  // Check if the response is JSON
-  const contentType = response.headers.get("content-type");
-  const isJson = contentType && contentType.includes("application/json");
-
-  if (isJson) {
-    const data = await response.json();
-    return data as ApiResponse<T>;
-  } else {
-    // Handle non-JSON responses
-    const text = await response.text();
-    return {
-      status: response.ok ? "success" : "failed",
-      message: text || response.statusText,
-      data: undefined as unknown as T,
-    };
-  }
+async function handleResponse<T>(response: Response): Promise<IApiResponse<T>> {
+  const data = await response.json();
+  return data;
 }
 
-async function request<T>(method: Method, url: URL, options: RequestOptions = {}): Promise<ApiResponse<T>> {
+async function request<T>(method: Method, url: URL, options: RequestOptions = {}): Promise<IApiResponse<T>> {
   try {
     // Prepare the request options
     const { body, _retry, ...fetchOptions } = options; // Extract _retry
@@ -115,7 +101,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       }
     }
     // --- End token saving logic ---
-    console.log(response.status, url);
+
     // --- 401 Handling and Refresh Token Logic ---
     if (response.status === 401 && !_retry) {
       // If it's the sign-in endpoint, it's invalid credentials, not an expired token
@@ -127,7 +113,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       // If not sign-in and 401, it's likely an expired token
       if (isRefreshing) {
         // If already refreshing, queue the request
-        return new Promise<ApiResponse<T>>((resolve, reject) => {
+        return new Promise<IApiResponse<T>>((resolve, reject) => {
           failedQueue.push({ url, method, options, resolve, reject });
         });
       }
@@ -136,7 +122,6 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
 
       try {
         const refreshToken = await getRefreshToken();
-        const actionToken = await getRefreshToken();
 
         if (!refreshToken) {
           // No refresh token available, redirect to login (client-side)
@@ -208,7 +193,6 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       throw new Error(result.message);
     }
 
-    console.log({ result });
     return result;
   } catch (error: any) {
     // Handle network errors or errors thrown during refresh
@@ -216,24 +200,25 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       return {
         status: "failed",
         message: "Could not connect to the server. Please check your network connection and try again.",
+        code: "network_error",
       };
     }
     throw error; // Re-throw the error
   }
 }
 
-export const GET = async <T>(url: string, options: RequestOptions = {}): Promise<ApiResponse<T>> => {
+export const GET = async <T>(url: string, options: RequestOptions = {}): Promise<IApiResponse<T>> => {
   return request<T>("GET", url, options);
 };
 
-export const POST = async <T>(url: string, options: RequestOptions = {}): Promise<ApiResponse<T>> => {
+export const POST = async <T>(url: string, options: RequestOptions = {}): Promise<IApiResponse<T>> => {
   return request<T>("POST", url, options);
 };
 
-export const PUT = async <T>(url: string, options: RequestOptions = {}): Promise<ApiResponse<T>> => {
+export const PUT = async <T>(url: string, options: RequestOptions = {}): Promise<IApiResponse<T>> => {
   return request<T>("PUT", url, options);
 };
 
-export const DELETE = async <T>(url: string, options: RequestOptions = {}): Promise<ApiResponse<T>> => {
+export const DELETE = async <T>(url: string, options: RequestOptions = {}): Promise<IApiResponse<T>> => {
   return request<T>("DELETE", url, options);
 };

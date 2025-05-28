@@ -1,11 +1,9 @@
 "use server";
 
-import type { Course } from "@/types";
+import { ENV_CONFIG } from "@/constants";
+import type { Course, IApiResponse } from "@/types";
 
-// New generic HTTP client
-import { ENV_CONFIG } from "../../constants";
 import { GET, POST } from "../apiClient";
-import { IApiResponse } from "../send-response.util";
 
 const COURSE_API_BASE_URL = ENV_CONFIG.SERVICES.ACS_API_URL;
 

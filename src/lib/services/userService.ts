@@ -1,11 +1,9 @@
 "use server";
 
-import type { GetUser, Profile, ProfileSchema } from "@/types";
+import { ENV_CONFIG } from "@/constants";
+import type { GetUser, IApiResponse, Profile, ProfileSchema } from "@/types";
 
-// New generic HTTP client
-import { ENV_CONFIG } from "../../constants";
 import { GET, PUT } from "../apiClient";
-import { IApiResponse } from "../send-response.util";
 
 const USER_API_BASE_URL = ENV_CONFIG.SERVICES.USER_API_URL;
 

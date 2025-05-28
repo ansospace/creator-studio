@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { IApiResponse } from "../../../../lib/send-response.util";
-import { Quiz } from "../../../../types/quiz";
+import { IApiResponse, Quiz } from "@/types";
+
 import { QuizDetails } from "./_components/QuizDetails";
 
 // Mock function to fetch quiz - replace with actual API call

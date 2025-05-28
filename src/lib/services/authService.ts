@@ -1,11 +1,9 @@
 "use server";
 
 import { ENV_CONFIG } from "@/constants";
-import { LoginSchema, SignUpResponse, SignUpSchema } from "@/types/auth";
+import { IApiResponse, LoginSchema, OtpEvent, OtpVerifyEvent, SignUpResponse, SignUpSchema } from "@/types";
 
-import { OtpEvent, OtpVerifyEvent } from "../../types";
 import { POST } from "../apiClient";
-import { IApiResponse } from "../send-response.util";
 import { getAccessToken, getRefreshToken } from "../server";
 
 // Keep getAccessToken/getRefreshToken for isLoggedIn

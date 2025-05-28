@@ -6,7 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
+import { COOKIES } from "@/constants";
 import { useToast } from "@/hooks/useToast";
+import { saveCookie } from "@/lib/server";
 import { loginUser, sendOtp } from "@/lib/services";
 import { LoginSchema } from "@/types/auth";
 
@@ -34,6 +36,7 @@ export const useLogin = () => {
           title: "Success",
           description: data.message,
         });
+        saveCookie(COOKIES.USER_ID, data.data.userId);
         router.replace("/dashboard");
       } else {
         if (data.code === "email_not_verified") {
