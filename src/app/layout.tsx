@@ -5,7 +5,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
 
+import { AuthProvider } from "../components/auth/AuthProvider";
 import { Toaster } from "../components/ui/toaster";
+import { COOKIES } from "../constants";
+import { getCookie } from "../lib/server";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
 import "./globals.css";
@@ -25,14 +28,19 @@ export const metadata: Metadata = {
   description: "Easy way to learn",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const accessToken = await getCookie(COOKIES.AUTHORIZATION);
+  const userId = await getCookie(COOKIES.USER_ID);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              {children}
+              <AuthProvider accessToken={accessToken} userId={userId}>
+                {children}
+              </AuthProvider>
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
           </ReduxProvider>

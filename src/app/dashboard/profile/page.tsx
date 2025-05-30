@@ -30,9 +30,9 @@ const ProfileLoading = () => (
 
 const ProfileContent = async () => {
   try {
-    const { data } = await getProfile();
+    const res = await getProfile();
 
-    if (!data) {
+    if (res.status === "failed") {
       return <div className="container mx-auto p-6">Please login to view profile</div>;
     }
 
@@ -48,10 +48,10 @@ const ProfileContent = async () => {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          <ProfileInfo profile={data} />
+          <ProfileInfo profile={res.data} />
           <Card>
             <CardContent className="p-6">
-              <UpdateProfileForm profile={data} />
+              <UpdateProfileForm profile={res.data} />
             </CardContent>
           </Card>
         </div>

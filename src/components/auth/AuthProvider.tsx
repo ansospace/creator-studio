@@ -12,14 +12,18 @@ import { Loader } from "../global";
 
 interface AuthProviderProps {
   children: React.ReactNode;
+  accessToken?: string;
+  userId?: string;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProps) => {
   const dispatch = useDispatch();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["profile", userId],
     queryFn: getProfile,
+    enabled: !!accessToken && !!userId,
+    retry: false,
   });
 
   if (data?.status === "failed") {
@@ -28,9 +32,5 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     dispatch(setUser(data.data));
   }
 
-  return (
-    <div className="flex min-h-screen">
-      <Loader loading={isLoading}>{children}</Loader>
-    </div>
-  );
+  return <Loader loading={isLoading}>{children}</Loader>;
 };

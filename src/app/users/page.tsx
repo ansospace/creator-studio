@@ -27,7 +27,7 @@ const UserList = ({ users }: { users: GetUser[] }) => {
 
 const page = async () => {
   const response = await getUsers();
-  if (!response.data) {
+  if (response.status === "failed") {
     return <div>No users found</div>;
   }
 
