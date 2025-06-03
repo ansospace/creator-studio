@@ -1,36 +1,36 @@
 import { z } from "zod";
 
-import { userSchema } from "./user";
+import { NotificationType, notificationTypeSchema } from "@/constants/events.constant";
 
-export const otpType = ["sendEmailVerificationOTP", "verifyPhoneNumber", "sendForgetPasswordOTP"] as const;
-export const OtpType = z.enum(otpType);
+import { userSchema } from "./user";
 
 export const otp = z.string().length(6);
 
-const sendEmailVerificationOtpSchema = z.object({
-  otpType: z.literal(OtpType.enum.sendEmailVerificationOTP),
+// Define separate schemas for each OTP type
+const emailVerificationOtpSchema = z.object({
+  otpType: z.literal(NotificationType.EMAIL_VERIFICATION_OTP),
   email: userSchema.shape.email,
 });
 
-const sendForgetPasswordOtpSchema = z.object({
-  otpType: z.literal(OtpType.enum.sendForgetPasswordOTP),
+const forgetPasswordOtpSchema = z.object({
+  otpType: z.literal(NotificationType.FORGET_PASSWORD_OTP),
   email: userSchema.shape.email,
 });
 
-const phoneOtpSchema = z.object({
-  otpType: z.literal(OtpType.enum.verifyPhoneNumber),
-  phoneNumber: z.string().min(1, "Phone number is required"),
-});
+// const phoneVerificationOtpSchema = z.object({
+//   otpType: z.literal(NotificationType.PHONE_VERIFICATION),
+//   phoneNumber: z.string().min(1, "Phone number is required"),
+// });
 
+// Use discriminatedUnion with the separate schemas
 export const otpEvent = z.discriminatedUnion("otpType", [
-  sendEmailVerificationOtpSchema,
-  sendForgetPasswordOtpSchema,
-  phoneOtpSchema,
+  emailVerificationOtpSchema,
+  forgetPasswordOtpSchema,
+  // phoneVerificationOtpSchema,
 ]);
 
-export const OtpVerifyEvent = z.object({
-  otp,
-  otpType: OtpType,
+export const VerifyOTP = z.object({
+  otpType: notificationTypeSchema,
   token: z.string().min(1, "Token is required"),
 });
 
@@ -39,7 +39,7 @@ export const otpSchema = z.object({
   otp,
   userId: z.string().regex(/^[a-f\d]{24}$/i, "Invalid id"),
   expiryTime: z.date(),
-  otpType: OtpType,
+  otpType: notificationTypeSchema,
 });
 
 export const saveOtpSchema = otpSchema.omit({ id: true });
@@ -48,10 +48,18 @@ export const getOtpSchema = otpSchema.pick({
   otpType: true,
 });
 
+// Update types based on the new schemas
 export type OtpSchema = z.infer<typeof otpSchema>;
 export type OTP = z.infer<typeof otp>;
 export type OtpEvent = z.infer<typeof otpEvent>;
 export type GetOtp = z.infer<typeof getOtpSchema>;
 export type SaveOtp = z.infer<typeof saveOtpSchema>;
-export type OtpVerifyEvent = z.infer<typeof OtpVerifyEvent>;
-export type OtpType = z.infer<typeof OtpType>;
+export type VerifyOTP = z.infer<typeof VerifyOTP>;
+
+export const VerifyOTPSchema = z.object({
+  otp,
+  otpType: notificationTypeSchema,
+  token: z.string().min(1, "Token is required"),
+});
+
+export type VerifyOTPSchema = z.infer<typeof VerifyOTPSchema>;

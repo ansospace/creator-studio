@@ -1,7 +1,7 @@
 "use server";
 
 import { ENV_CONFIG } from "@/constants";
-import { IApiResponse, LoginSchema, OtpEvent, OtpVerifyEvent, SignUpResponse, SignUpSchema } from "@/types";
+import { IApiResponse, LoginSchema, OtpEvent, SignUpResponse, SignUpSchema, VerifyOTPSchema } from "@/types";
 
 import { POST } from "../apiClient";
 import { getAccessToken, getRefreshToken } from "../server";
@@ -54,7 +54,7 @@ export const isLoggedIn = async (): Promise<boolean> => {
   }
 };
 
-export const verifyOtp = async (body: OtpVerifyEvent): Promise<IApiResponse<any>> => {
+export const verifyOtp = async (body: VerifyOTPSchema): Promise<IApiResponse<any>> => {
   const url = `${AUTH_API_URL}/api/v1/otp/verify`;
   return POST(url, { body });
 };

@@ -87,6 +87,10 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       ...fetchOptions,
     });
 
+    // Handle the response for non-401 or retried requests
+    const result = await handleResponse<T>(response);
+    console.log({ result });
+
     // --- Token saving logic for auth endpoints ---
     // Check if the response is from an auth endpoint that returns tokens
     if (url.includes("/auth/sign-in") || url.includes("/auth/refresh-token")) {
@@ -184,9 +188,6 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       }
     }
     // --- End 401 Handling ---
-
-    // Handle the response for non-401 or retried requests
-    const result = await handleResponse<T>(response);
 
     // --- 404 Handling ---
     if (result.status === "failed" && result.code === "resource_not_found") {

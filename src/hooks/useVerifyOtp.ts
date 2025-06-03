@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { verifyOtp } from "@/lib/services";
-import { OtpVerifyEvent } from "@/types";
+
+import { VerifyOTPSchema } from "../types";
 
 export const useVerifyOtp = (
   onSuccessCallback?: (data: any) => void, // Define a more specific type if possible
@@ -13,7 +14,7 @@ export const useVerifyOtp = (
     error,
     data, // The response data, potentially containing an action token
   } = useMutation({
-    mutationFn: (otpData: OtpVerifyEvent) => verifyOtp(otpData),
+    mutationFn: (otpData: VerifyOTPSchema) => verifyOtp(otpData),
     onSuccess: onSuccessCallback,
     onError: onErrorCallback,
   });

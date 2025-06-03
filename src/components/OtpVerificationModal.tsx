@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 import {
@@ -22,18 +23,20 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui";
-import { useRequestOtp, useToast, useVerifyOtp } from "@/hooks";
+import { useSessionStorage, useToast } from "@/hooks";
 
-import { useAuthContext } from "../app/(auth)/AuthContext";
-import { OtpType, OtpVerifyEvent } from "../types";
+import { SESSION_STORAGE_KEY } from "../constants";
+import { NotificationType } from "../constants/events.constant";
+import { sendOtp, verifyOtp } from "../lib/services";
+import { OtpEvent, VerifyOTP, VerifyOTPSchema } from "../types";
 
 interface OtpVerificationModalProps {
   isOpen: boolean;
   onCloseAction: () => void;
   email?: string; // Email is required to request/verify OTP
   phoneNumber?: string; // Phone is optional
-  otpType: OtpType; // Specify the type of OTP verification (e.g., signup, password reset)
-  token?: string; // Optional token, e.g., emailVerificationToken from signup
+  otpType: NotificationType; // Specify the type of OTP verification (e.g., signup, password reset)
+  token: string; // Optional token, e.g., emailVerificationToken from signup
   onVerificationSuccessAction: (data: any) => void; // Callback after successful verification
 }
 
@@ -41,45 +44,71 @@ export const OtpVerificationModal = ({
   isOpen,
   onCloseAction,
   email,
-  phoneNumber,
   otpType,
   token,
   onVerificationSuccessAction,
 }: OtpVerificationModalProps) => {
   const { toast } = useToast();
-  const { setActionData } = useAuthContext();
+  const [_, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
-  // Use the reusable verification hook
-  const { isVerifying, verifyOtp, verificationError, verificationData } = useVerifyOtp(
-    (data) => {
-      // Handle success within the modal, then call the external callback
-      toast({
-        title: "Success",
-        description: "OTP verified successfully!",
-        variant: "default",
-      });
-      onVerificationSuccessAction(data); // Pass the response data (potentially containing action token)
-      onCloseAction(); // Close the modal on success
+  const { isPending: isVerifying, mutate: handleVerifyOtp } = useMutation({
+    mutationFn: (otpData: VerifyOTPSchema) => verifyOtp(otpData),
+    onSuccess: (res) => {
+      if (res.status === "success") {
+        const { data, message } = res;
+        toast({
+          title: "OTP verified",
+          description: message,
+        });
+        setActionData(null);
+        onVerificationSuccessAction(data);
+      } else {
+        toast({
+          title: "Failed to verify OTP",
+          description: res.message,
+          variant: "destructive",
+        });
+      }
     },
-    (error) => {
-      // Handle error within the modal
-      //   const typedError = toTypedError(error);
+    onError: (error) => {
       toast({
-        title: "Verification Failed",
+        title: "Failed to verify OTP",
         description: error.message,
         variant: "destructive",
       });
-    }
-  );
+    },
+  });
 
-  const { isRequestingOtp, requestOtp, requestOtpError, requestOtpData } = useRequestOtp();
+  const { isPending: isRequestingOtp, mutate: requestOtp } = useMutation({
+    mutationFn: (otpEventData: OtpEvent) => sendOtp(otpEventData),
+    onSuccess: (res) => {
+      if (res.status === "success") {
+        const { data, message } = res;
+        toast({
+          title: "Sign up successful",
+          description: message,
+        });
+        setActionData(null);
+        onVerificationSuccessAction(data);
+      } else {
+        toast({
+          title: "Sign up failed",
+          description: res.message,
+          variant: "destructive",
+        });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "Sign up failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
-  if (requestOtpData && requestOtpData.status === "success" && requestOtpData.data?.token && email) {
-    setActionData(requestOtpData.data?.token, email, "sendEmailVerificationOTP");
-  }
-
-  const form = useForm<OtpVerifyEvent>({
-    resolver: zodResolver(OtpVerifyEvent),
+  const form = useForm<VerifyOTPSchema>({
+    resolver: zodResolver(VerifyOTPSchema),
     defaultValues: {
       otp: "",
       otpType: otpType,
@@ -94,19 +123,13 @@ export const OtpVerificationModal = ({
     }
   }, [token, form]);
 
-  const onSubmit = (data: OtpVerifyEvent) => {
-    // Ensure email is included in the data sent to the backend if needed by verifyOtp service
-    // The OtpVerifyEvent schema doesn't currently include email, but your service might need it.
-    // If your verifyOtp service needs email, you might need to adjust the schema or pass it separately.
-    // For now, we'll stick to the schema definition.
-    verifyOtp(data);
+  const onSubmit = (data: VerifyOTPSchema) => {
+    handleVerifyOtp(data);
   };
 
   const handleResend = () => {
-    if (email && (otpType === "sendEmailVerificationOTP" || otpType === "sendForgetPasswordOTP")) {
-      requestOtp({ otpType: otpType, email: email });
-    } else if (phoneNumber && otpType === "verifyPhoneNumber") {
-      requestOtp({ otpType: otpType, phoneNumber: phoneNumber });
+    if (email) {
+      requestOtp({ otpType: NotificationType.EMAIL_VERIFICATION_OTP, email }); // Add phoneNumber her
     }
   };
 

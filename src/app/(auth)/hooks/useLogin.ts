@@ -6,18 +6,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { COOKIES } from "@/constants";
+import { COOKIES, SESSION_STORAGE_KEY } from "@/constants";
 import { useToast } from "@/hooks/useToast";
 import { saveCookie } from "@/lib/server";
 import { loginUser, sendOtp } from "@/lib/services";
 import { LoginSchema } from "@/types/auth";
 
-import { useAuthContext } from "../AuthContext";
+import { NotificationType } from "../../../constants/events.constant";
+import { useSessionStorage } from "../../../hooks";
+import { VerifyOTP } from "../../../types";
 
 export const useLogin = () => {
   const { toast } = useToast();
   const router = useRouter();
-  const { setActionData } = useAuthContext();
+  const [_, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
   const {
     register,
@@ -42,9 +44,15 @@ export const useLogin = () => {
         if (data.code === "email_not_verified") {
           const email = getValues("email");
           if (email) {
-            const res = await sendOtp({ email, otpType: "sendEmailVerificationOTP" });
-            if (res.status === "success" && res.data?.token) {
-              setActionData(res.data.token, email, "sendEmailVerificationOTP");
+            const res = await sendOtp({
+              email,
+              otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+            });
+            if (res.status === "success" && res.data.token) {
+              setActionData({
+                token: res.data.token,
+                otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+              });
             }
           }
           router.push("/verify-otp");

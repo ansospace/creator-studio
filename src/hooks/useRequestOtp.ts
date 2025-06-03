@@ -10,6 +10,12 @@ export const useRequestOtp = () => {
 
   console.log({ error });
 
+  // mutate({
+  //   email: "",
+  //   actionType: "login",
+  //   otpType: "email",
+  // });
+
   return {
     isRequestingOtp: isPending,
     requestOtp: mutate,

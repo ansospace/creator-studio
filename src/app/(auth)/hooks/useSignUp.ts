@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { useToast } from "@/hooks/useToast";
+import { SESSION_STORAGE_KEY } from "@/constants";
+import { useSessionStorage, useToast } from "@/hooks";
 import { signup } from "@/lib/services";
-import { SignUpSchema } from "@/types/auth";
+import { SignUpSchema, VerifyOTP } from "@/types";
 
-import { useAuthContext } from "../AuthContext";
+import { NotificationType } from "../../../constants/events.constant";
 
 export const useSignUp = () => {
   const { toast } = useToast();
@@ -17,11 +18,10 @@ export const useSignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<SignUpSchema>({
     resolver: zodResolver(SignUpSchema),
   });
-  const { setActionData } = useAuthContext();
+  const [_, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
   const { isPending, mutate } = useMutation({
     mutationFn: signup,
@@ -32,9 +32,11 @@ export const useSignUp = () => {
           title: "Sign up successful",
           description: message,
         });
-        if (data.token) {
-          setActionData(data.token, getValues().email, "sendEmailVerificationOTP");
-        }
+        setActionData(null);
+        setActionData({
+          token: data.token,
+          otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+        });
         router.push("/verify-otp");
       } else {
         toast({
