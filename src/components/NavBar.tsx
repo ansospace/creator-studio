@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Bell, Menu, Moon, Search, Sun } from "lucide-react";
@@ -39,16 +39,15 @@ const NavBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
-  console.log({ isAuthenticated, isLoading });
+  const { theme, setTheme } = useTheme();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -56,12 +55,12 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div
+    <header
       className={`sticky top-0 z-50 w-full backdrop-blur-sm transition-all duration-300 ${
-        scrolled ? "bg-background/95 border-b shadow-sm" : "bg-background/80"
+        isScrolled ? "bg-background/95 border-b shadow-sm" : "bg-background/80"
       }`}
     >
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4">
+      <nav className="container mx-auto flex h-16 items-center justify-between gap-4 px-4">
         {/* Logo - Left */}
         <div className="shrink-0">
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
@@ -108,7 +107,7 @@ const NavBar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:flex"
+            className="flex"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
             <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
@@ -116,35 +115,35 @@ const NavBar = () => {
             <span className="sr-only">Toggle theme</span>
           </Button>
 
-          {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hidden md:flex">
-            <Bell className="h-5 w-5" />
-            <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px]">
-              3
-            </span>
-          </Button>
-
           {/* Auth Buttons or User Menu */}
           {isAuthenticated ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/images/avatar.png" alt="User" />
-                    <AvatarFallback>U</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => router.push("/dashboard")}>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push("/profile")}>Profile</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push("/settings")}>Settings</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/logout">Sign out</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <>
+              <Button variant="ghost" size="icon" className="relative">
+                <Bell className="h-5 w-5" />
+                <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px]">
+                  3
+                </span>
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/images/avatar.png" alt="User" />
+                      <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => router.push("/dashboard")}>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push("/profile")}>Profile</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push("/settings")}>Settings</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/logout">Sign out</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
           ) : (
             <div className="hidden items-center gap-2 md:flex">
               <Button variant="ghost" onClick={() => router.push("/login")} className="font-medium">
@@ -194,59 +193,7 @@ const NavBar = () => {
                 ))}
 
                 {/* Mobile Auth Buttons */}
-                {isAuthenticated ? (
-                  <div className="mt-4 space-y-2">
-                    <div className="mb-4 flex items-center gap-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src="/images/avatar.png" alt="User" />
-                        <AvatarFallback>U</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium">User Name</p>
-                        <p className="text-muted-foreground text-sm">user@example.com</p>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => {
-                        router.push("/dashboard");
-                        setOpen(false);
-                      }}
-                    >
-                      Dashboard
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => {
-                        router.push("/profile");
-                        setOpen(false);
-                      }}
-                    >
-                      Profile
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start"
-                      onClick={() => {
-                        router.push("/settings");
-                        setOpen(false);
-                      }}
-                    >
-                      Settings
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      className="mt-4 w-full"
-                      onClick={() => {
-                        redirect("/logout");
-                      }}
-                    >
-                      Log out
-                    </Button>
-                  </div>
-                ) : (
+                {!isAuthenticated && (
                   <div className="mt-4 flex flex-col gap-3">
                     <Button
                       className="w-full"
@@ -269,22 +216,12 @@ const NavBar = () => {
                     </Button>
                   </div>
                 )}
-
-                {/* Mobile Theme Toggle */}
-                <div className="mt-4 flex items-center justify-between border-t pt-4">
-                  <span className="font-medium">Toggle theme</span>
-                  <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-                    <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                    <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-                    <span className="sr-only">Toggle theme</span>
-                  </Button>
-                </div>
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </nav>
-    </div>
+    </header>
   );
 };
 
