@@ -20,6 +20,7 @@ const forgetPasswordOtpSchema = z.object({
 // const phoneVerificationOtpSchema = z.object({
 //   otpType: z.literal(NotificationType.PHONE_VERIFICATION),
 //   phoneNumber: z.string().min(1, "Phone number is required"),
+//   token: z.string().min(1, "Token is required"),
 // });
 
 // Use discriminatedUnion with the separate schemas
@@ -32,6 +33,7 @@ export const otpEvent = z.discriminatedUnion("otpType", [
 export const VerifyOTP = z.object({
   otpType: notificationTypeSchema,
   token: z.string().min(1, "Token is required"),
+  email: userSchema.shape.email,
 });
 
 export const otpSchema = z.object({

@@ -4,12 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { SESSION_STORAGE_KEY } from "@/constants";
+import { COOKIES, SESSION_STORAGE_KEY } from "@/constants";
 import { useSessionStorage, useToast } from "@/hooks";
 import { signup } from "@/lib/services";
 import { SignUpSchema, VerifyOTP } from "@/types";
 
 import { NotificationType } from "../../../constants/events.constant";
+import { saveCookie } from "../../../lib/server";
 
 export const useSignUp = () => {
   const { toast } = useToast();
@@ -18,6 +19,7 @@ export const useSignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<SignUpSchema>({
     resolver: zodResolver(SignUpSchema),
   });
@@ -32,10 +34,11 @@ export const useSignUp = () => {
           title: "Sign up successful",
           description: message,
         });
-        setActionData(null);
+        saveCookie(COOKIES.USER_ID, data.userId);
         setActionData({
           token: data.token,
           otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+          email: getValues("email"),
         });
         router.push("/verify-otp");
       } else {

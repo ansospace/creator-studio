@@ -32,7 +32,6 @@ export default function VerifyOtpPage() {
   const handleVerificationSuccess = (data: any) => {
     // This callback is triggered when OTP is successfully verified via the modal
     console.log("Verification successful, received data:", data);
-    setActionData(null); // Clear data from context/session storage on success
     router.replace("/dashboard");
   };
 

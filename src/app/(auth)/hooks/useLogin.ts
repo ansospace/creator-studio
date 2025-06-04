@@ -6,15 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { COOKIES, SESSION_STORAGE_KEY } from "@/constants";
-import { useToast } from "@/hooks/useToast";
+import { COOKIES, NotificationType, SESSION_STORAGE_KEY } from "@/constants";
+import { useSessionStorage, useToast } from "@/hooks";
 import { saveCookie } from "@/lib/server";
 import { loginUser, sendOtp } from "@/lib/services";
-import { LoginSchema } from "@/types/auth";
-
-import { NotificationType } from "../../../constants/events.constant";
-import { useSessionStorage } from "../../../hooks";
-import { VerifyOTP } from "../../../types";
+import { LoginSchema, VerifyOTP } from "@/types";
 
 export const useLogin = () => {
   const { toast } = useToast();
@@ -32,16 +28,18 @@ export const useLogin = () => {
 
   const { isPending, mutate } = useMutation({
     mutationFn: loginUser,
-    onSuccess: async (data) => {
-      if (data.status === "success") {
+    onSuccess: async (res) => {
+      if (res.status === "success") {
+        const { data, message } = res;
+
         toast({
           title: "Success",
-          description: data.message,
+          description: message,
         });
-        saveCookie(COOKIES.USER_ID, data.data.userId);
+        saveCookie(COOKIES.USER_ID, data.userId);
         router.replace("/dashboard");
       } else {
-        if (data.code === "email_not_verified") {
+        if (res.code === "email_not_verified") {
           const email = getValues("email");
           if (email) {
             const res = await sendOtp({
@@ -52,14 +50,15 @@ export const useLogin = () => {
               setActionData({
                 token: res.data.token,
                 otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+                email,
               });
+              router.push("/verify-otp");
             }
           }
-          router.push("/verify-otp");
         }
         toast({
           title: "Error",
-          description: data.message,
+          description: res.message,
           variant: "destructive",
         });
       }

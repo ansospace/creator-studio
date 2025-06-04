@@ -27,8 +27,9 @@ import { useSessionStorage, useToast } from "@/hooks";
 
 import { SESSION_STORAGE_KEY } from "../constants";
 import { NotificationType } from "../constants/events.constant";
+import { saveAccessToken, saveRefreshToken } from "../lib/server";
 import { sendOtp, verifyOtp } from "../lib/services";
-import { OtpEvent, VerifyOTP, VerifyOTPSchema } from "../types";
+import { AuthToken, OtpEvent, VerifyOTP, VerifyOTPSchema } from "../types";
 
 interface OtpVerificationModalProps {
   isOpen: boolean;
@@ -43,24 +44,27 @@ interface OtpVerificationModalProps {
 export const OtpVerificationModal = ({
   isOpen,
   onCloseAction,
-  email,
   otpType,
   token,
   onVerificationSuccessAction,
 }: OtpVerificationModalProps) => {
   const { toast } = useToast();
-  const [_, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
+  const [actionToken, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
   const { isPending: isVerifying, mutate: handleVerifyOtp } = useMutation({
-    mutationFn: (otpData: VerifyOTPSchema) => verifyOtp(otpData),
-    onSuccess: (res) => {
+    mutationFn: (otpData: VerifyOTPSchema) => verifyOtp<AuthToken>(otpData),
+    onSuccess: async (res) => {
       if (res.status === "success") {
         const { data, message } = res;
         toast({
           title: "OTP verified",
           description: message,
         });
-        setActionData(null);
+        if (message === "Email verified successfully") {
+          await saveRefreshToken(data.actionToken.refreshToken);
+          await saveAccessToken(data.actionToken.accessToken);
+          setActionData(null);
+        }
         onVerificationSuccessAction(data);
       } else {
         toast({
@@ -88,8 +92,13 @@ export const OtpVerificationModal = ({
           title: "Sign up successful",
           description: message,
         });
-        setActionData(null);
-        onVerificationSuccessAction(data);
+        if (data.token) {
+          setActionData({
+            token: data.token,
+            otpType: NotificationType.EMAIL_VERIFICATION_OTP,
+            email: actionToken?.email as string,
+          });
+        }
       } else {
         toast({
           title: "Sign up failed",
@@ -127,9 +136,13 @@ export const OtpVerificationModal = ({
     handleVerifyOtp(data);
   };
 
+  if (!actionToken) {
+    return null; // Or a loading spinner
+  }
+
   const handleResend = () => {
-    if (email) {
-      requestOtp({ otpType: NotificationType.EMAIL_VERIFICATION_OTP, email }); // Add phoneNumber her
+    if (actionToken.email) {
+      requestOtp({ otpType: NotificationType.EMAIL_VERIFICATION_OTP, email: actionToken.email }); // Add phoneNumber her
     }
   };
 
@@ -138,7 +151,7 @@ export const OtpVerificationModal = ({
       <DialogContent className="w-full max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-2xl">Verify OTP</DialogTitle>
-          <DialogDescription>Enter the 6-digit code sent to {email}.</DialogDescription>
+          <DialogDescription>Enter the 6-digit code sent to {actionToken.email}.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
           <Form {...form}>
@@ -171,7 +184,7 @@ export const OtpVerificationModal = ({
               </Button>
             </form>
           </Form>
-          <Button variant="link" className="w-full" onClick={handleResend} disabled={!email || isRequestingOtp}>
+          <Button variant="link" className="w-full" onClick={handleResend} disabled={isRequestingOtp}>
             {isRequestingOtp ? "Sending..." : "Resend OTP"}
           </Button>
         </div>

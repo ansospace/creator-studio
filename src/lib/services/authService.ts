@@ -6,41 +6,27 @@ import { IApiResponse, LoginSchema, OtpEvent, SignUpResponse, SignUpSchema, Veri
 import { POST } from "../apiClient";
 import { getAccessToken, getRefreshToken } from "../server";
 
-// Keep getAccessToken/getRefreshToken for isLoggedIn
-
 const AUTH_API_URL = ENV_CONFIG.SERVICES.USER_API_URL;
 
 interface LoginResponse {
   userId: string;
 }
 
-/**
- * Authenticates a user with their credentials
- */
 export const loginUser = async (body: LoginSchema): Promise<IApiResponse<LoginResponse>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-in`;
   return POST<LoginResponse>(url, { body });
 };
 
-/**
- * Registers a new user
- */
 export const signup = async (body: SignUpSchema): Promise<IApiResponse<SignUpResponse>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/sign-up`;
   return POST(url, { body });
 };
 
-/**
- * Logs out the current user
- */
 export const logout = async (): Promise<IApiResponse<void>> => {
   const url = `${AUTH_API_URL}/api/v1/auth/logout`;
   return POST<void>(url);
 };
 
-/**
- * Checks if the user is currently logged in
- */
 export const isLoggedIn = async (): Promise<boolean> => {
   // This logic still relies on checking for tokens, which is fine
   if (typeof window !== "undefined") {
@@ -54,7 +40,7 @@ export const isLoggedIn = async (): Promise<boolean> => {
   }
 };
 
-export const verifyOtp = async (body: VerifyOTPSchema): Promise<IApiResponse<any>> => {
+export const verifyOtp = async <T>(body: VerifyOTPSchema): Promise<IApiResponse<{ actionToken: T }>> => {
   const url = `${AUTH_API_URL}/api/v1/otp/verify`;
   return POST(url, { body });
 };

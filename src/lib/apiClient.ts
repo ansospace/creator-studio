@@ -89,11 +89,10 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
 
     // Handle the response for non-401 or retried requests
     const result = await handleResponse<T>(response);
-    console.log({ result });
 
     // --- Token saving logic for auth endpoints ---
     // Check if the response is from an auth endpoint that returns tokens
-    if (url.includes("/auth/sign-in") || url.includes("/auth/refresh-token")) {
+    if (url.includes("/auth/sign-in") || url.includes("/auth/refresh-token") || url.includes("/otp/verify")) {
       const newAccessToken = response.headers.get("authorization");
       const newRefreshToken = response.headers.get("refresh-token");
 
@@ -111,7 +110,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
       // If it's the sign-in endpoint, it's invalid credentials, not an expired token
       if (url.includes("/auth/sign-in")) {
         // Process the response for sign-in failure
-        return await handleResponse<T>(response);
+        return result;
       }
 
       // If not sign-in and 401, it's likely an expired token

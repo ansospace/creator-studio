@@ -17,6 +17,7 @@ export default function LogoutPage() {
     (async () => {
       await deleteCookie(COOKIES.AUTHORIZATION);
       await deleteCookie(COOKIES.REFRESH_TOKEN);
+      await deleteCookie(COOKIES.USER_ID);
       router.replace("/");
       dispatch(logout());
     })();

@@ -44,6 +44,13 @@ const SignUpResponse = z.object({
   token: z.string(),
 });
 
+const authToken = z.object({
+  userId: z.string(),
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
 export type SignUpResponse = z.infer<typeof SignUpResponse>;
 export type LoginSchema = z.infer<typeof LoginSchema>;
 export type SignUpSchema = z.infer<typeof SignUpSchema>;
+export type AuthToken = z.infer<typeof authToken>;
