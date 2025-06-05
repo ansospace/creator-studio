@@ -6,7 +6,7 @@ import { Pencil } from "lucide-react";
 import { Path } from "react-hook-form";
 
 import { FormGenerator } from "@/components/global";
-import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui";
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle, Typography } from "@/components/ui";
 import { PROFILE_FORM_FIELDS } from "@/constants";
 import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 import { Profile, ProfileSchema } from "@/types";
@@ -51,7 +51,7 @@ export const UpdateProfileForm = ({ profile }: UpdateProfileFormProps) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Pencil className="h-4 w-4" />
-          <h3 className="text-lg font-medium">Profile Details</h3>
+          <Typography variant="h3">Profile Details</Typography>
         </div>
         <Button
           variant={isEditing ? "outline" : "default"}

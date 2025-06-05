@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Clock, Star, Users } from "lucide-react";
 
-import { Badge, Button, CardContent, CardFooter, CardHeader } from "@/components/ui";
+import { Badge, Button, CardContent, CardFooter, CardHeader, Typography } from "@/components/ui";
 import { Course } from "@/types";
 
 interface CourseGridProps {
@@ -31,31 +31,33 @@ export const CourseGrid = ({ courses, viewMode, className }: CourseGridProps) =>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="group-hover:text-primary text-xl font-semibold transition-colors">{course.title}</h3>
-                    <p className="text-muted-foreground text-sm">by {course.instructor}</p>
+                    <Typography variant="h3">{course.title}</Typography>
+                    <Typography>by {course.instructor}</Typography>
                   </div>
                   <Badge variant="secondary">{course.level}</Badge>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4">{course.description}</p>
+                <Typography>{course.description}</Typography>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-yellow-400" />
-                    <span>{course.rating?.toFixed(1) ?? 0}</span>
+                    <Typography variant="span">{course.rating?.toFixed(1) ?? 0}</Typography>
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
-                    <span>{course.students?.toLocaleString() ?? 0} students</span>
+                    <Typography variant="span">{course.students?.toLocaleString() ?? 0} students</Typography>
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
-                    <span>{course.duration}</span>
+                    <Typography variant="span">{course.duration}</Typography>
                   </div>
                 </div>
               </CardContent>
               <CardFooter className="flex items-center justify-between">
-                <span className="text-lg font-bold">${course.price?.toFixed(2) ?? 0}</span>
+                <Typography variant="span" className="text-lg font-bold">
+                  ${course.price?.toFixed(2) ?? 0}
+                </Typography>
                 <Button>Enroll Now</Button>
               </CardFooter>
             </div>

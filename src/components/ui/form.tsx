@@ -17,6 +17,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
+import { Typography } from "./typography";
+
 const Form = FormProvider;
 
 type FormFieldContextValue<
@@ -130,9 +132,14 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   }
 
   return (
-    <p data-slot="form-message" id={formMessageId} className={cn("text-destructive text-sm", className)} {...props}>
+    <Typography
+      data-slot="form-message"
+      id={formMessageId}
+      className={cn("text-destructive text-sm", className)}
+      {...props}
+    >
       {body}
-    </p>
+    </Typography>
   );
 }
 

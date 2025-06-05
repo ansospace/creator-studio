@@ -10,6 +10,8 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useAppSelector } from "@/redux/store";
 
+import { Typography } from "../../../components/ui";
+
 const SettingsPage = () => {
   const [isClient, setIsClient] = useState(false);
   const { profile, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -29,8 +31,8 @@ const SettingsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-        <p className="text-muted-foreground">Manage your account settings and preferences.</p>
+        <Typography variant="h2">Settings</Typography>
+        <Typography>Manage your account settings and preferences.</Typography>
       </div>
 
       <Separator />
@@ -46,13 +48,13 @@ const SettingsPage = () => {
             <CardDescription>Update your account information and preferences.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label>Email</Label>
-              <p className="text-muted-foreground text-sm">{profile.user.email}</p>
+            <div>
+              <Typography variant="mutedText">Email</Typography>
+              <Typography>{profile.user.email}</Typography>
             </div>
-            <div className="space-y-2">
-              <Label>Username</Label>
-              <p className="text-muted-foreground text-sm">{profile.user.username}</p>
+            <div>
+              <Typography variant="mutedText">Username</Typography>
+              <Typography>{profile.user.username}</Typography>
             </div>
           </CardContent>
         </Card>

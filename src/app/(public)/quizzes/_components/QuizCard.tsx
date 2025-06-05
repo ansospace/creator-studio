@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Clock, Users } from "lucide-react";
 
-import { Badge, Card, CardContent, CardHeader } from "@/components/ui";
+import { Badge, Card, CardContent, CardHeader, Typography } from "@/components/ui";
 import { Quiz } from "@/types/quiz";
 
 interface QuizCardProps {
@@ -28,22 +28,22 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
         <CardHeader>
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="group-hover:text-primary text-xl font-semibold transition-colors">{quiz.title}</h3>
-              <p className="text-muted-foreground text-sm">{quiz.category}</p>
+              <Typography>{quiz.title}</Typography>
+              <Typography variant="mutedText">{quiz.category}</Typography>
             </div>
             <Badge variant="secondary">{quiz.difficulty}</Badge>
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">{quiz.description}</p>
+          <Typography className="mb-4">{quiz.description}</Typography>
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              <span>{quiz.duration} mins</span>
+              <Typography variant="span">{quiz.duration} mins</Typography>
             </div>
             <div className="flex items-center gap-1">
               <Users className="h-4 w-4" />
-              <span>{quiz.totalAttempts?.toLocaleString() ?? 0} attempts</span>
+              <Typography variant="span">{quiz.totalAttempts?.toLocaleString() ?? 0} attempts</Typography>
             </div>
           </div>
         </CardContent>

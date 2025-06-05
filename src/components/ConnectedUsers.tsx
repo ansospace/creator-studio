@@ -8,6 +8,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSocket } from "@/hooks";
 import { UserConnectionEvent } from "@/types/socket";
 
+import { Typography } from "./ui";
+
 interface ConnectedUser {
   userId: string;
   timestamp: number;
@@ -78,7 +80,7 @@ export const ConnectedUsers = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Connected Users ({connectedUsers.length})</h2>
+      <Typography>Connected Users ({connectedUsers.length})</Typography>
       <div className="grid gap-4">
         {connectedUsers.map((user) => (
           <div key={user.userId} className="flex items-center gap-3">

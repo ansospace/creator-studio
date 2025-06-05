@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { Clock, Star, Users } from "lucide-react";
 
-import { Button, Card, CardContent, CardHeader } from "@/components/ui";
+import { Button, Card, CardContent, CardHeader, Typography } from "@/components/ui";
 import { Course } from "@/types";
 
 interface CourseDetailsProps {
@@ -20,8 +20,10 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
           <Card>
             <CardHeader>
               <div className="mb-4">
-                <h1 className="text-3xl font-bold">{course.title}</h1>
-                <p className="text-muted-foreground">by {course.instructor}</p>
+                <Typography variant="h1">{course.title}</Typography>
+                <Typography variant="p" className="text-muted-foreground">
+                  by {course.instructor}
+                </Typography>
               </div>
               {course.image && (
                 <div className="relative aspect-video overflow-hidden rounded-lg">
@@ -32,22 +34,22 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
             <CardContent>
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-semibold">About this course</h2>
-                  <p className="text-muted-foreground mt-2">{course.description}</p>
+                  <Typography variant="h2">About this course</Typography>
+                  <Typography variant="p">{course.description}</Typography>
                 </div>
 
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-yellow-400" />
-                    <span>{course.rating?.toFixed(1) ?? "N/A"}</span>
+                    <Typography variant="span">{course.rating?.toFixed(1) ?? "N/A"}</Typography>
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
-                    <span>{course.students?.toLocaleString() ?? 0} students</span>
+                    <Typography variant="span">{course.students?.toLocaleString() ?? 0} students</Typography>
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="h-4 w-4" />
-                    <span>{course.duration}</span>
+                    <Typography variant="span">{course.duration}</Typography>
                   </div>
                 </div>
               </div>
@@ -67,7 +69,7 @@ export const CourseDetails = ({ course }: CourseDetailsProps) => {
               </Button>
               <div className="mt-6 space-y-4">
                 <div>
-                  <h3 className="font-semibold">This course includes:</h3>
+                  <Typography variant="h3">This course includes:</Typography>
                   <ul className="text-muted-foreground mt-2 space-y-2 text-sm">
                     <li>• {course.duration} of content</li>
                     <li>• Access on all devices</li>

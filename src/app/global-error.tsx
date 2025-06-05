@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../components/ui";
+import { Button, Typography } from "../components/ui";
 
 // Error boundaries must be Client Components
 
@@ -14,7 +14,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
     // global-error must include html and body tags
     <html lang="en">
       <body>
-        <h2>Something went wrong! {error.message}</h2>
+        <Typography variant="h2">Something went wrong! {error.message}</Typography>
         <Button onClick={() => reset()}>Try again</Button>
       </body>
     </html>

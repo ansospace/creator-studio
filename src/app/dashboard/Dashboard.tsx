@@ -8,6 +8,8 @@ import { ConnectedUsers } from "@/components/ConnectedUsers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppSelector } from "@/redux/store";
 
+import { Typography } from "../../components/ui";
+
 const DashboardPage = () => {
   const [isClient, setIsClient] = useState(false);
   const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
@@ -31,12 +33,12 @@ const DashboardPage = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <div className="text-2xl font-bold">1,234</div>
-              <span className="flex items-center text-xs text-green-500">
+              <Typography variant="smallText" className="flex items-center text-green-500">
                 <ArrowUp className="h-3 w-3" />
                 20.1%
-              </span>
+              </Typography>
             </div>
-            <p className="text-muted-foreground text-xs">from last month</p>
+            <Typography variant="mutedText">from last month</Typography>
           </CardContent>
         </Card>
 
@@ -48,12 +50,12 @@ const DashboardPage = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <div className="text-2xl font-bold">423</div>
-              <span className="flex items-center text-xs text-green-500">
+              <Typography variant="smallText" className="flex items-center text-green-500">
                 <ArrowUp className="h-3 w-3" />
                 12.3%
-              </span>
+              </Typography>
             </div>
-            <p className="text-muted-foreground text-xs">from last hour</p>
+            <Typography variant="mutedText">from last hour</Typography>
           </CardContent>
         </Card>
 
@@ -65,12 +67,12 @@ const DashboardPage = () => {
           <CardContent>
             <div className="flex items-center gap-2">
               <div className="text-2xl font-bold">5,678</div>
-              <span className="flex items-center text-xs text-green-500">
+              <Typography variant="smallText" className="flex items-center text-green-500">
                 <ArrowUp className="h-3 w-3" />
                 8.2%
-              </span>
+              </Typography>
             </div>
-            <p className="text-muted-foreground text-xs">from last week</p>
+            <Typography variant="mutedText">from last week</Typography>
           </CardContent>
         </Card>
       </div>
@@ -98,8 +100,9 @@ const DashboardPage = () => {
           <CardContent>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground text-sm">Authentication:</span>
-                <span
+                <Typography variant="mutedText">Authentication:</Typography>
+                <Typography
+                  variant="span"
                   className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     isAuthenticated
                       ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
@@ -107,13 +110,16 @@ const DashboardPage = () => {
                   }`}
                 >
                   {isAuthenticated ? "Authenticated" : "Not Authenticated"}
-                </span>
+                </Typography>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground text-sm">System Status:</span>
-                <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                <Typography variant="mutedText">System Status:</Typography>
+                <Typography
+                  variant="span"
+                  className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400"
+                >
                   {isLoading ? "Loading" : "Online"}
-                </span>
+                </Typography>
               </div>
             </div>
           </CardContent>

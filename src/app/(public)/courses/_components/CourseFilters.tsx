@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label, Slider } from "@/components/ui";
+import { Button, Checkbox, Label, Slider, Typography } from "@/components/ui";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { COURSE_CATEGORIES, COURSE_DURATIONS, COURSE_LEVELS } from "@/constants/course.constants";
 import { FilterAction, FilterState } from "@/types";
@@ -14,7 +14,7 @@ export const CourseFilters = ({ className, state, dispatch }: CourseFiltersProps
     <div className={className}>
       <div className="bg-card rounded-lg border p-6">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Filters</h3>
+          <Typography variant="h3">Filters</Typography>
           <Button variant="ghost" size="sm" onClick={() => dispatch({ type: "RESET_FILTERS" })}>
             Reset
           </Button>

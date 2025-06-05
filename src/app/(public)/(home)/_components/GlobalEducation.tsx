@@ -17,10 +17,10 @@ export const GlobalEducation = () => {
             />
           </div>
           <div className="flex flex-col justify-center gap-6">
-            <Typography className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-              Discover Worldwide{" "}
-              <Typography color="primary" className="text-primary">
-                Education
+            <Typography variant="h2">
+              Discover Worldwide
+              <Typography className="text-primary" variant="span">
+                &nbsp;Education
               </Typography>
             </Typography>
             <Typography>
