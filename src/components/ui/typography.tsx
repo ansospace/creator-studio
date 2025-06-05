@@ -53,12 +53,10 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement>, Vari
   as?: string;
 }
 
-const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-  ({ className, variant, as, asChild, ...props }, ref) => {
-    const Comp = asChild ? Slot : (as ?? (variant ? variantElementMap[variant] : undefined) ?? "div");
-    return <Comp className={cn(typographyVariants({ variant, className }))} ref={ref} {...props} />;
-  }
-);
+const Typography = ({ className, variant, as, asChild, ...props }: TypographyProps) => {
+  const Comp = asChild ? Slot : (as ?? (variant ? variantElementMap[variant] : "p"));
+  return <Comp className={cn(typographyVariants({ variant, className }))} {...props} />;
+};
 
 Typography.displayName = "Typography";
 

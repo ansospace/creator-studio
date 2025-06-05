@@ -4,9 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
+import { Toaster } from "@/components/ui/sonner";
 
 import { AuthProvider } from "../components/auth/AuthProvider";
-import { Toaster } from "../components/ui/toaster";
 import { COOKIES } from "../constants";
 import { getCookie } from "../lib/server";
 import { ReactQueryProvider } from "../react-query/provider";

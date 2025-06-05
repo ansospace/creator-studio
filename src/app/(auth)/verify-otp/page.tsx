@@ -3,14 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { toast } from "sonner";
+
 import { OtpVerificationModal } from "@/components/ui";
 import { SESSION_STORAGE_KEY } from "@/constants";
-import { useSessionStorage, useToast } from "@/hooks";
+import { useSessionStorage } from "@/hooks";
 import { VerifyOTP } from "@/types";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
-  const { toast } = useToast();
   const [actionToken, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,10 +21,8 @@ export default function VerifyOtpPage() {
       setIsModalOpen(true);
     } else {
       // Redirect if token or email is missing (edge case: direct access or session expired)
-      toast({
-        title: "Verification Required",
+      toast.message("Verification Required", {
         description: "Please sign up or log in to verify your email.",
-        variant: "destructive",
       });
       router.replace("/login"); // Redirect to signup or login page
     }

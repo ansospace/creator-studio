@@ -67,17 +67,17 @@ export const filterActionSchema = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const createCourseSchema = courseSchema.omit({ id: true });
+export const CreateCourse = courseSchema.omit({ id: true });
 
 // Type exports
 export type Course = z.infer<typeof courseSchema>;
 export type FilterState = z.infer<typeof filterStateSchema>;
 export type FilterAction = z.infer<typeof filterActionSchema>;
-export type CreateCourse = z.infer<typeof createCourseSchema>;
+export type CreateCourse = z.infer<typeof CreateCourse>;
 
 // Validation functions
 export const validateCourse = (data: unknown) => {
-  return createCourseSchema.parse(data);
+  return CreateCourse.parse(data);
 };
 
 export const validateFilterState = (data: unknown) => {

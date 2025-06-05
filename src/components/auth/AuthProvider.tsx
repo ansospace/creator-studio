@@ -32,5 +32,9 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
     dispatch(setUser(data.data));
   }
 
-  return <Loader loading={isLoading}>{children}</Loader>;
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Loader loading={isLoading}>{children}</Loader>
+    </div>
+  );
 };

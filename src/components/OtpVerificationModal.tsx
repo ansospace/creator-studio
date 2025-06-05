@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import {
   Button,
@@ -23,7 +24,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui";
-import { useSessionStorage, useToast } from "@/hooks";
+import { useSessionStorage } from "@/hooks";
 
 import { SESSION_STORAGE_KEY } from "../constants";
 import { NotificationType } from "../constants/events.constant";
@@ -48,7 +49,6 @@ export const OtpVerificationModal = ({
   token,
   onVerificationSuccessAction,
 }: OtpVerificationModalProps) => {
-  const { toast } = useToast();
   const [actionToken, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
   const { isPending: isVerifying, mutate: handleVerifyOtp } = useMutation({
@@ -56,10 +56,7 @@ export const OtpVerificationModal = ({
     onSuccess: async (res) => {
       if (res.status === "success") {
         const { data, message } = res;
-        toast({
-          title: "OTP verified",
-          description: message,
-        });
+        toast.success(message);
         if (message === "Email verified successfully") {
           await saveRefreshToken(data.actionToken.refreshToken);
           await saveAccessToken(data.actionToken.accessToken);
@@ -67,19 +64,11 @@ export const OtpVerificationModal = ({
         }
         onVerificationSuccessAction(data);
       } else {
-        toast({
-          title: "Failed to verify OTP",
-          description: res.message,
-          variant: "destructive",
-        });
+        toast.error(res.message);
       }
     },
     onError: (error) => {
-      toast({
-        title: "Failed to verify OTP",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     },
   });
 
@@ -88,10 +77,7 @@ export const OtpVerificationModal = ({
     onSuccess: (res) => {
       if (res.status === "success") {
         const { data, message } = res;
-        toast({
-          title: "Sign up successful",
-          description: message,
-        });
+        toast.success(message);
         if (data.token) {
           setActionData({
             token: data.token,
@@ -100,19 +86,11 @@ export const OtpVerificationModal = ({
           });
         }
       } else {
-        toast({
-          title: "Sign up failed",
-          description: res.message,
-          variant: "destructive",
-        });
+        toast.error(res.message);
       }
     },
     onError: (error) => {
-      toast({
-        title: "Sign up failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     },
   });
 

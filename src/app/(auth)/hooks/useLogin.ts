@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { COOKIES, NotificationType, SESSION_STORAGE_KEY } from "@/constants";
-import { useSessionStorage, useToast } from "@/hooks";
+import { useSessionStorage } from "@/hooks";
 import { saveCookie } from "@/lib/server";
 import { loginUser, sendOtp } from "@/lib/services";
 import { LoginSchema, VerifyOTP } from "@/types";
 
 export const useLogin = () => {
-  const { toast } = useToast();
   const router = useRouter();
   const [_, setActionData] = useSessionStorage<VerifyOTP | null>(SESSION_STORAGE_KEY.AUTH_ACTION, null);
 
@@ -32,10 +32,7 @@ export const useLogin = () => {
       if (res.status === "success") {
         const { data, message } = res;
 
-        toast({
-          title: "Success",
-          description: message,
-        });
+        toast.success(message);
         saveCookie(COOKIES.USER_ID, data.userId);
         router.replace("/dashboard");
       } else {
@@ -56,19 +53,11 @@ export const useLogin = () => {
             }
           }
         }
-        toast({
-          title: "Error",
-          description: res.message,
-          variant: "destructive",
-        });
+        toast.error(res.message);
       }
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     },
   });
 

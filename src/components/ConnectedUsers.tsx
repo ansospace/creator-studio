@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 
+import { toast } from "sonner";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSocket } from "@/hooks";
-import { useToast } from "@/hooks/useToast";
 import { UserConnectionEvent } from "@/types/socket";
 
 interface ConnectedUser {
@@ -15,7 +16,6 @@ interface ConnectedUser {
 export const ConnectedUsers = () => {
   const [connectedUsers, setConnectedUsers] = useState<ConnectedUser[]>([]);
   const socket = useSocket();
-  const { toast } = useToast();
 
   useEffect(() => {
     if (!socket) return;
@@ -31,8 +31,7 @@ export const ConnectedUsers = () => {
 
         // Show toast notification after state update
         setTimeout(() => {
-          toast({
-            title: "User Connected",
+          toast.message("User Connected", {
             description: `User ${data.userId} has joined`,
           });
         }, 0);
@@ -45,10 +44,8 @@ export const ConnectedUsers = () => {
       setConnectedUsers((prev) => {
         // Show toast notification after state update
         setTimeout(() => {
-          toast({
-            title: "User Disconnected",
+          toast("User Disconnected", {
             description: `User ${data.userId} has left`,
-            variant: "destructive",
           });
         }, 0);
 
@@ -69,7 +66,7 @@ export const ConnectedUsers = () => {
       socket.off("user:disconnected", handleUserDisconnected);
       socket.off("connected:users", handleInitialUsers);
     };
-  }, [socket, toast]);
+  }, [socket]);
 
   if (!socket) {
     return <div className="text-muted-foreground">Connecting...</div>;

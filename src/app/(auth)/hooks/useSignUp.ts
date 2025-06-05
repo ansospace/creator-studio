@@ -3,17 +3,15 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { COOKIES, SESSION_STORAGE_KEY } from "@/constants";
-import { useSessionStorage, useToast } from "@/hooks";
+import { COOKIES, NotificationType, SESSION_STORAGE_KEY } from "@/constants";
+import { useSessionStorage } from "@/hooks";
+import { saveCookie } from "@/lib/server";
 import { signup } from "@/lib/services";
 import { SignUpSchema, VerifyOTP } from "@/types";
 
-import { NotificationType } from "../../../constants/events.constant";
-import { saveCookie } from "../../../lib/server";
-
 export const useSignUp = () => {
-  const { toast } = useToast();
   const router = useRouter();
   const {
     register,
@@ -30,10 +28,7 @@ export const useSignUp = () => {
     onSuccess: (res) => {
       if (res.status === "success") {
         const { data, message } = res;
-        toast({
-          title: "Sign up successful",
-          description: message,
-        });
+        toast.success(message);
         saveCookie(COOKIES.USER_ID, data.userId);
         setActionData({
           token: data.token,
@@ -42,19 +37,11 @@ export const useSignUp = () => {
         });
         router.push("/verify-otp");
       } else {
-        toast({
-          title: "Sign up failed",
-          description: res.message,
-          variant: "destructive",
-        });
+        toast.error(res.message);
       }
     },
     onError: (error) => {
-      toast({
-        title: "Sign up failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     },
   });
 

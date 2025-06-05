@@ -22,5 +22,4 @@ export * from "./signin-with-google";
 export * from "./slider";
 export * from "./table";
 export * from "./textarea";
-export * from "./toast";
 export * from "./typography";

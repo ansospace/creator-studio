@@ -3,27 +3,23 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
+import { toast } from "sonner";
+
 import { ENV_CONFIG } from "@/constants";
-import { useToast } from "@/hooks";
 import { Google } from "@/icons";
 
 import { Button } from "./button";
 
 export const SignInWithGoogle = () => {
   const router = useRouter();
-  const { toast } = useToast();
 
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (searchParams.get("error")) {
-      toast({
-        title: "Error",
-        description: "Failed to login",
-        variant: "destructive",
-      });
+      toast.error("Failed to login");
     }
-  }, [searchParams, toast]);
+  }, [searchParams]);
 
   return (
     <Button

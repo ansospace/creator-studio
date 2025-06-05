@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { Path } from "react-hook-form";
 
-import { FormGenerator, Loader } from "@/components/global";
+import { FormGenerator } from "@/components/global";
 import { Button } from "@/components/ui";
 import { LOGIN_FORM_FIELDS } from "@/constants";
 import { LoginSchema } from "@/types/auth";
@@ -32,8 +32,8 @@ export const LoginForm = () => {
           Forget password?
         </Link>
       </div>
-      <Button type="submit" disabled={isPending}>
-        <Loader loading={isPending}>Log In</Loader>
+      <Button type="submit" loading={isPending}>
+        Log In
       </Button>
     </form>
   );
