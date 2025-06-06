@@ -1,41 +1,47 @@
 "use client";
 
-import { Bell, Search } from "lucide-react";
-
+import { Search } from "@/components/Search";
+import { Header } from "@/components/layout/header";
+import { TopNav } from "@/components/layout/top-nav";
+import { ProfileDropdown } from "@/components/profile-dropdown";
 import ThemeToggle from "@/components/theme/ThemeToggle";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 
 export const DashboardNavbar = () => {
-  const { toggleSidebar } = useSidebar();
-
   return (
-    <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-40 border-b backdrop-blur-sm">
-      <div className="flex h-14 items-center gap-4 px-4 md:px-6">
-        <SidebarTrigger />
-
-        <Button variant="ghost" size="icon" className="h-8 w-8 md:hidden" onClick={toggleSidebar}>
-          <Search className="h-4 w-4" />
-        </Button>
-
-        <div className="flex flex-1 items-center gap-4">
-          <form className="hidden flex-1 md:block">
-            <div className="flex w-full max-w-sm items-center gap-2">
-              <Input type="search" placeholder="Search..." className="h-8 w-full lg:w-[300px]" />
-            </div>
-          </form>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Bell className="h-4 w-4" />
-            <span className="sr-only">Notifications</span>
-          </Button>
-
-          <ThemeToggle className="h-8 w-8" />
-        </div>
+    <Header>
+      <TopNav links={topNav} />
+      <div className="ml-auto flex items-center space-x-4">
+        <Search />
+        <ThemeToggle />
+        <ProfileDropdown />
       </div>
-    </header>
+    </Header>
   );
 };
+
+const topNav = [
+  {
+    title: "Overview",
+    href: "dashboard/overview",
+    isActive: true,
+    disabled: false,
+  },
+  {
+    title: "Customers",
+    href: "dashboard/customers",
+    isActive: false,
+    disabled: true,
+  },
+  {
+    title: "Products",
+    href: "dashboard/products",
+    isActive: false,
+    disabled: true,
+  },
+  {
+    title: "Settings",
+    href: "dashboard/settings",
+    isActive: false,
+    disabled: true,
+  },
+];
