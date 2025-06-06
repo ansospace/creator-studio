@@ -1,5 +1,6 @@
-import { SidebarProvider } from "../../components/ui";
-import { SearchProvider } from "../../contexts/search-context";
+import { SidebarProvider } from "@/components/ui";
+import { SearchProvider } from "@/contexts/search-context";
+
 import { DashboardNavbar } from "./_components/DashboardNavbar";
 import { DashboardSidebar } from "./_components/Sidebar/DashboardSidebar";
 

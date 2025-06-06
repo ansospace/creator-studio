@@ -1,106 +1,27 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Suspense } from "react";
+"use client";
 
-import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { BookOpen, ChevronUp, Home, Settings, User2 } from "lucide-react";
+import { sidebarData } from "@/components/layout/data/sidebar-data";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui";
+import { TeamSwitcher } from "../team-switcher";
+import { NavGroup } from "./nav-group";
+import { NavUser } from "./nav-user";
 
-import { NavProjects } from "./NavProjects";
-import { NavProjectsSkeleton } from "./NavProjectsSkeleton";
-
-const items = [
-  { title: "Home", url: "/", icon: Home },
-  // { title: "Inbox", url: "/dashboard/inbox", icon: Inbox },
-  // { title: "Calendar", url: "/dashboard/calendar", icon: Calendar },
-  // { title: "Search", url: "/dashboard/search", icon: Search },
-  { title: "Settings", url: "/dashboard/settings", icon: Settings },
-  { title: "Courses", url: "/dashboard/courses", icon: BookOpen },
-];
-
-export const DashboardSidebar = () => {
+export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar>
-      <SidebarHeader className="border-b">
-        <Link href="/dashboard" className="flex items-center gap-2 px-4 py-3">
-          <div className="shrink-0">
-            <div className="flex items-center gap-2">
-              <Image src="/images/ansopedia_logo.svg" alt="ansopedia" width={40} height={40} priority />
-              <span className="text-xl font-bold">Ansopedia</span>
-            </div>
-          </div>
-        </Link>
+    <Sidebar collapsible="icon" variant="floating" {...props}>
+      <SidebarHeader>
+        <TeamSwitcher teams={sidebarData.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <Suspense fallback={<NavProjectsSkeleton />}>
-              <NavProjects />
-            </Suspense>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {sidebarData.navGroups.map((props) => (
+          <NavGroup key={props.title} {...props} />
+        ))}
       </SidebarContent>
-      <SidebarFooter className="border-t">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 className="h-4 w-4" />
-                  <span>Profile</span>
-                  <ChevronUp className="ml-auto h-4 w-4" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" className="w-(--radix-popper-anchor-width)">
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/profile">Profile Settings</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/settings">Account Settings</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/logout">Sign out</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarFooter>
+        <NavUser user={sidebarData.user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
-};
+}

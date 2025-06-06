@@ -39,4 +39,4 @@ interface SidebarData {
   navGroups: NavGroup[];
 }
 
-export type { NavGroup, SidebarData };
+export type { NavCollapsible, NavGroup, NavItem, NavLink, SidebarData };
