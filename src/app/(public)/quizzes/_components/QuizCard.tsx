@@ -21,7 +21,7 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
               alt={quiz.title}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
-              objectFit="contain"
+              priority
             />
           </div>
         )}

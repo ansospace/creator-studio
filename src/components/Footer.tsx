@@ -49,7 +49,14 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <Image src="/images/ansopedia_logo.svg" alt="Ansopedia Logo" width={40} height={40} />
+              <Image
+                src="/images/ansopedia_logo.svg"
+                alt="ansopedia"
+                width={40}
+                height={40}
+                className="h-auto w-auto"
+              />
+
               <Typography variant="h3" className="text-xl font-bold">
                 Ansopedia
               </Typography>

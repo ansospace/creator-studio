@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isLoggedIn } from "./lib/services";
 
 const protectedRoutes = ["/dashboard", "/profile", "/logout", "/settings"];
-const authRoutes = ["/login", "/sign-up"];
+const authRoutes = ["/login", "/signup"];
 
 export const middleware = async (request: NextRequest) => {
   const path = new URL(request.url).pathname;

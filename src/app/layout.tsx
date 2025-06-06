@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
           </ReduxProvider>
-          <Toaster />
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>

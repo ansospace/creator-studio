@@ -21,12 +21,14 @@ export const Hero = () => {
 
           {/* Mobile Image */}
           <div className="flex items-center justify-center p-1 md:hidden">
+            {/* Using width in Image */}
             <Image
               src="/images/ansopedia-illustrator.svg"
               alt="illustrator"
-              className="h-full max-h-[452px] w-full max-w-[640px]"
               width={640}
               height={452}
+              priority
+              className="h-auto max-w-full"
             />
           </div>
 
@@ -41,13 +43,10 @@ export const Hero = () => {
 
         {/* Tablet/Desktop Image */}
         <div className="hidden items-center justify-center p-1 md:flex">
-          <Image
-            src="/images/ansopedia-illustrator.svg"
-            alt="illustrator"
-            className="h-full max-h-[452px] w-full max-w-[640px]"
-            width={640}
-            height={452}
-          />
+          {/* Using Fill */}
+          <div className="relative h-[452px] w-[640px]">
+            <Image src="/images/ansopedia-illustrator.svg" alt="illustrator" fill className="object-contain" priority />
+          </div>
         </div>
       </div>
     </section>

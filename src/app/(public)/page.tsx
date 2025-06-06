@@ -1,12 +1,11 @@
-import ThemeToggle from "@/components/theme/ThemeToggle";
-
-import Home from "./(home)/Home";
+import { GlobalEducation, Hero, Welcome } from "./(home)/_components";
 
 export default function Page() {
   return (
     <div>
-      <ThemeToggle className="absolute top-4 right-4" />
-      <Home />
+      <Hero />
+      <Welcome />
+      <GlobalEducation />
     </div>
   );
 }

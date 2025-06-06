@@ -1,14 +1,13 @@
 "use client";
 
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 
 import { getProfile } from "@/lib/services";
-import { setUser } from "@/redux/features/authSlice";
-
-import { Loader } from "../global";
+import { setLoading, setUser } from "@/redux/features/authSlice";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -26,15 +25,17 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
     retry: false,
   });
 
-  if (data?.status === "failed") {
-    redirect("/login");
-  } else if (data?.data) {
-    dispatch(setUser(data.data));
-  }
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [dispatch, isLoading]);
 
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Loader loading={isLoading}>{children}</Loader>
-    </div>
-  );
+  useEffect(() => {
+    if (data?.status === "failed") {
+      redirect("/login");
+    } else if (data?.data) {
+      dispatch(setUser(data.data));
+    }
+  }, [data, dispatch]);
+
+  return <div className="flex min-h-screen flex-col">{children}</div>;
 };

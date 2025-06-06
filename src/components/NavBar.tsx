@@ -65,7 +65,10 @@ const NavBar = () => {
         {/* Logo - Left */}
         <div className="shrink-0">
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <Image src="/images/ansopedia_logo.svg" alt="ansopedia" width={40} height={40} priority />
+            <div className="relative h-[40px] w-[40px]">
+              <Image src="/images/ansopedia_logo.svg" alt="ansopedia" fill className="object-contain" priority />
+            </div>
+
             <Typography className="text-xl font-bold">Ansopedia</Typography>
           </Link>
         </div>

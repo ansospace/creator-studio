@@ -12,17 +12,19 @@ export const Welcome = () => {
       <Image
         src="/images/background-wave.svg"
         alt="Background wave"
-        className="flex h-full w-full dark:hidden"
+        className="flex h-auto w-auto dark:hidden"
         width={1920}
         height={1080}
+        priority
       />
       {/* Dark mode background */}
       <Image
         src="/images/background-wave-dark.svg"
         alt="Background wave"
-        className="hidden h-full w-full dark:block"
+        className="hidden h-auto w-auto dark:block"
         width={1920}
         height={1080}
+        priority
       />
       <section className="relative min-h-[80vh] bg-[#fff4eb] py-12 md:py-20 dark:bg-[#1e293b]">
         <div className="container mx-auto flex flex-col gap-16 px-4">

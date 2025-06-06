@@ -21,7 +21,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
         </Button>
       </Link>
 
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden py-0">
         {/* Hero Image */}
         <div className="relative aspect-video w-full">
           <Image src={blog.image} alt={blog.title} fill className="object-cover" priority />

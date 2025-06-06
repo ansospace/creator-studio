@@ -21,7 +21,7 @@ export const blogs: Blog[] = [
     date: "2024-03-15",
     category: "Web Development",
     readTime: "5 min read",
-    image: "/images/blog/web-dev.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["Web Development", "Programming", "HTML", "CSS", "JavaScript"],
   },
   {
@@ -43,7 +43,7 @@ export const blogs: Blog[] = [
     date: "2024-03-15",
     category: "Web Development",
     readTime: "5 min read",
-    image: "/images/blog/css-practices.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["CSS", "Web Development", "Frontend", "Design", "Performance"],
   },
   {
@@ -65,7 +65,7 @@ export const blogs: Blog[] = [
     date: "2024-03-14",
     category: "AI & ML",
     readTime: "8 min read",
-    image: "/images/blog/ml-basics.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["Machine Learning", "AI", "Data Science", "Python", "Technology"],
   },
   {
@@ -87,7 +87,7 @@ export const blogs: Blog[] = [
     date: "2024-03-13",
     category: "Education",
     readTime: "6 min read",
-    image: "/images/blog/future-edu.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["Education", "Technology", "E-learning", "Innovation", "Digital Transformation"],
   },
   {
@@ -109,7 +109,7 @@ export const blogs: Blog[] = [
     date: "2024-03-12",
     category: "Cloud Computing",
     readTime: "7 min read",
-    image: "/images/blog/cloud-essentials.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["Cloud Computing", "AWS", "Azure", "DevOps", "Infrastructure"],
   },
   {
@@ -131,7 +131,7 @@ export const blogs: Blog[] = [
     date: "2024-03-11",
     category: "React",
     readTime: "10 min read",
-    image: "/images/blog/react-state.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["React", "JavaScript", "State Management", "Frontend", "Programming"],
   },
   {
@@ -153,7 +153,7 @@ export const blogs: Blog[] = [
     date: "2024-03-10",
     category: "Security",
     readTime: "8 min read",
-    image: "/images/blog/security.jpg",
+    image: "https://picsum.photos/300/200",
     tags: ["Security", "Cybersecurity", "Web Security", "Best Practices", "Technology"],
   },
   // Add more dummy blogs as needed

@@ -15,7 +15,7 @@ export const Loader = ({ loading, children, className }: LoaderProps) => {
   return loading ? (
     <div className={cn("flex flex-grow items-center justify-center", className)}>
       <div role="status">
-        <Image src="/ansopedia_loader.gif" alt="loading" width={100} height={100} />
+        <Image src="/images/ansopedia_loader.gif" alt="loading" width={100} height={100} unoptimized priority />
         <span className="sr-only">Loading...</span>
       </div>
     </div>
