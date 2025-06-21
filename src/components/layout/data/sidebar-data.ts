@@ -1,30 +1,5 @@
-// import {
-//   IconBarrierBlock,
-//   IconBrowserCheck,
-//   IconBug,
-//   IconChecklist,
-//   IconError404,
-//   IconHelp,
-//   IconLayoutDashboard,
-//   IconLock,
-//   IconLockAccess,
-//   IconMessages,
-//   IconNotification,
-//   IconPackages,
-//   IconPalette,
-//   IconServerOff,
-//   IconSettings,
-//   IconTool,
-//   IconUserCog,
-//   IconUserOff,
-//   IconUsers,
-// } from "@tabler/icons-react";
-// import { AudioWaveform, Command, GalleryVerticalEnd } from "lucide-react";
-// import { ClerkLogo } from "@/assets/clerk-logo";
 import {
   AudioWaveform,
-  Bell,
-  Calendar,
   Check,
   Command,
   GalleryVerticalEnd,
@@ -32,14 +7,26 @@ import {
   LayoutDashboard,
   MessageCircle,
   PackagePlus,
-  PanelLeft,
   Settings,
   Settings2,
   User2,
   Users,
 } from "lucide-react";
 
-import { SidebarData } from "../../../types/types";
+import type { NavChildItem, SidebarData } from "@/types/types";
+
+export const profileSidebarItems: NavChildItem[] = [
+  {
+    title: "Profile",
+    icon: User2,
+    url: "/dashboard/settings",
+  },
+  {
+    title: "Account",
+    icon: Settings2,
+    url: "/dashboard/settings/account",
+  },
+];
 
 export const sidebarData: SidebarData = {
   user: {
@@ -102,33 +89,7 @@ export const sidebarData: SidebarData = {
         {
           title: "Settings",
           icon: Settings,
-          items: [
-            {
-              title: "Profile",
-              url: "/settings",
-              icon: User2,
-            },
-            {
-              title: "Account",
-              url: "/settings/account",
-              icon: Settings2,
-            },
-            {
-              title: "Appearance",
-              url: "/settings/appearance",
-              icon: PanelLeft,
-            },
-            {
-              title: "Notifications",
-              url: "/settings/notifications",
-              icon: Bell,
-            },
-            {
-              title: "Display",
-              url: "/settings/display",
-              icon: Calendar,
-            },
-          ],
+          items: profileSidebarItems,
         },
         {
           title: "Help Center",

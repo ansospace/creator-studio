@@ -21,7 +21,7 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
   const { data, isLoading } = useQuery({
     queryKey: ["profile", userId],
     queryFn: getProfile,
-    enabled: !!accessToken && !!userId,
+    enabled: !!accessToken,
     retry: false,
   });
 
