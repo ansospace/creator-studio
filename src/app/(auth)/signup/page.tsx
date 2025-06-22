@@ -1,14 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 import NavBar from "@/components/NavBar";
 import { Typography } from "@/components/ui";
+import UsernameInput from "@/components/ui/UsernameInput";
 
 import { SignUpForm } from "../components";
 
 const LoginPage = () => {
   return (
-    <>
+    <React.Fragment>
       <NavBar />
       <div className="h-vh container m-auto flex min-h-dvh w-svw items-center justify-center gap-10 p-6">
         <div className="lg:1/4 w-full sm:w-2/3 md:w-2/4 lg:w-1/3">
@@ -19,6 +21,7 @@ const LoginPage = () => {
             </Typography>
           </Typography>
           <Typography>Sign up to continue</Typography>
+          <UsernameInput />
           <SignUpForm />
           <Typography className="mt-2">
             Already have an account?
@@ -31,7 +34,7 @@ const LoginPage = () => {
           <Image src="/images/sign-up-illustrator.svg" alt="login" width={500} height={500} priority />
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 
