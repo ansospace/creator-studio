@@ -1,6 +1,6 @@
 import { getUser } from "@/lib/services";
 
-import { Typography } from "../../../components/ui";
+import { Typography } from "../../../../components/ui";
 
 interface PageProps {
   params: Promise<{ username: string }>;
