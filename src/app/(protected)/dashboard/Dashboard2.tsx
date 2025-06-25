@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { Main } from "../../components/layout/main";
+import { Main } from "../../../components/layout/main";
 import { Overview } from "./_components/overview";
 
 export default function Dashboard() {

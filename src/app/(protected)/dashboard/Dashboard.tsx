@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import { Activity, ArrowUp, HelpCircle, Users } from "lucide-react";
 
 import { ConnectedUsers } from "@/components/ConnectedUsers";
+import { Typography } from "@/components/ui";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppSelector } from "@/redux/store";
-
-import { Typography } from "../../components/ui";
 
 const DashboardPage = () => {
   const [isClient, setIsClient] = useState(false);
