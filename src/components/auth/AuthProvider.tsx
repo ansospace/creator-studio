@@ -9,8 +9,6 @@ import { useDispatch } from "react-redux";
 import { getProfile } from "@/lib/services";
 import { setLoading, setUser } from "@/redux/features/authSlice";
 
-import NavBar from "../NavBar";
-
 interface AuthProviderProps {
   children: React.ReactNode;
   accessToken?: string;
@@ -39,10 +37,5 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
     }
   }, [data, dispatch]);
 
-  return (
-    <div className="flex min-h-screen flex-col">
-      <NavBar />
-      {children}
-    </div>
-  );
+  return <div className="flex min-h-screen flex-col">{children}</div>;
 };

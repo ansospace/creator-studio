@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "@/components/theme";
 import { Toaster } from "@/components/ui/sonner";
 
+import CopyrightFooter from "../components/CopyrightFooter";
 import { AuthProvider } from "../components/auth/AuthProvider";
 import { COOKIES } from "../constants";
 import { getCookie } from "../lib/server";
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <ReactQueryProvider>
               <AuthProvider accessToken={accessToken} userId={userId}>
                 {children}
+                <CopyrightFooter />
               </AuthProvider>
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
