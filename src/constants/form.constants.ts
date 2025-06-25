@@ -12,13 +12,13 @@ export interface FormFieldConfig extends FieldValues {
 }
 
 export const SIGNUP_FORM_FIELDS: FormFieldConfig[] = [
-  // {
-  //   id: "signup_username",
-  //   inputType: "input",
-  //   placeholder: "Create an unique username",
-  //   name: "username",
-  //   type: "text",
-  // },
+  {
+    id: "signup_username",
+    inputType: "input",
+    placeholder: "Create an unique username",
+    name: "username",
+    type: "text",
+  },
   {
     id: "signup_email",
     inputType: "input",

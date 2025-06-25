@@ -1,7 +1,5 @@
 "use server";
 
-import { console } from "inspector";
-
 import { ENV_CONFIG } from "@/constants";
 import { IApiResponse, LoginSchema, OtpEvent, SignUpResponse, SignUpSchema, VerifyOTPSchema } from "@/types";
 
@@ -26,10 +24,9 @@ export const signup = async (body: SignUpSchema): Promise<IApiResponse<SignUpRes
 
 export const checkUsernameAvailability = async (data: {
   username: string;
-}): Promise<IApiResponse<{ available: boolean }>> => {
+}): Promise<IApiResponse<{ isAvailable: boolean }>> => {
   const url = `${AUTH_API_URL}/api/v1/users/check-username/${data.username}`;
-  console.log("Checking username availability at:", url);
-  return GET<{ available: boolean }>(url);
+  return GET<{ isAvailable: boolean }>(url);
 };
 
 export const logout = async (): Promise<IApiResponse<void>> => {

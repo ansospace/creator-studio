@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import NavBar from "@/components/NavBar";
 import { Divider, SignInWithGoogle, Typography } from "@/components/ui";
 
 import { LoginForm } from "../components";
@@ -9,7 +8,6 @@ import { LoginForm } from "../components";
 const LoginPage = () => {
   return (
     <>
-      <NavBar />
       <div className="h-vh container m-auto flex min-h-dvh w-svw items-center justify-center gap-10 p-6">
         <div className="lg:1/4 w-full sm:w-2/3 md:w-2/4 lg:w-1/3">
           <Typography variant="h2" className="border-none">
