@@ -1,9 +1,9 @@
-import NavBar from "@/components/NavBar";
+import AuthNavBar from "./components/AuthNavBar";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <NavBar />
+      <AuthNavBar />
       <main className="min-h-[calc(100vh-64px)]">{children}</main>
     </>
   );
