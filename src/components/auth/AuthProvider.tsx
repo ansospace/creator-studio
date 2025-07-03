@@ -21,7 +21,7 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
   const { data, isLoading } = useQuery({
     queryKey: ["profile", userId],
     queryFn: getProfile,
-    enabled: !!accessToken,
+    enabled: !!accessToken && !!userId,
     retry: false,
   });
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children, accessToken, userId }: AuthProviderProp
 
   useEffect(() => {
     if (data?.status === "failed") {
-      redirect("/login");
+      redirect("/logout");
     } else if (data?.data) {
       dispatch(setUser(data.data));
     }

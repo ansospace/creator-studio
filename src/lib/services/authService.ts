@@ -18,7 +18,7 @@ export const loginUser = async (body: LoginSchema): Promise<IApiResponse<LoginRe
 };
 
 export const signup = async (body: SignUpSchema): Promise<IApiResponse<SignUpResponse>> => {
-  const url = `${AUTH_API_URL}/api/v1/auth/sign-up`;
+  const url = `${AUTH_API_URL}/api/v1/auth/login`;
   return POST(url, { body });
 };
 
