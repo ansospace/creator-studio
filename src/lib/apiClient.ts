@@ -92,7 +92,7 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
 
     // --- Token saving logic for auth endpoints ---
     // Check if the response is from an auth endpoint that returns tokens
-    if (url.includes("/auth/sign-in") || url.includes("/auth/refresh-token") || url.includes("/otp/verify")) {
+    if (url.includes("/auth/login") || url.includes("/auth/refresh-token") || url.includes("/otp/verify")) {
       const newAccessToken = response.headers.get("authorization");
       const newRefreshToken = response.headers.get("refresh-token");
 
@@ -107,13 +107,13 @@ async function request<T>(method: Method, url: URL, options: RequestOptions = {}
 
     // --- 401 Handling and Refresh Token Logic ---
     if (response.status === 401 && !_retry) {
-      // If it's the sign-in endpoint, it's invalid credentials, not an expired token
-      if (url.includes("/auth/sign-in")) {
-        // Process the response for sign-in failure
+      // If it's the login endpoint, it's invalid credentials, not an expired token
+      if (url.includes("/auth/login")) {
+        // Process the response for login failure
         return result;
       }
 
-      // If not sign-in and 401, it's likely an expired token
+      // If not login and 401, it's likely an expired token
       if (isRefreshing) {
         // If already refreshing, queue the request
         return new Promise<IApiResponse<T>>((resolve, reject) => {

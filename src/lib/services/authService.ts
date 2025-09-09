@@ -13,12 +13,12 @@ interface LoginResponse {
 }
 
 export const loginUser = async (body: LoginSchema): Promise<IApiResponse<LoginResponse>> => {
-  const url = `${AUTH_API_URL}/api/v1/auth/sign-in`;
+  const url = `${AUTH_API_URL}/api/v1/auth/login`;
   return POST<LoginResponse>(url, { body });
 };
 
 export const signup = async (body: SignUpSchema): Promise<IApiResponse<SignUpResponse>> => {
-  const url = `${AUTH_API_URL}/api/v1/auth/login`;
+  const url = `${AUTH_API_URL}/api/v1/auth/register`;
   return POST(url, { body });
 };
 
