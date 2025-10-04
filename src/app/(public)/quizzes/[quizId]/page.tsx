@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 
+import { IApiResponse, Quiz } from "@/types";
+
 import { QuizDetails } from "./_components/QuizDetails";
 
 // Mock function to fetch quiz - replace with actual API call
-const getQuiz = async (id: string) => {
+const getQuiz = async (id: string): Promise<IApiResponse<{ quiz: Quiz }>> => {
   // Simulating API call with dummy data
-  return {
+  const apiResponse: IApiResponse<{ quiz: Quiz }> = {
     status: "success",
+    message: "Quiz fetched successfully",
     data: {
       quiz: {
         id,
@@ -49,21 +52,24 @@ const getQuiz = async (id: string) => {
       },
     },
   };
+
+  return new Promise<IApiResponse<{ quiz: Quiz }>>((resolve) => resolve(apiResponse));
 };
 
 interface QuizPageProps {
-  params: {
+  params: Promise<{
     quizId: string;
-  };
+  }>;
 }
 
-const QuizPage = async ({ params }: QuizPageProps) => {
+const QuizPage = async (props: QuizPageProps) => {
+  const params = await props.params;
   if (!params.quizId) {
     notFound();
   }
 
   const response = await getQuiz(params.quizId);
-  if (!response.data?.quiz) {
+  if (response.status === "failed") {
     notFound();
   }
 

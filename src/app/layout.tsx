@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Geist, Geist_Mono } from "next/font/google";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ThemeProvider } from "@/components/theme";
+import { Toaster } from "@/components/ui/sonner";
 
-import ThemeToggle from "../components/theme/ThemeToggle";
-import { Toaster } from "../components/ui/toaster";
+import CopyrightFooter from "../components/CopyrightFooter";
+import { AuthProvider } from "../components/auth/AuthProvider";
+import { COOKIES } from "../constants";
+import { getCookie } from "../lib/server";
 import { ReactQueryProvider } from "../react-query/provider";
 import { ReduxProvider } from "../redux/provider";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+const geistSans = Geist({
   variable: "--font-geist-sans",
-  weight: "100 900",
+  subsets: ["latin"],
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+
+const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  weight: "100 900",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -27,23 +29,24 @@ export const metadata: Metadata = {
   description: "Easy way to learn",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const accessToken = await getCookie(COOKIES.AUTHORIZATION);
+  const userId = await getCookie(COOKIES.USER_ID);
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ReduxProvider>
             <ReactQueryProvider>
-              <ThemeToggle className="absolute right-4 top-[150px]" />
-              {children}
+              <AuthProvider accessToken={accessToken} userId={userId}>
+                {children}
+                <CopyrightFooter />
+              </AuthProvider>
               <ReactQueryDevtools initialIsOpen={false} />
             </ReactQueryProvider>
           </ReduxProvider>
-          <Toaster />
+          <Toaster richColors />
         </ThemeProvider>
       </body>
     </html>

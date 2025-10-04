@@ -6,7 +6,7 @@ import { FC } from "react";
 
 import { Search } from "lucide-react";
 
-import { Button, Card, CardContent, CardHeader, Input, Typography } from "@/components/ui";
+import { Badge, Button, Card, CardContent, CardHeader, Input, Typography } from "@/components/ui";
 import { Blog } from "@/types/blog";
 
 import { useBlogFilters } from "./useBlogFilters";
@@ -26,7 +26,10 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       {/* Header */}
       <div className="mb-10 text-center">
         <Typography variant="h1" className="mb-4">
-          Latest from Our <span className="text-primary">Blog</span>
+          Latest from Our
+          <Typography variant="span" className="text-primary">
+            &nbsp;Blog
+          </Typography>
         </Typography>
         <Typography className="text-muted-foreground">
           Stay updated with the latest insights, tutorials, and articles
@@ -37,12 +40,12 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       <div className="mb-8 space-y-4">
         <div className="mx-auto max-w-md">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Search blogs..."
               className="pl-10"
               value={filters.query}
-              onChange={(e) => updateFilters(e.target.value, undefined)}
+              onChange={(e) => updateFilters.setInputQuery(e.target.value)}
             />
           </div>
         </div>
@@ -51,7 +54,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button
             variant={!filters.category ? "default" : "outline"}
-            onClick={() => updateFilters(undefined, "")}
+            onClick={() => updateFilters.updateCategory("")}
             className="text-sm"
           >
             All
@@ -60,7 +63,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
             <Button
               key={category}
               variant={filters.category === category ? "default" : "outline"}
-              onClick={() => updateFilters(undefined, category)}
+              onClick={() => updateFilters.updateCategory(category)}
               className="text-sm"
             >
               {category}
@@ -72,7 +75,7 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       {/* Loading State */}
       {isLoading && (
         <div className="flex justify-center py-8">
-          <div className="animate-pulse text-muted-foreground">Loading...</div>
+          <div className="text-muted-foreground animate-pulse">Loading...</div>
         </div>
       )}
 
@@ -80,30 +83,31 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
           <Link key={blog.id} href={`/blog/${blog.id}`}>
-            <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
+            <Card className="flex h-full justify-between overflow-hidden transition-all duration-300 hover:shadow-lg">
               <div className="relative aspect-video">
                 <Image
                   src={blog.image}
                   alt={blog.title}
                   fill
-                  className="object-cover transition-transform duration-300 hover:scale-105"
-                  objectFit="contain"
+                  className="rounded-2xl object-cover transition-transform duration-300 hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
                 />
               </div>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-primary">{blog.category}</span>
-                  <span className="text-sm text-muted-foreground">{blog.readTime}</span>
+                  <Badge>{blog.category}</Badge>
+                  <Typography variant="mutedText">{blog.readTime}</Typography>
                 </div>
                 <Typography variant="h3" className="line-clamp-2 text-xl font-semibold">
                   {blog.title}
                 </Typography>
               </CardHeader>
               <CardContent>
-                <Typography className="mb-4 line-clamp-3 text-muted-foreground">{blog.excerpt}</Typography>
+                <Typography className="text-muted-foreground mb-4 line-clamp-3">{blog.excerpt}</Typography>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">By {blog.author.name}</span>
-                  <span className="text-sm text-muted-foreground">{new Date(blog.date).toLocaleDateString()}</span>
+                  <Typography variant="mutedText">By {blog.author.name}</Typography>
+                  <Typography variant="mutedText">{new Date(blog.date).toLocaleDateString()}</Typography>
                 </div>
               </CardContent>
             </Card>
@@ -114,7 +118,14 @@ export const Blogs: FC<BlogsProps> = ({ initialBlogs }) => {
       {!isLoading && blogs.length === 0 && (
         <div className="py-8 text-center">
           <Typography className="text-muted-foreground">No blogs found matching your criteria.</Typography>
-          <Button variant="outline" className="mt-4" onClick={() => updateFilters("", "")}>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() => {
+              updateFilters.setInputQuery("");
+              updateFilters.updateCategory("");
+            }}
+          >
             Clear All Filters
           </Button>
         </div>

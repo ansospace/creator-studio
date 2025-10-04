@@ -2,7 +2,7 @@
 
 import { User } from "lucide-react";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, Typography } from "@/components/ui";
 import { Profile } from "@/types";
 
 import { useAppSelector } from "../../redux/store";
@@ -64,14 +64,14 @@ export const ProfileInfo = ({ profile }: ProfileInfoProps) => {
 
             return (
               <div key={section.label} className="space-y-3">
-                <h3 className="font-semibold text-foreground">{section.label}</h3>
+                <Typography variant="h3">{section.label}</Typography>
                 <div className="grid gap-4 rounded-lg border p-4 sm:grid-cols-2">
                   {section.fields.map(
                     (field) =>
                       field.value && (
                         <div key={field.label}>
-                          <label className="text-sm font-medium text-muted-foreground">{field.label}</label>
-                          <p className="text-foreground">{field.value}</p>
+                          <Typography variant="mutedText">{field.label}</Typography>
+                          <Typography>{field.value}</Typography>
                         </div>
                       )
                   )}

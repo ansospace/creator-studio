@@ -6,22 +6,18 @@
     "source.organizeImports": "always",
     "source.fixAll.eslint": "always"
   },
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.requireConfig": true,
-  "eslint.options": {
-    "extensions": [".js", ".jsx", ".ts", ".tsx"]
-  },
+  "eslint.options": {},
+  "eslint.useFlatConfig": true,
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["Ansopedian", "hookform", "tanstack", "trivago"],
+  "cSpell.words": ["Ansopedian", "hookform", "Sonner", "tanstack", "trivago"],
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

@@ -21,7 +21,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
         </Button>
       </Link>
 
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden py-0">
         {/* Hero Image */}
         <div className="relative aspect-video w-full">
           <Image src={blog.image} alt={blog.title} fill className="object-cover" priority />
@@ -32,7 +32,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
           <div className="mb-6">
             <div className="mb-4 flex flex-wrap gap-2">
               <Badge variant="secondary">{blog.category}</Badge>
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-1 text-sm">
                 <Clock className="h-4 w-4" />
                 {blog.readTime}
               </div>
@@ -50,7 +50,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
             </Avatar>
             <div>
               <Typography className="font-semibold">{blog.author.name}</Typography>
-              <Typography className="text-sm text-muted-foreground">
+              <Typography className="text-muted-foreground text-sm">
                 {new Date(blog.date).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -62,7 +62,7 @@ export const BlogDetails = ({ blog }: BlogDetailsProps) => {
 
           {/* Content */}
           <div
-            className="prose prose-slate max-w-none dark:prose-invert"
+            className="prose prose-slate dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
 

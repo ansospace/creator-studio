@@ -4,9 +4,10 @@ import { useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
+import { toast } from "sonner";
 
 import { Button, Card, Select, SelectContent, SelectItem, SelectTrigger, Textarea, Typography } from "@/components/ui";
-import { toast, useAI } from "@/hooks";
+import { useAI } from "@/hooks";
 
 const AISummarizerTypes: Record<string, AISummarizerType> = {
   KeyPoints: "key-points",
@@ -60,21 +61,13 @@ export const AIFeatures = () => {
         }
       }
 
-      toast({
-        title: "Summarization Failed",
-        description,
-        variant: "destructive",
-      });
+      toast.error(description);
     },
   });
 
   const handleSummarize = () => {
     if (!text.trim()) {
-      toast({
-        title: "Input Required",
-        description: "Please enter some text to summarize",
-        variant: "destructive",
-      });
+      toast.warning("Please enter some text to summarize");
       return;
     }
 
@@ -124,7 +117,7 @@ export const AIFeatures = () => {
 
       {summary && (
         <Card className="max-w-2xl p-6">
-          <h3 className="mb-4 text-lg font-semibold">Summary</h3>
+          <Typography variant="h3">Summary</Typography>
           <div className="prose prose-slate dark:prose-invert">
             <ReactMarkdown>{summary}</ReactMarkdown>
           </div>

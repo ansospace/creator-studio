@@ -33,6 +33,4 @@ We have a [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) that outlines our expectati
 
 We welcome and recognize all contributors to the Ansopedia Creator Studio.
 
-<a href="https://github.com/ansopedia/creator-studio/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ansopedia/creator-studio" />
-</a>
+![Contributors](https://contrib.rocks/image?repo=ansopedia/creator-studio)

@@ -4,6 +4,9 @@ import { GetUser } from "./user";
 
 export const ProfileSchema = z.object({
   userId: z.string(),
+  name: z.string().optional(),
+  givenName: z.string().optional(),
+  familyName: z.string().optional(),
   avatar: z.string().url().optional(),
   bio: z.string().max(500).optional(),
   address: z
@@ -17,9 +20,9 @@ export const ProfileSchema = z.object({
   phoneNumber: z.string().optional(),
   socialLinks: z
     .object({
-      twitter: z.string().trim().url().optional().or(z.literal("")),
-      linkedin: z.string().trim().url().optional().or(z.literal("")),
-      github: z.string().trim().url().optional().or(z.literal("")),
+      twitter: z.string().url().optional(),
+      linkedin: z.string().url().optional(),
+      github: z.string().url().optional(),
     })
     .optional(),
 });

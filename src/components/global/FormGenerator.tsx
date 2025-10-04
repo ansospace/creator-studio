@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FieldErrors, FieldValues, Path, UseFormRegister } from "react-hook-form";
 
-import { Input, Label, Password, Textarea } from "@/components/ui";
+import { Input, Label, Password, Textarea, Typography } from "@/components/ui";
 
 type InputType = "select" | "input" | "textarea" | "password";
 type InputTypeProps = {
@@ -26,7 +26,9 @@ const ErrorMessageComponent = ({ errors, name }: { errors: FieldErrors<FieldValu
   <ErrorMessage
     errors={errors}
     name={name}
-    render={({ message }) => <p className="mt-2 text-red-400">{message === "Required" ? "" : message}</p>}
+    render={({ message }) => (
+      <Typography className="mt-2 text-red-400">{message === "Required" ? "" : message}</Typography>
+    )}
   />
 );
 
@@ -85,7 +87,7 @@ export const FormGenerator = <T extends InputType, F extends FieldValues>(props:
   const InputComponent = inputComponents[inputType];
 
   return InputComponent ? (
-    <Label className="flex flex-col gap-2" htmlFor={commonProps.id}>
+    <Label className="flex flex-col items-start" htmlFor={commonProps.id}>
       {label && label}
       {InputComponent}
       <ErrorMessageComponent errors={errors} name={name} />

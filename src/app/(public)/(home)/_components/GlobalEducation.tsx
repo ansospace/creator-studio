@@ -5,7 +5,7 @@ import { Button, Typography } from "@/components/ui";
 export const GlobalEducation = () => {
   return (
     <section className="container mx-auto max-w-7xl px-4">
-      <div className="py-18 container mx-auto my-12 flex flex-col gap-10 lg:gap-0">
+      <div className="container mx-auto my-12 flex flex-col gap-10 py-18 lg:gap-0">
         <div className="grid md:grid-cols-2 md:gap-8">
           <div className="h-full w-full md:order-2">
             <Image
@@ -17,10 +17,10 @@ export const GlobalEducation = () => {
             />
           </div>
           <div className="flex flex-col justify-center gap-6">
-            <Typography className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-              Discover Worldwide{" "}
-              <Typography color="primary" className="text-primary">
-                Education
+            <Typography variant="h2">
+              Discover Worldwide
+              <Typography className="text-primary" variant="span">
+                &nbsp;Education
               </Typography>
             </Typography>
             <Typography>

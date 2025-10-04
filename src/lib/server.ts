@@ -2,9 +2,11 @@
 
 import { cookies } from "next/headers";
 
+import { COOKIES } from "../constants/app.constants";
+
 export const saveAccessToken = async (token: string) => {
   (await cookies()).set({
-    name: "authorization",
+    name: COOKIES.AUTHORIZATION,
     value: token,
     httpOnly: true,
     secure: true,
@@ -14,7 +16,7 @@ export const saveAccessToken = async (token: string) => {
 
 export const saveRefreshToken = async (token: string) => {
   (await cookies()).set({
-    name: "refresh-token",
+    name: COOKIES.REFRESH_TOKEN,
     value: token,
     httpOnly: true,
     secure: true,
@@ -23,18 +25,18 @@ export const saveRefreshToken = async (token: string) => {
 };
 
 export const getRefreshToken = async () => {
-  return (await cookies()).get("refresh-token")?.value;
+  return (await cookies()).get(COOKIES.REFRESH_TOKEN)?.value;
 };
 
 export const getAccessToken = async () => {
-  return (await cookies()).get("authorization")?.value;
+  return (await cookies()).get(COOKIES.AUTHORIZATION)?.value;
 };
 
-export const getCookie = async (name: string) => {
+export const getCookie = async (name: COOKIES) => {
   return (await cookies()).get(name)?.value;
 };
 
-export const saveCookie = async (name: string, value: string) => {
+export const saveCookie = async (name: COOKIES, value: string) => {
   (await cookies()).set({
     name,
     value,
@@ -43,15 +45,8 @@ export const saveCookie = async (name: string, value: string) => {
     sameSite: "strict",
   });
 };
-export interface IApiResponse<T = undefined> {
-  response: Response;
-  statusCode: number;
-  status: "success" | "failed";
-  message: string;
-  data: T;
-}
 
-export const deleteCookie = async (name: string) => {
+export const deleteCookie = async (name: COOKIES) => {
   (await cookies()).delete(name);
 };
 
@@ -66,7 +61,7 @@ const extractCookiesFromHeader = (setCookieHeader: string | null): { name: strin
 };
 
 export const saveAuthTokens = async (response: Response) => {
-  const authToken = response.headers.get("authorization");
+  const authToken = response.headers.get(COOKIES.AUTHORIZATION);
   const setCookieHeader = response.headers.get("set-cookie");
 
   if (!authToken || !setCookieHeader) {
@@ -76,11 +71,11 @@ export const saveAuthTokens = async (response: Response) => {
   const cookies = extractCookiesFromHeader(setCookieHeader);
 
   // Save auth token to cookies instead of directly manipulating headers
-  await saveCookie("authorization", authToken);
+  await saveCookie(COOKIES.AUTHORIZATION, authToken);
 
   // Save other cookies
   for (const { name, value } of cookies) {
-    await saveCookie(name, value);
+    await saveCookie(name as COOKIES, value);
   }
 
   return true;

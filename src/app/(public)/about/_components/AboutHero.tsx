@@ -7,10 +7,13 @@ export const AboutHero = () => {
     <section className="container mx-auto max-w-7xl px-4">
       <div className="grid gap-8 md:grid-cols-2 md:items-center">
         <div className="flex flex-col gap-6">
-          <Typography variant="h1" className="text-4xl font-bold md:text-5xl lg:text-6xl">
-            Empowering Global <span className="text-primary">Education</span>
+          <Typography variant="h1">
+            Empowering Global{" "}
+            <Typography variant="span" className="text-primary">
+              Education
+            </Typography>
           </Typography>
-          <Typography className="text-lg text-muted-foreground">
+          <Typography>
             We&apos;re on a mission to make quality education accessible to everyone, everywhere. Our platform connects
             learners with the best educational resources and opportunities worldwide.
           </Typography>

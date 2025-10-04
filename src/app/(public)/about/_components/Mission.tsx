@@ -4,10 +4,8 @@ export const Mission = () => {
   return (
     <section className="container mx-auto max-w-7xl px-4">
       <div className="text-center">
-        <Typography variant="h2" className="mb-4 text-3xl font-bold">
-          Our Mission & Vision
-        </Typography>
-        <Typography className="mx-auto max-w-2xl text-muted-foreground">
+        <Typography variant="h2">Our Mission & Vision</Typography>
+        <Typography className="mx-auto max-w-2xl" variant="p">
           We strive to break down barriers in education and create a world where quality learning is accessible to all,
           regardless of geographical or economic constraints.
         </Typography>

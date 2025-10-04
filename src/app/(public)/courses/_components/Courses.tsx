@@ -2,7 +2,16 @@
 
 import { Grid, List, SlidersHorizontal } from "lucide-react";
 
-import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui";
+import {
+  Button,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Typography,
+} from "@/components/ui";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import { Course } from "../../../../types";
@@ -117,7 +126,7 @@ export const Courses = ({ initialCourses }: CoursesProps) => {
         <div className="lg:col-span-3">
           {filteredCourses.length === 0 ? (
             <div className="py-8 text-center">
-              <p className="text-muted-foreground">No courses found matching your criteria.</p>
+              <Typography>No courses found matching your criteria.</Typography>
               <Button variant="outline" className="mt-4" onClick={() => dispatch({ type: "RESET_FILTERS" })}>
                 Reset Filters
               </Button>

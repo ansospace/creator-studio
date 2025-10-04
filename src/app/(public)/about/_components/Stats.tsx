@@ -15,8 +15,8 @@ export const Stats = () => {
           {stats.map((stat) => (
             <Card key={stat.label} className="border-none bg-transparent text-center">
               <CardContent className="p-6">
-                <Typography className="text-3xl font-bold text-primary">{stat.value}</Typography>
-                <Typography className="mt-2 text-sm text-muted-foreground">{stat.label}</Typography>
+                <Typography className="text-primary text-3xl font-bold">{stat.value}</Typography>
+                <Typography className="text-muted-foreground mt-2 text-sm">{stat.label}</Typography>
               </CardContent>
             </Card>
           ))}

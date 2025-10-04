@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Facebook, Github, Instagram, Linkedin, Twitter } from "lucide-react";
 
-import { Typography } from "./ui";
+import { Separator, Typography } from "./ui";
 
 const footerLinks = [
   {
@@ -43,72 +43,54 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t bg-background">
-      <div className="container mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="mb-4 flex items-center gap-2">
-              <Image src="/images/ansopedia_logo.svg" alt="Ansopedia Logo" width={40} height={40} />
-              <Typography variant="h3" className="text-xl font-bold">
-                Ansopedia
-              </Typography>
-            </Link>
-            <Typography className="mb-6 text-muted-foreground">
-              Empowering global education through accessible learning resources and opportunities.
+    <footer className="container mx-auto">
+      <Separator />
+      <div className="flex flex-col flex-wrap items-start justify-between gap-8 py-8 sm:flex-row">
+        {/* Brand Section */}
+        <div className="max-w-md">
+          <Link href="/" className="mb-4 flex items-center gap-2">
+            <Image src="/images/ansopedia_logo.svg" alt="ansopedia" width={40} height={40} className="h-auto w-auto" />
+            <Typography variant="h3" className="text-xl font-bold">
+              Ansopedia
             </Typography>
-            <div className="flex space-x-4">
-              {socialLinks.map(({ icon: Icon, href, label }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                  aria-label={label}
-                >
-                  <Icon className="h-5 w-5" />
-                </Link>
+          </Link>
+          <Typography className="text-muted-foreground mb-6">
+            Empowering global education through accessible learning resources and opportunities.
+          </Typography>
+          <div className="flex space-x-4">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <Link
+                key={label}
+                href={href}
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label={label}
+              >
+                <Icon className="h-5 w-5" />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Links Sections */}
+        {footerLinks.map((section) => (
+          <div key={section.title} className="flex flex-col sm:items-start">
+            <Typography variant="h3" className="mb-4 text-sm font-semibold tracking-wider uppercase">
+              {section.title}
+            </Typography>
+            <ul className="space-y-2">
+              {section.links.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-primary transition-colors hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-
-          {/* Links Sections */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <Typography variant="h3" className="mb-4 text-sm font-semibold uppercase tracking-wider">
-                {section.title}
-              </Typography>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-muted-foreground transition-colors hover:text-primary hover:underline"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom Section */}
-        <div className="mt-12 border-t pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Typography className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Ansopedia. All rights reserved.
-            </Typography>
-            <div className="flex gap-4">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary hover:underline">
-                Privacy Policy
-              </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary hover:underline">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </footer>
   );

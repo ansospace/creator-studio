@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
-import { useToast } from "@/hooks/useToast";
-import { upSertProfile } from "@/lib/api";
+import { upsertProfile } from "@/lib/services";
 import { Profile, ProfileSchema } from "@/types/profile";
 
 import { setUser } from "../redux/features/authSlice";
@@ -35,7 +35,6 @@ const initialProfileData: Profile = {
 
 export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
   const queryClient = useQueryClient();
-  const { toast } = useToast();
   const dispatch = useDispatch();
   const {
     register,
@@ -62,23 +61,16 @@ export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
   });
 
   const { isPending, mutate } = useMutation({
-    mutationFn: upSertProfile,
+    mutationFn: upsertProfile,
     onSuccess: (data) => {
       if (data.status === "success" && data.data) {
         dispatch(setUser({ profile: data.data, user: initialData.user }));
         queryClient.invalidateQueries({ queryKey: ["profile"] });
-        toast({
-          title: "Success",
-          description: "Profile updated successfully",
-        });
+        toast.success(data.message);
       }
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     },
   });
 
@@ -86,8 +78,7 @@ export const useUpdateProfile = (initialData: Profile = initialProfileData) => {
     const cleanedData = {
       ...data,
       socialLinks: data.socialLinks
-        ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          Object.fromEntries(Object.entries(data.socialLinks).filter(([_, value]) => value && value.length > 0))
+        ? Object.fromEntries(Object.entries(data.socialLinks).filter(([_, value]) => value && value.length > 0))
         : undefined,
     };
 

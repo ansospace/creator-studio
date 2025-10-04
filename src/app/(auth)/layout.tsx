@@ -1,11 +1,10 @@
-import { FC, ReactNode } from "react";
+import AuthNavBar from "./components/AuthNavBar";
 
-interface AuthLayoutProps {
-  children: ReactNode;
+export default function PublicLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <AuthNavBar />
+      <main className="min-h-[calc(100vh-64px)]">{children}</main>
+    </>
+  );
 }
-
-const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
-  return <>{children}</>;
-};
-
-export default AuthLayout;

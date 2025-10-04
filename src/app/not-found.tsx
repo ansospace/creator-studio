@@ -4,7 +4,7 @@ import { Button, Typography } from "@/components/ui";
 
 export default function NotFound() {
   return (
-    <div className="bg-gradient-to-r from-slate-200 to-gray-200 px-[2vw] text-black dark:from-gray-800 dark:to-gray-900 dark:text-white">
+    <div className="bg-linear-to-r from-slate-200 to-gray-200 px-[2vw] text-black dark:from-gray-800 dark:to-gray-900 dark:text-white">
       <div className="flex min-h-screen items-center justify-center px-2">
         <div className="text-center">
           <Typography variant="h1" className="sm:text-[3vw]">

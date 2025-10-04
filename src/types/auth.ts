@@ -9,7 +9,6 @@ export const LoginSchema = z
       message: "Username must be at least 3 characters",
     }),
     password: userSchema.shape.password,
-    rememberMe: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.email == null && data.username == null) {
@@ -40,5 +39,18 @@ export const SignUpSchema = userSchema
     path: ["confirmPassword"],
   });
 
+const SignUpResponse = z.object({
+  userId: z.string(),
+  token: z.string(),
+});
+
+const authToken = z.object({
+  userId: z.string(),
+  accessToken: z.string(),
+  refreshToken: z.string(),
+});
+
+export type SignUpResponse = z.infer<typeof SignUpResponse>;
 export type LoginSchema = z.infer<typeof LoginSchema>;
 export type SignUpSchema = z.infer<typeof SignUpSchema>;
+export type AuthToken = z.infer<typeof authToken>;
