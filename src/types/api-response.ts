@@ -1,10 +1,9 @@
 import { ZodIssue } from "zod";
 
-interface IApiResponseSuccess<T> {
+type IApiResponseSuccess<T> = {
   status: "success";
   message: string;
-  data: T extends undefined ? never : T;
-}
+} & (T extends void ? { readonly data?: never } : { data: T });
 
 interface IApiResponseFailed {
   status: "failed";
@@ -13,4 +12,4 @@ interface IApiResponseFailed {
   errors?: ZodIssue[];
 }
 
-export type IApiResponse<T> = IApiResponseSuccess<T> | IApiResponseFailed;
+export type IApiResponse<T = void> = IApiResponseSuccess<T> | IApiResponseFailed;
